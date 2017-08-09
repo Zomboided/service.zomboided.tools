@@ -1,0 +1,64 @@
+# Kodi Media Center language file
+# Addon Name: Zomboided Tools
+# Addon id: service.zomboided.tools
+# Addon Provider: Zomboided
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+# Playlist Screen
+
+msgctxt "#32010"
+msgid "Playlists"
+msgstr ""
+
+msgctxt "#32011"
+msgid "Limit playlist playback"
+msgstr ""
+
+msgctxt "#32012"
+msgid "Stop playback after maximum time"
+msgstr ""
+
+msgctxt "#32013"
+msgid "Maximum time (minutes)"
+msgstr ""
+
+msgctxt "#32014"
+msgid "Stop playback after maximum videos"
+msgstr ""
+
+msgctxt "#32015"
+msgid "Maximum videos"
+msgstr ""
+
+msgctxt "#32016"
+msgid "Playlist detection"
+msgstr ""
+
+msgctxt "#32017"
+msgid "Minimum number of files"
+msgstr ""
+
+msgctxt "#32018"
+msgid "Seconds between videos"
+msgstr ""
+
+msgctxt "#32200"
+msgid "Debug"
+msgstr ""
+
+msgctxt "#32201"
+msgid "Enable debug for just Zomboided Tools"
+msgstr ""

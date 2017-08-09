@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<settings>
+    <category label="32010">
+        <setting label="32011" type="lsep"/>
+        <setting label="32012" type="bool" id="stop_playback_time" default="true"/>
+        <setting label="32013" type="slider" id="stop_playback_mins" default="60" range="1,1,720" option="int" />
+        <setting label="32014" type="bool" id="stop_playback_videos" default="true"/>
+        <setting label="32015" type="slider" id="stop_playback_count" default="10" range="3,1,100" option="int" />
+        <setting label="32016" type="lsep"/>
+        <setting label="32017" type="slider" id="detect_playlist_minimum" default="2" range="1,1,10" option="int" />
+        <setting label="32018" type="slider" id="detect_playlist_gap" default="5" range="1,1,60" option="int" />
+    </category>
+    <category label="32200">
+        <setting label="32201" type="bool" id="enable_debug" default="false"/>
+    </category>
+</settings>
