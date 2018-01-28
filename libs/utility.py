@@ -20,6 +20,7 @@
 
 import xbmc
 import xbmcaddon
+import time
 
 forceDebug = False
 
@@ -62,7 +63,11 @@ def infoPrint(data):
 def newPrint(data):
     xbmc.log(msg=data, level=xbmc.LOGERROR)
 
+   
+def now():
+    return int(time.time())
     
+
 def enum(**enums):
     return type('Enum', (), enums)    
     

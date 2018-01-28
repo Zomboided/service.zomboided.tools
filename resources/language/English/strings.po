@@ -55,10 +55,240 @@ msgctxt "#32018"
 msgid "Seconds between videos"
 msgstr ""
 
-msgctxt "#32200"
+
+# Trigger Screens
+
+msgctxt "#32051"
+msgid "Trigger #1"
+msgstr ""
+
+msgctxt "#32052"
+msgid "Trigger #2"
+msgstr ""
+
+msgctxt "#32053"
+msgid "Trigger #3"
+msgstr ""
+
+msgctxt "#32054"
+msgid "Trigger #4"
+msgstr ""
+
+msgctxt "#32055"
+msgid "Trigger #5"
+msgstr ""
+
+msgctxt "#32061"
+msgid "Timer Trigger"
+msgstr ""
+
+msgctxt "#32062"
+msgid "Frequency"
+msgstr ""
+
+msgctxt "#32063"
+msgid "Off"
+msgstr ""
+
+msgctxt "#32064"
+msgid "Daily"
+msgstr ""
+
+msgctxt "#32065"
+msgid "Periodically"
+msgstr ""
+
+msgctxt "#32066"
+msgid "Weekly"
+msgstr ""
+
+msgctxt "#32067"
+msgid "Monthly"
+msgstr ""
+
+msgctxt "#32068"
+msgid "Time (24h)"
+msgstr ""
+
+msgctxt "#32069"
+msgid "Period (Days)"
+msgstr ""
+
+msgctxt "#32070"
+msgid "Day (Weekly)"
+msgstr ""
+
+msgctxt "#32071"
+msgid "Monday"
+msgstr ""
+
+msgctxt "#32072"
+msgid "Tuesday"
+msgstr ""
+
+msgctxt "#32073"
+msgid "Wednesday"
+msgstr ""
+
+msgctxt "#32074"
+msgid "Thursday"
+msgstr ""
+
+msgctxt "#32075"
+msgid "Friday"
+msgstr ""
+
+msgctxt "#32076"
+msgid "Saturday"
+msgstr ""
+
+msgctxt "#32077"
+msgid "Sunday"
+msgstr ""
+
+msgctxt "#32078"
+msgid "Date (Monthly)"
+msgstr ""
+
+msgctxt "#32079"
+msgid "File Change Trigger"
+msgstr ""
+
+msgctxt "#32080"
+msgid "Detect file changes"
+msgstr ""
+
+msgctxt "#32081"
+msgid "Detect if file not available"
+msgstr ""
+
+msgctxt "#32082"
+msgid "File"
+msgstr ""
+
+msgctxt "#32083"
+msgid "Behaviour"
+msgstr ""
+
+msgctxt "#32084"
+msgid "Action"
+msgstr ""
+
+msgctxt "#32085"
+msgid "Reboot"
+msgstr ""
+
+msgctxt "#32086"
+msgid "Quit"
+msgstr ""
+
+msgctxt "#32087"
+msgid "Shutdown"
+msgstr ""
+
+msgctxt "#32088"
+msgid "Sleep"
+msgstr ""
+
+msgctxt "#32089"
+msgid "Clear Cache"
+msgstr ""
+
+msgctxt "#32090"
+msgid "Run Command"
+msgstr ""
+
+msgctxt "#32091"
+msgid "Clear selected Kodi caches now"
+msgstr ""
+
+msgctxt "#32092"
+msgid "Command"
+msgstr ""
+
+msgctxt "#32093"
+msgid "Warning before action (seconds, 0 is off)"
+msgstr ""
+
+
+# Sleep Screen
+
+msgctxt "#32100"
+msgid "Sleep"
+msgstr ""
+
+msgctxt "#32101"
+msgid "User sleep timer"
+msgstr ""
+
+msgctxt "#32102"
+msgid "Sleep timer increments"
+msgstr ""
+
+msgctxt "#32103"
+msgid "Sleep timer maximum"
+msgstr ""
+
+# Cache Clear Screen
+
+msgctxt "#32150"
+msgid "Caches"
+msgstr ""
+
+msgctxt "#32151"
+msgid "Select Kodi caches to manage"
+msgstr ""
+
+msgctxt "#32152"
+msgid "Kodi cache"
+msgstr ""
+
+msgctxt "#32160"
+msgid "Manage caches"
+msgstr ""
+
+msgctxt "#32161"
+msgid "Clear selected Kodi caches now"
+msgstr ""
+
+msgctxt "#32162"
+msgid "Clear cache frequency"
+msgstr ""
+
+
+# Random Utilities Screen
+
+msgctxt "#32300"
+msgid "Utilites"
+msgstr ""
+
+msgctxt "#32301"
+msgid "Local file read speed test"
+msgstr ""
+
+msgctxt "#32302"
+msgid "Source file (>50MB)"
+msgstr ""
+
+msgctxt "#32303"
+msgid "Run speed test"
+msgstr ""
+
+
+# Debug Screen
+
+msgctxt "#32350"
 msgid "Debug"
 msgstr ""
 
-msgctxt "#32201"
+msgctxt "#32351"
 msgid "Enable debug for just Zomboided Tools"
+msgstr ""
+
+msgctxt "#32352"
+msgid "View Kodi log file"
+msgstr ""
+
+msgctxt "#32353"
+msgid "Copy log files"
 msgstr ""

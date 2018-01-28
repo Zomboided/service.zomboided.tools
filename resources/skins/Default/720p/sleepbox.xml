@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<window>
+    <defaultcontrol>3002</defaultcontrol>
+    <zorder>2</zorder>
+    <coordinates>
+        <system>1</system>
+        <posx>100</posx>
+        <posy>100</posy>
+    </coordinates>
+    <controls>
+        <control type="image">
+            <description>Background image</description>
+            <posx>0</posx>
+            <posy>0</posy>
+            <width>400</width>
+            <height>400</height>
+            <texture border="20">DialogBackTranslucent.png</texture>
+        </control>
+        <control type="label" id="100">
+            <description>Caption</description>
+            <posx>0</posx>
+            <posy>20</posy>
+            <width>1000</width>
+            <height>50</height>
+            <font>font13_title</font>
+            <textcolor>orange</textcolor>
+            <shadowcolor>black</shadowcolor>
+            <aligny>center</aligny>
+            <align>center</align>
+        </control>
+        <control type="textbox" id="200">
+            <description>Left textbox</description>
+            <posx>40</posx>
+            <posy>80</posy>
+            <width>400</width>
+            <height>518</height>
+            <font>font50</font>
+            <textcolor>green</textcolor>
+            <aligny>center</aligny>
+            <align>center</align>
+        </control>       
+        <control type="slider" id="300">
+            <description>My first slider control</description>
+            <left>80</left>
+            <top>60</top>
+            <width>250</width>
+            <height>60</height>
+            <visible>true</visible>
+            <texturesliderbar>scroll_bar_v_focus.png</texturesliderbar>
+            <textureslidernib>scroll_bar_v_back.png</textureslidernib>
+            <textureslidernibfocus>scroll_bar_v_focus.png</textureslidernibfocus>
+            <orientation>horizontal</orientation>
+            <onup>10</onup>
+            <ondown>10</ondown>
+            <onleft></onleft>
+            <onright></onright>
+        </control>
+    </controls>
+</window>

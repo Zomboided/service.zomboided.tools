@@ -3,14 +3,116 @@
     <category label="32010">
         <setting label="32011" type="lsep"/>
         <setting label="32012" type="bool" id="stop_playback_time" default="true"/>
-        <setting label="32013" type="slider" id="stop_playback_mins" default="60" range="1,1,720" option="int" />
+        <setting label="32013" type="slider" id="stop_playback_mins" default="60" range="1,1,720" option="int"/>
         <setting label="32014" type="bool" id="stop_playback_videos" default="true"/>
-        <setting label="32015" type="slider" id="stop_playback_count" default="10" range="3,1,100" option="int" />
+        <setting label="32015" type="slider" id="stop_playback_count" default="10" range="3,1,100" option="int"/>
         <setting label="32016" type="lsep"/>
-        <setting label="32017" type="slider" id="detect_playlist_minimum" default="2" range="1,1,10" option="int" />
-        <setting label="32018" type="slider" id="detect_playlist_gap" default="5" range="1,1,60" option="int" />
+        <setting label="32017" type="slider" id="detect_playlist_minimum" default="2" range="1,1,10" option="int"/>
+        <setting label="32018" type="slider" id="detect_playlist_gap" default="10" range="1,1,60" option="int"/>
     </category>
-    <category label="32200">
-        <setting label="32201" type="bool" id="enable_debug" default="false"/>
+    <category label="32051">
+        <setting label=""      type="text" id="boot_time" enable="false" visible="true" default="Last restart time is unknown"/>
+        <setting label="32061" type="lsep"/>
+        <setting label="32062" type="labelenum" id="action_timer_freq_1" lvalues="32063|32064|32065|32066|32067"/>
+        <setting label="32068" type="time" id="action_time_1" visible="!eq(-1,0)" default="02:00"/>
+        <setting label="32069" type="slider" id="action_period_1" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
+        <setting label="32070" type="labelenum" id="action_day_1" visible="eq(-3,3)" lvalues="32071|32072|32073|32074|32075|32076|32077"/>
+        <setting label="32078" type="slider" id="action_date_1" visible="eq(-4,4)" default="1" range="1,1,31" option="int"/>
+        <setting label="32079" type="lsep"/>
+        <setting label="32080" type="bool" id="action_file_enabled_1" default="false"/>
+        <setting label="32081" type="bool" visible="!eq(-1,false)"id="action_file_unavailable_1" default="false"/>
+        <setting label="32082" type="file" visible="!eq(-2,false)" id="action_file_1" default=""/>
+        <setting label="32083" type="lsep"/>
+        <setting label="32084" type="labelenum" id="action_1" lvalues="32085|32086|32087|32088|32089|32090"/>
+        <setting label="32091" type="action" option="close" visible="eq(-1,4)" action="RunScript(special://home/addons/service.zomboided.tools/clearcache.py, settings)"/>
+        <setting label="32092" type="text" id="action_command_1" enable="true" visible="eq(-2,5)" default=""/>
+        <setting label="32093" type="slider" id="action_warn_1" default="10" range="0,10,30" option="int"/>
+    </category>
+    <category label="32052">
+        <setting label=""      type="text" id="boot_time" enable="false" visible="true" default="Last restart time is unknown"/>
+        <setting label="32061" type="lsep"/>
+        <setting label="32062" type="labelenum" id="action_timer_freq_2" lvalues="32063|32064|32065|32066|32067"/>
+        <setting label="32068" type="time" id="action_time_2" visible="!eq(-1,0)" default="02:00"/>
+        <setting label="32069" type="slider" id="action_period_2" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
+        <setting label="32070" type="labelenum" id="action_day_2" visible="eq(-3,3)" lvalues="32071|32072|32073|32074|32075|32076|32077"/>
+        <setting label="32078" type="slider" id="action_date_2" visible="eq(-4,4)" default="1" range="1,1,31" option="int"/>
+        <setting label="32079" type="lsep"/>
+        <setting label="32080" type="bool" id="action_file_enabled_2" default="false"/>
+        <setting label="32081" type="bool" visible="!eq(-1,false)"id="action_file_unavailable_2" default="false"/>
+        <setting label="32082" type="file" visible="!eq(-2,false)" id="action_file_2" default=""/>
+        <setting label="32083" type="lsep"/>
+        <setting label="32084" type="labelenum" id="action_2" lvalues="32085|32086|32087|32088|32089|32090"/>
+        <setting label="32091" type="action" option="close" visible="eq(-1,4)" action="RunScript(special://home/addons/service.zomboided.tools/speedtest.py)"/>
+        <setting label="32092" type="text" id="action_command_2" enable="true" visible="eq(-2,5)" default=""/>
+        <setting label="32093" type="slider" id="action_warn_2" default="10" range="0,10,30" option="int"/>
+    </category>
+    <category label="32053">
+        <setting label=""      type="text" id="boot_time" enable="false" visible="true" default="Last restart time is unknown"/>
+        <setting label="32061" type="lsep"/>
+        <setting label="32062" type="labelenum" id="action_timer_freq_3" lvalues="32063|32064|32065|32066|32067"/>
+        <setting label="32068" type="time" id="action_time_3" visible="!eq(-1,0)" default="02:00"/>
+        <setting label="32069" type="slider" id="action_period_3" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
+        <setting label="32070" type="labelenum" id="action_day_3" visible="eq(-3,3)" lvalues="32071|32072|32073|32074|32075|32076|32077"/>
+        <setting label="32078" type="slider" id="action_date_3" visible="eq(-4,4)" default="1" range="1,1,31" option="int"/>
+        <setting label="32079" type="lsep"/>
+        <setting label="32080" type="bool" id="action_file_enabled_3" default="false"/>
+        <setting label="32081" type="bool" visible="!eq(-1,false)"id="action_file_unavailable_3" default="false"/>
+        <setting label="32082" type="file" visible="!eq(-2,false)" id="action_file_3" default=""/>
+        <setting label="32083" type="lsep"/>
+        <setting label="32084" type="labelenum" id="action_3" lvalues="32085|32086|32087|32088|32089|32090"/>
+        <setting label="32091" type="action" option="close" visible="eq(-1,4)" action="RunScript(special://home/addons/service.zomboided.tools/speedtest.py)"/>
+        <setting label="32092" type="text" id="action_command_3" enable="true" visible="eq(-2,5)" default=""/>
+        <setting label="32093" type="slider" id="action_warn_3" default="10" range="0,10,30" option="int"/>
+    </category>
+    <category label="32054">
+        <setting label=""      type="text" id="boot_time" enable="false" visible="true" default="Last restart time is unknown"/>
+        <setting label="32061" type="lsep"/>
+        <setting label="32062" type="labelenum" id="action_timer_freq_4" lvalues="32063|32064|32065|32066|32067"/>
+        <setting label="32068" type="time" id="action_time_4" visible="!eq(-1,0)" default="02:00"/>
+        <setting label="32069" type="slider" id="action_period_4" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
+        <setting label="32070" type="labelenum" id="action_day_4" visible="eq(-3,3)" lvalues="32071|32072|32073|32074|32075|32076|32077"/>
+        <setting label="32078" type="slider" id="action_date_4" visible="eq(-4,4)" default="1" range="1,1,31" option="int"/>
+        <setting label="32079" type="lsep"/>
+        <setting label="32080" type="bool" id="action_file_enabled_4" default="false"/>
+        <setting label="32081" type="bool" visible="!eq(-1,false)"id="action_file_unavailable_4" default="false"/>
+        <setting label="32082" type="file" visible="!eq(-2,false)" id="action_file_4" default=""/>
+        <setting label="32083" type="lsep"/>
+        <setting label="32084" type="labelenum" id="action_4" lvalues="32085|32086|32087|32088|32089|32090"/>
+        <setting label="32091" type="action" option="close" visible="eq(-1,4)" action="RunScript(special://home/addons/service.zomboided.tools/speedtest.py)"/>
+        <setting label="32092" type="text" id="action_command_4" enable="true" visible="eq(-2,5)" default=""/>
+        <setting label="32093" type="slider" id="action_warn_4" default="10" range="0,10,30" option="int"/>
+    </category>
+    <category label="32055">
+        <setting label=""      type="text" id="boot_time" enable="false" visible="true" default="Last restart time is unknown"/>
+        <setting label="32061" type="lsep"/>
+        <setting label="32062" type="labelenum" id="action_timer_freq_5" lvalues="32063|32064|32065|32066|32067"/>
+        <setting label="32068" type="time" id="action_time_5" visible="!eq(-1,0)" default="02:00"/>
+        <setting label="32069" type="slider" id="action_period_5" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
+        <setting label="32070" type="labelenum" id="action_day_5" visible="eq(-3,3)" lvalues="32071|32072|32073|32074|32075|32076|32077"/>
+        <setting label="32078" type="slider" id="action_date_5" visible="eq(-4,4)" default="1" range="1,1,31" option="int"/>
+        <setting label="32079" type="lsep"/>
+        <setting label="32080" type="bool" id="action_file_enabled_5" default="false"/>
+        <setting label="32081" type="bool" visible="!eq(-1,false)"id="action_file_unavailable_5" default="false"/>
+        <setting label="32082" type="file" visible="!eq(-2,false)" id="action_file_5" default=""/>
+        <setting label="32083" type="lsep"/>
+        <setting label="32084" type="labelenum" id="action_5" lvalues="32085|32086|32087|32088|32089|32090"/>
+        <setting label="32091" type="action" option="close" visible="eq(-1,4)" action="RunScript(special://home/addons/service.zomboided.tools/speedtest.py)"/>
+        <setting label="32092" type="text" id="action_command_5" enable="true" visible="eq(-2,5)" default=""/>
+        <setting label="32093" type="slider" id="action_warn_5" default="10" range="0,10,30" option="int"/>
+    </category>    
+    <category label="32100">
+        <setting label="32101" type="lsep"/>
+        <setting label="32102" type="slider" id="sleep_inc" default="15" range="5,5,30" option="int"/>
+        <setting label="32103" type="slider" id="sleep_max" default="60" range="15,15,120" option="int"/>
+    </category>
+    <category label="32300">
+        <setting label="32301" type="lsep"/>        
+        <setting label="32302" type="file" id="speed_test_source" default=""/>
+        <setting label="32303" type="action" enable="!eq(-1,)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/speedtest.py)"/>
+    </category>
+    <category label="32350">
+        <setting label="32351" type="bool" id="enable_debug" default="false"/>
+        <setting label="32352" type="action" action="RunScript(special://home/addons/service.zomboided.tools/logpopup.py, kodi)"/>
+        <setting label="32353" type="action" action="RunScript(special://home/addons/service.zomboided.tools/managefiles.py, log)"/>
     </category>
 </settings>
