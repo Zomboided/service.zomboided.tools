@@ -17,41 +17,53 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 
-# Playlist Screen
+# Playback Screen
 
 msgctxt "#32010"
-msgid "Playlists"
+msgid "Play Limits"
 msgstr ""
 
 msgctxt "#32011"
-msgid "Limit playlist playback"
+msgid "Limit all playback"
 msgstr ""
 
 msgctxt "#32012"
-msgid "Stop playback after maximum time"
+msgid "Stop playback after maximum duration"
 msgstr ""
 
 msgctxt "#32013"
-msgid "Maximum time (minutes)"
+msgid "Maximum duration (minutes)"
 msgstr ""
 
 msgctxt "#32014"
-msgid "Stop playback after maximum videos"
+msgid "Stop playback at time"
 msgstr ""
 
 msgctxt "#32015"
-msgid "Maximum videos"
+msgid "Stop time (minutes)"
 msgstr ""
 
 msgctxt "#32016"
-msgid "Playlist detection"
+msgid "Limit playlist playback"
 msgstr ""
 
 msgctxt "#32017"
-msgid "Minimum number of files"
+msgid "Stop playback after maximum videos"
 msgstr ""
 
 msgctxt "#32018"
+msgid "Maximum videos"
+msgstr ""
+
+msgctxt "#32019"
+msgid "Playlist detection"
+msgstr ""
+
+msgctxt "#32020"
+msgid "Minimum number of files"
+msgstr ""
+
+msgctxt "#32021"
 msgid "Seconds between videos"
 msgstr ""
 
@@ -167,46 +179,54 @@ msgid "File"
 msgstr ""
 
 msgctxt "#32083"
-msgid "Behaviour"
+msgid "Add-on Change Trigger"
 msgstr ""
 
 msgctxt "#32084"
-msgid "Action"
+msgid "Detect if add-on is updated"
 msgstr ""
 
 msgctxt "#32085"
-msgid "Reboot"
+msgid "Add-on"
 msgstr ""
 
 msgctxt "#32086"
-msgid "Quit"
+msgid "Behaviour"
 msgstr ""
 
 msgctxt "#32087"
-msgid "Shutdown"
+msgid "Action"
 msgstr ""
 
 msgctxt "#32088"
-msgid "Sleep"
+msgid "Reboot"
 msgstr ""
 
 msgctxt "#32089"
-msgid "Clear Cache"
+msgid "Quit"
 msgstr ""
 
 msgctxt "#32090"
-msgid "Run Command"
+msgid "Shutdown"
 msgstr ""
 
 msgctxt "#32091"
-msgid "Clear selected Kodi caches now"
+msgid "Sleep"
 msgstr ""
 
 msgctxt "#32092"
-msgid "Command"
+msgid "Clear Cache"
 msgstr ""
 
 msgctxt "#32093"
+msgid "Run Command"
+msgstr ""
+
+msgctxt "#32094"
+msgid "Command"
+msgstr ""
+
+msgctxt "#32095"
 msgid "Warning before action (seconds, 0 is off)"
 msgstr ""
 
@@ -256,39 +276,52 @@ msgid "Clear cache frequency"
 msgstr ""
 
 
-# Random Utilities Screen
-
-msgctxt "#32300"
-msgid "Utilites"
-msgstr ""
-
-msgctxt "#32301"
-msgid "Local file read speed test"
-msgstr ""
-
-msgctxt "#32302"
-msgid "Source file (>50MB)"
-msgstr ""
-
-msgctxt "#32303"
-msgid "Run speed test"
-msgstr ""
-
-
 # Debug Screen
 
-msgctxt "#32350"
+msgctxt "#32300"
 msgid "Debug"
 msgstr ""
 
-msgctxt "#32351"
+msgctxt "#32301"
+msgid "General"
+msgstr ""
+
+msgctxt "#32302"
 msgid "Enable debug for just Zomboided Tools"
 msgstr ""
 
-msgctxt "#32352"
-msgid "View Kodi log file"
+msgctxt "#32303"
+msgid "Clear Caches"
 msgstr ""
 
-msgctxt "#32353"
-msgid "Copy log files"
+msgctxt "#32304"
+msgid "Command delay"
+msgstr ""
+
+msgctxt "#32305"
+msgid "  Clear cache"
+msgstr ""
+
+msgctxt "#32306"
+msgid "  Clear providers"
+msgstr ""
+
+msgctxt "#32307"
+msgid "  Refresh Trakt TV collection"
+msgstr ""
+
+msgctxt "#32308"
+msgid "  Refresh Trakt movie collection"
+msgstr ""
+
+msgctxt "#32309"
+msgid "Covenant"
+msgstr ""
+
+msgctxt "#32310"
+msgid "Exodus"
+msgstr ""
+
+msgctxt "#32311"
+msgid "Fantastic"
 msgstr ""

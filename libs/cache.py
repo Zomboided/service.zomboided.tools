@@ -30,82 +30,131 @@ def clearCache(window):
     addon = xbmcaddon.Addon("service.zomboided.tools")
     addon_name = addon.getAddonInfo("name")
 
-    COMM_DELAY = 5000
+    caches = []
+    if xbmc.getCondVisibility("System.HasAddon(plugin.video.covenant)"): caches.append("covenant")
+    if xbmc.getCondVisibility("System.HasAddon(plugin.video.exodus)"): caches.append("exodus")
+    if xbmc.getCondVisibility("System.HasAddon(plugin.video.fantastic)"): caches.append("fantastic")
+
+    try:
+        commDelay = int(addon.getSetting(cache_command_delay))
+    except:
+        commDelay = 5000
 
     cleared = 0
 
+    progDiag = xbmcgui.DialogProgressBG()
+    progDiag.create("Clearing Caches", "[B]Avoid any input![/B]")
+    progDiag.update(0)
+    
+    percent = 0
+    percentJump = (100/len(caches))/4
+    
     # Change the window and stop any media
     if not window == 0:
         player = xbmc.Player()
         if player.isPlaying():
-            infoTrace("clearcache.py", "Stopping media to clear caches")
+            infoTrace("cache.py", "Stopping media to clear caches")
             player.stop()
         s = "ActivateWindow(" + str(window) + ")"
         xbmc.executebuiltin(s)
-        xbmcgui.Dialog().notification(addon_name, "Looking for caches to clear", xbmcgui.NOTIFICATION_INFO, 5000, False)
-        xbmc.sleep(COMM_DELAY)
+        xbmc.sleep(commDelay)
     
-    # Clear Covenant cache and providers        
-    try:
-        if xbmc.getCondVisibility("System.HasAddon(plugin.video.covenant)"):
-            infoTrace("clearcache.py", "Clearing Covenant cache")
-            xbmcgui.Dialog().notification(addon_name, "Clearing Covenant cache, please wait", xbmcgui.NOTIFICATION_WARNING, 5000, False)
-            xbmc.executebuiltin("ActivateWindow(10025,plugin://plugin.video.covenant/?action=clearCache,return)")
-            xbmc.sleep(COMM_DELAY)
-            xbmc.executebuiltin("Action(Left)")
-            xbmc.sleep(COMM_DELAY)
-            xbmc.executebuiltin("Action(Select)")
-            xbmc.sleep(COMM_DELAY)
-            xbmc.executebuiltin("Action(Back)")
-            xbmc.sleep(COMM_DELAY)
-            xbmcgui.Dialog().notification(addon_name, "Clearing Covenant providers, please wait", xbmcgui.NOTIFICATION_WARNING, 5000, False)
-            infoTrace("clearcache.py", "Clearing Covenant providers")
-            xbmc.executebuiltin("ActivateWindow(10025,plugin://plugin.video.covenant/?action=clearSources,return)")
-            xbmc.sleep(COMM_DELAY)
-            xbmc.executebuiltin("Action(Left)")
-            xbmc.sleep(COMM_DELAY)
-            xbmc.executebuiltin("Action(Select)")
-            xbmc.sleep(COMM_DELAY)
-            xbmc.executebuiltin("Action(Back)")
-            xbmc.sleep(COMM_DELAY)
-            cleared += 1
-        else:
-            debugTrace("Covenant not installed and enabled, can't clear cache and providers")
-    except Exception as e:
-        errorTrace("clearcache.py", "Problem clearing Covenant caches")
-        errorTrace("clearcache.py", str(e))
+    for i in caches:
+        name = i
+        tname = name.title()       
+        try:
+            # Clear the cache
+            percent = percent + percentJump      
+            if addon.getSetting(name + "_cache") == "true":
+                progDiag.update(percent, "Clearing " + tname + " cache")
+                infoTrace("cache.py", "Clearing " + tname + " cache")
+                command = "ActivateWindow(10025,plugin://plugin.video." + name + "/?action=clearCache,return)"
+                xbmc.executebuiltin(command)
+                xbmc.sleep(commDelay)
+                xbmc.executebuiltin("Action(Left)")
+                xbmc.sleep(commDelay)
+                xbmc.executebuiltin("Action(Select)")
+                xbmc.sleep(commDelay)
+                xbmc.executebuiltin("Action(Back)")
+                xbmc.sleep(commDelay)
+                cleared += 1
+            else:
+                progDiag.update(percent, "Skipping " + tname + " cache")
+                xbmc.sleep(1000)
 
-    # Clear Fantastic cache and providers        
-    try:
-        if xbmc.getCondVisibility("System.HasAddon(plugin.video.fantastic)"):
-            infoTrace("clearcache.py", "Clearing Fantastic cache")
-            xbmcgui.Dialog().notification(addon_name, "Clearing Fantastic cache, please wait", xbmcgui.NOTIFICATION_WARNING, 5000, False)
-            xbmc.executebuiltin("ActivateWindow(10025,plugin://plugin.video.fantastic/?action=clearCache,return)")
-            xbmc.sleep(COMM_DELAY)
-            xbmc.executebuiltin("Action(Left)")
-            xbmc.sleep(COMM_DELAY)
-            xbmc.executebuiltin("Action(Select)")
-            xbmc.sleep(COMM_DELAY)
-            xbmc.executebuiltin("Action(Back)")
-            xbmc.sleep(COMM_DELAY)
-            xbmcgui.Dialog().notification(addon_name, "Clearing Fantastic providers, please wait", xbmcgui.NOTIFICATION_WARNING, 5000, False)
-            infoTrace("clearcache.py", "Clearing Fantastic providers")
-            xbmc.executebuiltin("ActivateWindow(10025,plugin://plugin.video.fantastic/?action=clearSources,return)")
-            xbmc.sleep(COMM_DELAY)
-            xbmc.executebuiltin("Action(Left)")
-            xbmc.sleep(COMM_DELAY)
-            xbmc.executebuiltin("Action(Select)")
-            xbmc.sleep(COMM_DELAY)
-            xbmc.executebuiltin("Action(Back)")
-            xbmc.sleep(COMM_DELAY)
-            cleared += 1
-        else:
-            debugTrace("Fantastic not installed and enabled, can't clear cache and providers")
-    except Exception as e:
-        errorTrace("clearcache.py", "Problem clearing Fantastic caches")
-        errorTrace("clearcache.py", str(e))    
+            # Clear the providers                
+            percent = percent + percentJump       
+            if addon.getSetting(name + "_providers") == "true":
+                progDiag.update(percent, "Clearing " + tname + " providers")
+                infoTrace("cache.py", "Clearing " + tname + " providers")
+                command = "ActivateWindow(10025,plugin://plugin.video." + name + "/?action=clearSources,return)"
+                xbmc.executebuiltin(command)
+                xbmc.sleep(commDelay)
+                xbmc.executebuiltin("Action(Left)")
+                xbmc.sleep(commDelay)
+                xbmc.executebuiltin("Action(Select)")
+                xbmc.sleep(commDelay)
+                xbmc.executebuiltin("Action(Back)")
+                xbmc.sleep(commDelay)               
+                cleared += 1
+            else:
+                progDiag.update(percent, "Skipping " + tname + " providers")
+                xbmc.sleep(1000)
+                
+            # Refresh the TV collection list
+            percent = percent + percentJump     
+            if addon.getSetting(name + "_tv_collection") == "true":
+                progDiag.update(percent, "Refreshing " + tname + " Trakt TV collection") 
+                infoTrace("cache.py", "Refreshing " + tname + " Trakt TV collection")                
+                command = "ActivateWindow(10025,plugin://plugin.video." + name + "/?action=mytvNavigator,return)"
+                xbmc.executebuiltin(command)
+                xbmc.sleep(commDelay)
+                xbmc.executebuiltin("Action(PageUp)")
+                xbmc.sleep(commDelay)
+                xbmc.executebuiltin("Action(Down)")
+                xbmc.sleep(commDelay)
+                xbmc.executebuiltin("Action(Select)")
+                xbmc.sleep(commDelay)
+                xbmc.executebuiltin("Action(Back)")
+                xbmc.sleep(commDelay)
+                xbmc.executebuiltin("Action(Back)")
+                xbmc.sleep(commDelay)
+                cleared += 1
+            else:
+                progDiag.update(percent, "Skipping " + tname + " Trakt TV collection")
+                xbmc.sleep(1000)
+                
+            # Refresh the movie collection list
+            percent = percent + percentJump
+            if addon.getSetting(name + "_movie_collection") == "true":
+                progDiag.update(percent, "Refreshing " + tname + " Trakt movie collection")
+                infoTrace("cache.py", "Refreshing " + tname + " Trakt TV collection")                
+                command = "ActivateWindow(10025,plugin://plugin.video." + name + "/?action=mymovieNavigator,return)"
+                xbmc.executebuiltin(command)
+                xbmc.sleep(commDelay)
+                xbmc.executebuiltin("Action(PageUp)")
+                xbmc.sleep(commDelay)
+                xbmc.executebuiltin("Action(Down)")
+                xbmc.sleep(commDelay)
+                xbmc.executebuiltin("Action(Select)")
+                xbmc.sleep(commDelay)
+                xbmc.executebuiltin("Action(Back)")
+                xbmc.sleep(commDelay)
+                xbmc.executebuiltin("Action(Back)")
+                xbmc.sleep(commDelay)                 
+                cleared += 1
+            else:
+                progDiag.update(percent, "Skipping " + tname + " Trakt movie collection")
+                xbmc.sleep(1000)
+                
+        except Exception as e:
+            errorTrace("cache.py", "Problem clearing " + tname + " caches")
+            errorTrace("cache.py", str(e))    
 
-    if cleared == 0:    
-        xbmcgui.Dialog().notification(addon_name, "No caches were found to clear", xbmcgui.NOTIFICATION_ERROR, 5000, False)
+    if cleared > 0:
+        progDiag.update(100, "Finished clearing selected caches", " ")
     else:
-        xbmcgui.Dialog().notification(addon_name, "Finished clearing the caches", xbmcgui.NOTIFICATION_INFO, 5000, False)
+        progDiag.update(100, "No caches were cleared", " ")
+    xbmc.sleep(2000)        
+            
+    progDiag.close() 

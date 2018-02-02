@@ -16,7 +16,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
-#    Service module for Zomboided Tools addon
+#    Service module for Zomboided Tools add-on
 
 import xbmc
 import xbmcgui
@@ -47,17 +47,22 @@ addon_name = addon.getAddonInfo('name')
 allow_updates = False
 
 # Playlist check variables
-playlist_detection_delay = 10
-playlist_time_check = True
-playlist_max_minutes = 10
-playlist_count_check = True
-playlist_max_count = 5
-playlist_min_count = 1
+playback_duration_check = False
+playback_duration_minutes = 0
+playback_time_check = False
+playback_time = 0
+playlist_detection_delay = 0
+playlist_time_check = False
+playlist_max_minutes = 0
+playlist_count_check = False
+playlist_max_count = 0
+playlist_min_count = 0
 
 # Timers
 action_timer = 0
 action_timer_number = 0
 last_boot = 0
+playback_timer = 0
 
 # Monitor class which will get called when the settings change    
 class KodiMonitor(xbmc.Monitor):
@@ -70,6 +75,10 @@ class KodiMonitor(xbmc.Monitor):
 
 # Pick through the addon settings and translate them to variables we'll be using        
 def updateSettings():
+    global playback_duration_check
+    global playback_duration_minutes
+    global playback_time_check
+    global playback_time
     global playlist_detection_delay
     global playlist_time_check
     global playlist_max_minutes
@@ -87,13 +96,21 @@ def updateSettings():
     
     addon = xbmcaddon.Addon()
     
+    # Refresh the play limit settings
+    if addon.getSetting("stop_playback_duration") == "true": playback_duration_check = True
+    else: playback_duration_check = False
+    playback_duration_minutes = int(addon.getSetting("stop_playback_mins"))
+    if addon.getSetting("stop_playback_after") == "true": playback_time_check = True
+    else: playback_time_check = False
+    playback_time = addon.getSetting("stop_playback_time")
+    
     # Refresh the playlist settings
-    if addon.getSetting("stop_playback_time") == "true": playlist_time_check = True
+    if addon.getSetting("stop_playlist_time") == "true": playlist_time_check = True
     else: playlist_time_check = False
-    playlist_max_minutes = int(addon.getSetting("stop_playback_mins"))
-    if addon.getSetting("stop_playback_videos") == "true": playlist_count_check = True
+    playlist_max_minutes = int(addon.getSetting("stop_playlist_mins"))
+    if addon.getSetting("stop_playlist_videos") == "true": playlist_count_check = True
     else: playlist_count_check = False
-    playlist_max_count = int(addon.getSetting("stop_playback_count"))
+    playlist_max_count = int(addon.getSetting("stop_playlist_count"))
     playlist_min_count = int(addon.getSetting("detect_playlist_minimum"))
     playlist_detection_delay = int(addon.getSetting("detect_playlist_gap"))
     
@@ -117,7 +134,11 @@ def updateSettings():
         if (action_timer == 0 and not next_action_timer == 0) or (next_action_timer > 0 and next_action_timer < action_timer):
             action_timer_number = i + 1
             action_timer = next_action_timer
+           
+    # FIXME read in the addons here and get the current version
     
+    # FIXME read in the files here
+           
     debugTrace("Action timer " + str(action_timer_number) + " is the first timer with " + str(action_timer))
     allow_updates = True                         
 
@@ -193,10 +214,12 @@ def parseTimer(type, freq, rtime, day, date, period):
 # Player class which will be called when the playback state changes           
 class KodiPlayer(xbmc.Player):
     
-    playback_playing = False
-    playback_max = 0
-    playback_count = 0
-    playback_ended = 0
+    global playback_timer
+    
+    playlist_playing = False
+    playlist_max = 0
+    playlist_count = 0
+    playlist_ended = 0
 
     def __init__ (self):
         xbmc.Player.__init__(self)
@@ -205,31 +228,40 @@ class KodiPlayer(xbmc.Player):
     def onPlayBackStarted(self, *arg):
         t = now()
         
+        # Determine the end time if there's a play back limit
+        d_timer = 0
+        t_timer = 0
+        if playback_duration_check: d_timer = t + (playback_duration_minutes * 60)
+        if playback_time_check: t_timer = parseTimer("Play back timer", "Daily", playback_time, "", "", "")
+        if not d_timer == 0 and (d_timer < t_timer or t_timer == 0): playback_timer = d_timer
+        if not t_timer == 0 and (t_timer < d_timer or d_timer == 0): playback_timer = t_timer
+        if playback_timer: debugTrace("Time is " + str(t) + " playing until " + str(playback_timer) + ". Duration was " + str(playback_duration_minutes) + ", time was " + playback_time)
+        
         # If playback ended some time ago, this isn't a playlist
-        if self.playback_playing and t - self.playback_ended > playlist_detection_delay:
+        if self.playlist_playing and t - self.playlist_ended > playlist_detection_delay:
             debugTrace("Playlist is over")
-            debugTrace("Ended because time between videos was " + str(t-self.playback_ended) + " seconds, max is " + str(playlist_detection_delay))
+            debugTrace("Ended because time between videos was " + str(t-self.playlist_ended) + " seconds, max is " + str(playlist_detection_delay))
             self.resetPlaybackCounts()
         
-        if not self.playback_playing:
+        if not self.playlist_playing:
             # If a playlist isn't active, this is the first video in a playlist (or otherwise)
             updateSettings()
-            self.playback_playing = True
-            self.playback_max = t + (playlist_max_minutes * 60)
-            self.playback_count = 0
+            self.playlist_playing = True
+            self.playlist_max = t + (playlist_max_minutes * 60)
+            self.playlist_count = 0
             debugTrace("Detected playback starting")
             debugTrace("Max playback time is " + str(playlist_max_minutes))
             debugTrace("Max playback videos is " + str(playlist_max_count))
-            debugTrace("Time is " + str(t) + " max time is " + str(self.playback_max))
+            debugTrace("Time is " + str(t) + " max time is " + str(self.playlist_max))
         else:
             # This is not the first video in a playlist
-            if playlist_count_check: debugTrace("Count is " + str(self.playback_count) + ", max is " + str(playlist_max_count) + ", min is " + str(playlist_min_count))
-            if playlist_time_check: debugTrace("Time is " + str(t) + ", timeout is " + str(self.playback_max))
-            if playlist_count_check and self.playback_count >= playlist_max_count:
+            if playlist_count_check: debugTrace("Count is " + str(self.playlist_count) + ", max is " + str(playlist_max_count) + ", min is " + str(playlist_min_count))
+            if playlist_time_check: debugTrace("Time is " + str(t) + ", timeout is " + str(self.playlist_max))
+            if playlist_count_check and self.playlist_count >= playlist_max_count:
                 xbmc.Player().stop()
                 infoTrace("service.py", "Stopping playlist after playing " + str(playlist_max_count) + " videos.")
                 self.resetPlaybackCounts()
-            elif playlist_time_check and t > self.playback_max and self.playback_count >= playlist_min_count:
+            elif playlist_time_check and t > self.playlist_max and self.playlist_count >= playlist_min_count:
                 xbmc.Player().stop()
                 infoTrace("service.py", "Stopping playlist after reaching maximum time period")
                 self.resetPlaybackCounts()  
@@ -239,14 +271,16 @@ class KodiPlayer(xbmc.Player):
         
     def onPlayBackEnded(self, *arg):
         t = now()
-        self.playback_ended = t
-        self.playback_count += 1
+        self.playlist_ended = t
+        self.playlist_count += 1
+        playback_timer = 0
 
     def resetPlaybackCounts(self):
-        self.playback_playing = False
-        self.playback_max = 0
-        self.playback_count = 0
-        self.playback_ended = 0
+        playback_timer = 0
+        self.playlist_playing = False
+        self.playlist_max = 0
+        self.playlist_count = 0
+        self.playlist_ended = 0
 
         
 if __name__ == '__main__':   
@@ -256,7 +290,7 @@ if __name__ == '__main__':
 
     # Set up the general monitor class
     monitor = KodiMonitor()
-    # Set up a player monitor class to track the 
+    # Set up a player monitor class
     playerMonitor = KodiPlayer()
 
     # Initialise some variables we'll be using repeatedly    
@@ -272,7 +306,12 @@ if __name__ == '__main__':
     
     while not monitor.abortRequested():
     
-        t = now()         
+        t = now()
+
+        if playback_timer > 0 and t > playback_timer:
+            xbmc.Player().stop()
+            infoTrace("service.py", "Stopping play back.  Duration is " + str(playback_duration_minutes) + " minutes, time limit is " + str(playback_time))
+            
         if action_timer > 0 and t > action_timer:
             action = addon.getSetting("action_" + str(action_timer_number))
             warn = int(addon.getSetting("action_warn_" + str(action_timer_number)))
@@ -310,7 +349,11 @@ if __name__ == '__main__':
                 
             # Get the next timer setting
             updateSettings()
-            
+        
+        # FIXME
+        # if not playing, check the versions and the files
+
+        
         # Take a nap before checking timers again
         if monitor.waitForAbort(delay):
             # Abort was requested while waiting. We should exit

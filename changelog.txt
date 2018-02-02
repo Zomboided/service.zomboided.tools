@@ -1,3 +1,7 @@
+v0.0.3
+- Cache clearing settings
+- Move utilities to add-on screen from settings
+
 v0.0.2
 - Rework to allow multiple timers
 - Add cache clearing

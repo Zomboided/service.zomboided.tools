@@ -30,15 +30,12 @@ import datetime
 import os
 from libs.utility import debugTrace, errorTrace, infoTrace, newPrint
 
-addon = xbmcaddon.Addon("service.zomboided.tools")
-addon_name = addon.getAddonInfo("name")
+def copyLog():
 
-action = sys.argv[1]
+    addon = xbmcaddon.Addon("service.zomboided.tools")
+    addon_name = addon.getAddonInfo("name")
 
-debugTrace("-- Entered managefiles.py with parameter " + action + " --")
-        
-# Copy the log file        
-if action == "log":
+    # Copy the log file        
     log_path = ""
     dest_path = ""
     try:
@@ -61,8 +58,3 @@ if action == "log":
             dialog_messsage = "Could not find the kodi.log file."
         errorTrace("managefiles.py", dialog_message + " " + log_path + ", " + dest_path)
     xbmcgui.Dialog().ok("Log Copy", dialog_message)
-
-
-xbmc.executebuiltin("Addon.OpenSettings(service.zomboided.tools)")    
-    
-debugTrace("-- Exit managefiles.py --")

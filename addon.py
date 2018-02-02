@@ -24,7 +24,10 @@ import xbmcplugin
 import xbmcgui
 import os
 from libs.utility import debugTrace, errorTrace, infoTrace
-
+from libs.cache import clearCache
+from libs.logbox import popupKodiLog
+from libs.speedtest import speedTest
+from libs.managefiles import copyLog
 
 debugTrace("-- Entered addon.py " + sys.argv[0] + " " + sys.argv[1] + " " + sys.argv[2] + " --")
 
@@ -46,12 +49,26 @@ for token in args:
     inc = inc + 1  
 
 debugTrace("Parsed arguments to action=" + action + " params=" + params)
+
     
 def topLevel():
     # Build the top level menu with URL callbacks to this plugin
     debugTrace("Displaying the top level menu")
     url = base_url + "?settings"
     li = xbmcgui.ListItem("Add-on Settings", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
+    xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
+    if xbmc.getCondVisibility('System.HasAddon(plugin.video.covenant)') or xbmc.getCondVisibility('System.HasAddon(plugin.video.exodus)') or xbmc.getCondVisibility('System.HasAddon(plugin.video.fantastic)'):
+        url = base_url + "?clearcache"
+        li = xbmcgui.ListItem("Clear Caches", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
+        xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
+    url = base_url + "?viewlog"
+    li = xbmcgui.ListItem("View Log", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
+    xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
+    url = base_url + "?copylog"
+    li = xbmcgui.ListItem("Copy Log", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
+    xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
+    url = base_url + "?speedtest"
+    li = xbmcgui.ListItem("LAN Speed Test", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
     xbmcplugin.endOfDirectory(addon_handle)
     return
@@ -65,6 +82,19 @@ def back():
 if action == "settings" :
     debugTrace("Opening settings")
     xbmc.executebuiltin("Addon.OpenSettings(service.zomboided.tools)")    
+elif action == "clearcache" :
+    debugTrace("Clearing the cache")
+    clearCache(0)
+elif action == "viewlog" :
+    debugTrace("Displaying log")
+    popupKodiLog()
+elif action == "copylog" :
+    debugTrace("Copying log")
+    copyLog()
+elif action == "speedtest" :
+    debugTrace("Displaying log")
+    speedTest()    
 else: topLevel()
+
 
 debugTrace("-- Exit addon.py --")    

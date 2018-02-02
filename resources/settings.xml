@@ -2,13 +2,18 @@
 <settings>
     <category label="32010">
         <setting label="32011" type="lsep"/>
-        <setting label="32012" type="bool" id="stop_playback_time" default="true"/>
-        <setting label="32013" type="slider" id="stop_playback_mins" default="60" range="1,1,720" option="int"/>
-        <setting label="32014" type="bool" id="stop_playback_videos" default="true"/>
-        <setting label="32015" type="slider" id="stop_playback_count" default="10" range="3,1,100" option="int"/>
+        <setting label="32012" type="bool" id="stop_playback_duration" default="true"/>
+        <setting label="32013" type="slider" id="stop_playback_mins" visible="eq(-1,true)" default="240" range="1,1,720" option="int"/>
+        <setting label="32014" type="bool" id="stop_playback_after" default="true"/>
+        <setting label="32015" type="time" id="stop_playback_time" visible="eq(-1,true)" default="02:00"/>        
         <setting label="32016" type="lsep"/>
-        <setting label="32017" type="slider" id="detect_playlist_minimum" default="2" range="1,1,10" option="int"/>
-        <setting label="32018" type="slider" id="detect_playlist_gap" default="10" range="1,1,60" option="int"/>
+        <setting label="32012" type="bool" id="stop_playlist_time" default="true"/>
+        <setting label="32013" type="slider" id="stop_playlist_mins" visible="eq(-1,true)" default="60" range="1,1,720" option="int"/>
+        <setting label="32017" type="bool" id="stop_playlist_videos" default="true"/>
+        <setting label="32018" type="slider" id="stop_playlist_count" visible="eq(-1,true)" default="10" range="3,1,100" option="int"/>
+        <setting label="32019" type="lsep"/>
+        <setting label="32020" type="slider" id="detect_playlist_minimum" default="2" range="1,1,10" option="int"/>
+        <setting label="32021" type="slider" id="detect_playlist_gap" default="10" range="1,1,60" option="int"/>
     </category>
     <category label="32051">
         <setting label=""      type="text" id="boot_time" enable="false" visible="true" default="Last restart time is unknown"/>
@@ -23,10 +28,12 @@
         <setting label="32081" type="bool" visible="!eq(-1,false)"id="action_file_unavailable_1" default="false"/>
         <setting label="32082" type="file" visible="!eq(-2,false)" id="action_file_1" default=""/>
         <setting label="32083" type="lsep"/>
-        <setting label="32084" type="labelenum" id="action_1" lvalues="32085|32086|32087|32088|32089|32090"/>
-        <setting label="32091" type="action" option="close" visible="eq(-1,4)" action="RunScript(special://home/addons/service.zomboided.tools/clearcache.py, settings)"/>
-        <setting label="32092" type="text" id="action_command_1" enable="true" visible="eq(-2,5)" default=""/>
-        <setting label="32093" type="slider" id="action_warn_1" default="10" range="0,10,30" option="int"/>
+        <setting label="32084" type="bool" id="action_addon_enabled_1" default="false"/>
+        <setting label="32085" type="addon" id="action_addon_1" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="false" default=""/>
+        <setting label="32086" type="lsep"/>
+        <setting label="32087" type="labelenum" id="action_1" lvalues="32088|32089|32090|32091|32092|32093"/>
+        <setting label="32094" type="text" id="action_command_1" enable="true" visible="eq(-2,5)" default=""/>
+        <setting label="32095" type="slider" id="action_warn_1" default="10" range="0,10,30" option="int"/>
     </category>
     <category label="32052">
         <setting label=""      type="text" id="boot_time" enable="false" visible="true" default="Last restart time is unknown"/>
@@ -41,10 +48,12 @@
         <setting label="32081" type="bool" visible="!eq(-1,false)"id="action_file_unavailable_2" default="false"/>
         <setting label="32082" type="file" visible="!eq(-2,false)" id="action_file_2" default=""/>
         <setting label="32083" type="lsep"/>
-        <setting label="32084" type="labelenum" id="action_2" lvalues="32085|32086|32087|32088|32089|32090"/>
-        <setting label="32091" type="action" option="close" visible="eq(-1,4)" action="RunScript(special://home/addons/service.zomboided.tools/speedtest.py)"/>
-        <setting label="32092" type="text" id="action_command_2" enable="true" visible="eq(-2,5)" default=""/>
-        <setting label="32093" type="slider" id="action_warn_2" default="10" range="0,10,30" option="int"/>
+        <setting label="32084" type="bool" id="action_addon_enabled_2" default="false"/>
+        <setting label="32085" type="addon" id="action_addon_2" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="false" default=""/>
+        <setting label="32086" type="lsep"/>
+        <setting label="32087" type="labelenum" id="action_2" lvalues="32088|32089|32090|32091|32092|32093"/>
+        <setting label="32094" type="text" id="action_command_2" enable="true" visible="eq(-2,5)" default=""/>
+        <setting label="32095" type="slider" id="action_warn_2" default="10" range="0,10,30" option="int"/>
     </category>
     <category label="32053">
         <setting label=""      type="text" id="boot_time" enable="false" visible="true" default="Last restart time is unknown"/>
@@ -59,10 +68,12 @@
         <setting label="32081" type="bool" visible="!eq(-1,false)"id="action_file_unavailable_3" default="false"/>
         <setting label="32082" type="file" visible="!eq(-2,false)" id="action_file_3" default=""/>
         <setting label="32083" type="lsep"/>
-        <setting label="32084" type="labelenum" id="action_3" lvalues="32085|32086|32087|32088|32089|32090"/>
-        <setting label="32091" type="action" option="close" visible="eq(-1,4)" action="RunScript(special://home/addons/service.zomboided.tools/speedtest.py)"/>
-        <setting label="32092" type="text" id="action_command_3" enable="true" visible="eq(-2,5)" default=""/>
-        <setting label="32093" type="slider" id="action_warn_3" default="10" range="0,10,30" option="int"/>
+        <setting label="32084" type="bool" id="action_addon_enabled_3" default="false"/>
+        <setting label="32085" type="addon" id="action_addon_3" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="false" default=""/>
+        <setting label="32086" type="lsep"/>
+        <setting label="32087" type="labelenum" id="action_3" lvalues="32088|32089|32090|32091|32092|32093"/>
+        <setting label="32094" type="text" id="action_command_3" enable="true" visible="eq(-2,5)" default=""/>
+        <setting label="32095" type="slider" id="action_warn_3" default="10" range="0,10,30" option="int"/>
     </category>
     <category label="32054">
         <setting label=""      type="text" id="boot_time" enable="false" visible="true" default="Last restart time is unknown"/>
@@ -77,10 +88,12 @@
         <setting label="32081" type="bool" visible="!eq(-1,false)"id="action_file_unavailable_4" default="false"/>
         <setting label="32082" type="file" visible="!eq(-2,false)" id="action_file_4" default=""/>
         <setting label="32083" type="lsep"/>
-        <setting label="32084" type="labelenum" id="action_4" lvalues="32085|32086|32087|32088|32089|32090"/>
-        <setting label="32091" type="action" option="close" visible="eq(-1,4)" action="RunScript(special://home/addons/service.zomboided.tools/speedtest.py)"/>
-        <setting label="32092" type="text" id="action_command_4" enable="true" visible="eq(-2,5)" default=""/>
-        <setting label="32093" type="slider" id="action_warn_4" default="10" range="0,10,30" option="int"/>
+        <setting label="32084" type="bool" id="action_addon_enabled_4" default="false"/>
+        <setting label="32085" type="addon" id="action_addon_4" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="false" default=""/>
+        <setting label="32086" type="lsep"/>
+        <setting label="32087" type="labelenum" id="action_4" lvalues="32088|32089|32090|32091|32092|32093"/>
+        <setting label="32094" type="text" id="action_command_4" enable="true" visible="eq(-2,5)" default=""/>
+        <setting label="32095" type="slider" id="action_warn_4" default="10" range="0,10,30" option="int"/>
     </category>
     <category label="32055">
         <setting label=""      type="text" id="boot_time" enable="false" visible="true" default="Last restart time is unknown"/>
@@ -95,10 +108,12 @@
         <setting label="32081" type="bool" visible="!eq(-1,false)"id="action_file_unavailable_5" default="false"/>
         <setting label="32082" type="file" visible="!eq(-2,false)" id="action_file_5" default=""/>
         <setting label="32083" type="lsep"/>
-        <setting label="32084" type="labelenum" id="action_5" lvalues="32085|32086|32087|32088|32089|32090"/>
-        <setting label="32091" type="action" option="close" visible="eq(-1,4)" action="RunScript(special://home/addons/service.zomboided.tools/speedtest.py)"/>
-        <setting label="32092" type="text" id="action_command_5" enable="true" visible="eq(-2,5)" default=""/>
-        <setting label="32093" type="slider" id="action_warn_5" default="10" range="0,10,30" option="int"/>
+        <setting label="32084" type="bool" id="action_addon_enabled_5" default="false"/>
+        <setting label="32085" type="addon" id="action_addon_5" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="false" default=""/>
+        <setting label="32086" type="lsep"/>
+        <setting label="32087" type="labelenum" id="action_5" lvalues="32088|32089|32090|32091|32092|32093"/>
+        <setting label="32094" type="text" id="action_command_5" enable="true" visible="eq(-2,5)" default=""/>
+        <setting label="32095" type="slider" id="action_warn_5" default="10" range="0,10,30" option="int"/>
     </category>    
     <category label="32100">
         <setting label="32101" type="lsep"/>
@@ -106,13 +121,25 @@
         <setting label="32103" type="slider" id="sleep_max" default="60" range="15,15,120" option="int"/>
     </category>
     <category label="32300">
-        <setting label="32301" type="lsep"/>        
-        <setting label="32302" type="file" id="speed_test_source" default=""/>
-        <setting label="32303" type="action" enable="!eq(-1,)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/speedtest.py)"/>
-    </category>
-    <category label="32350">
-        <setting label="32351" type="bool" id="enable_debug" default="false"/>
-        <setting label="32352" type="action" action="RunScript(special://home/addons/service.zomboided.tools/logpopup.py, kodi)"/>
-        <setting label="32353" type="action" action="RunScript(special://home/addons/service.zomboided.tools/managefiles.py, log)"/>
+        <setting label="32301" type="lsep"/>
+        <setting label="32302" type="bool" id="enable_debug" default="false"/>
+        <setting label=""      type="lsep"/>
+        <setting label="32303" type="lsep"/>
+        <setting label="32304" type="slider" id="cache_command_delay" default="10" range="0,1,60" option="int"/>
+        <setting label="32309" type="text" enable="false" visible="System.HasAddon(plugin.video.covenant)" />
+        <setting label="32305" type="bool" id="covenant_cache" visible="System.HasAddon(plugin.video.covenant)" default="true"/>
+        <setting label="32306" type="bool" id="covenant_providers" visible="System.HasAddon(plugin.video.covenant)" default="true"/>
+        <setting label="32307" type="bool" id="covenant_tv_collection" visible="System.HasAddon(plugin.video.covenant)" default="false"/>
+        <setting label="32308" type="bool" id="covenant_movie_collection" visible="System.HasAddon(plugin.video.covenant)" default="false"/>
+        <setting label="32310" type="text" enable="false" visible="System.HasAddon(plugin.video.exodus)"/>
+        <setting label="32305" type="bool" id="exodus_cache" visible="System.HasAddon(plugin.video.exodus)" default="true"/>
+        <setting label="32306" type="bool" id="exodus_providers" visible="System.HasAddon(plugin.video.exodus)" default="true"/>
+        <setting label="32307" type="bool" id="exodus_tv_collection" visible="System.HasAddon(plugin.video.exodus)" default="false"/>
+        <setting label="32308" type="bool" id="exodus_movie_collection" visible="System.HasAddon(plugin.video.exodus)" default="false"/>
+        <setting label="32312" type="text" enable="false" visble="System.HasAddon(plugin.video.fantastic)" />
+        <setting label="32305" type="bool" id="fantastic_cache" visible="System.HasAddon(plugin.video.fantastic)" default="true"/>
+        <setting label="32306" type="bool" id="fantastic_providers" visible="System.HasAddon(plugin.video.fantastic)" default="true"/>
+        <setting label="32307" type="bool" id="fantastic_tv_collection" visible="System.HasAddon(plugin.video.fantastic)" default="false"/>
+        <setting label="32308" type="bool" id="fantastic_movie_collection" visible="System.HasAddon(plugin.video.fantastic)" default="false"/>
     </category>
 </settings>
