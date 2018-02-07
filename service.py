@@ -21,6 +21,7 @@
 import xbmc
 import xbmcgui
 import xbmcaddon
+import xbmcvfs
 import os
 import time
 import datetime
@@ -37,14 +38,12 @@ debugTrace("-- Entered service.py --")
 
 days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
-# Number of timers enabled in the settings screen
-TIMER_COUNT = 5
+# Number of actions enabled in the settings screen
+ACTION_COUNT = 5
 
 # Set the addon name for use in the dialogs
 addon = xbmcaddon.Addon()
 addon_name = addon.getAddonInfo('name')
-
-allow_updates = False
 
 # Playlist check variables
 playback_duration_check = False
@@ -57,24 +56,30 @@ playlist_max_minutes = 0
 playlist_count_check = False
 playlist_max_count = 0
 playlist_min_count = 0
+addon_check_freq = 0
+file_check_freq = 0
+refresh_check_freq = 0
 
 # Timers
 action_timer = 0
 action_timer_number = 0
+addon_timer = 0
 last_boot = 0
 playback_timer = 0
+file_timer = 0
+refresh_timer = 0
 
 # Monitor class which will get called when the settings change    
 class KodiMonitor(xbmc.Monitor):
 
     # This gets called every time a setting is changed either programmatically or via the settings dialog.
     def onSettingsChanged( self ):
-        debugTrace("Requested update to service process via settings monitor")
-        updateSettings()
+        #debugTrace("Requested update to service process via settings monitor")
+        updateSettings("onSettingsChanged", False)
 
 
 # Pick through the addon settings and translate them to variables we'll be using        
-def updateSettings():
+def updateSettings(caller, wait):
     global playback_duration_check
     global playback_duration_minutes
     global playback_time_check
@@ -87,12 +92,24 @@ def updateSettings():
     global playlist_min_count
     global action_timer
     global action_timer_number
-    global cache_timer
-    global allow_updates
+    global addon_timer
+    global addon_check_freq
+    global file_timer
+    global file_check_freq
+    global refresh_timer
+    global refresh_check_freq
     
-    if not allow_updates: return
+    if not updatesAllowed() and not wait: return
     
-    allow_updates = False
+    # Wait for 60 seconds, then carry on anyway
+    for i in range(1, 60):
+        if updatesAllowed(): break
+        xbmc.sleep(1000)
+        if i == 59: errorTrace("service.py", "updateSettings was called from " + caller + " with wait, but could not get a lock to update after 60 seconds")
+    
+    debugTrace("updateSettings called from " + caller)
+    refresh_timer = 0
+    allowUpdates(False)
     
     addon = xbmcaddon.Addon()
     
@@ -115,14 +132,15 @@ def updateSettings():
     playlist_detection_delay = int(addon.getSetting("detect_playlist_gap"))
     
     # The warning timers should be 10 second increments so fix if it's not
-    for i in range(1, (TIMER_COUNT + 1)):
+    for i in range(1, (ACTION_COUNT + 1)):
         fixWarnTime("action_warn_" + str(i))
     addon = xbmcaddon.Addon()
         
-    # Refresh the reboot timer settings
+    # Refresh the action settings
     action_timer = 0
     action_timer_number = 0
-    for i in range(0, TIMER_COUNT):
+    for i in range(0, ACTION_COUNT):
+        # Check the timer settings
         j = str(i+1)
         next_action_timer = parseTimer("Action Timer " + j,
                                        addon.getSetting("action_timer_freq_" + j),
@@ -130,17 +148,41 @@ def updateSettings():
                                        addon.getSetting("action_day_" + j),
                                        addon.getSetting("action_date_" + j),
                                        addon.getSetting("action_period_" + j))
-                                      
+        # Determine if this time is the nearest one and use it if it is
         if (action_timer == 0 and not next_action_timer == 0) or (next_action_timer > 0 and next_action_timer < action_timer):
             action_timer_number = i + 1
             action_timer = next_action_timer
-           
-    # FIXME read in the addons here and get the current version
+            
+        if addon.getSetting("action_addon_enabled_" + j) == "true":
+            selected = addon.getSetting("action_addon_" + j)
+            last = addon.getSetting("addon_name_" + j)
+            if not selected == last: addon_timer = addon_check_freq + 1
+        
+    # Frequency add-ons and files are checked        
+    addon_check_freq = int(addon.getSetting("addon_check"))*60
+    file_check_freq = int(addon.getSetting("file_check"))*60
+    refresh_check_freq = int(addon.getSetting("refresh_check"))*60
     
-    # FIXME read in the files here
-           
-    debugTrace("Action timer " + str(action_timer_number) + " is the first timer with " + str(action_timer))
-    allow_updates = True                         
+    if not action_timer_number == 0:
+        debugTrace("Action timer " + str(action_timer_number) + " is the first timer with " + str(action_timer))
+    else:
+        debugTrace("No action timers are set")
+    allowUpdates(True)
+
+
+def allowUpdates(bool):
+    xbmc.sleep(1000)
+    if bool:
+        xbmcgui.Window(10000).setProperty("Zomboided_Tools_Settings_Updates", "True")
+    else: 
+        xbmcgui.Window(10000).setProperty("Zomboided_Tools_Settings_Updates", "False")
+    xbmc.sleep(1000)
+    return 
+    
+    
+def updatesAllowed():
+    if xbmcgui.Window(10000).getProperty("Zomboided_Tools_Settings_Updates") == "False": return False
+    return True
 
     
 # Fix the warning timer settings if necessary                             
@@ -245,7 +287,7 @@ class KodiPlayer(xbmc.Player):
         
         if not self.playlist_playing:
             # If a playlist isn't active, this is the first video in a playlist (or otherwise)
-            updateSettings()
+            updateSettings("onPlayBackStarted", True)
             self.playlist_playing = True
             self.playlist_max = t + (playlist_max_minutes * 60)
             self.playlist_count = 0
@@ -288,35 +330,146 @@ if __name__ == '__main__':
     infoTrace("service.py", "Starting Zomboided Tools service, version is " + addon.getAddonInfo("version"))
     debugTrace("Kodi build is " + xbmc.getInfoLabel('System.BuildVersion'))
 
-    # Set up the general monitor class
     monitor = KodiMonitor()
-    # Set up a player monitor class
-    playerMonitor = KodiPlayer()
+    player = KodiPlayer()
 
     # Initialise some variables we'll be using repeatedly    
     addon = xbmcaddon.Addon()
+    
+    allowUpdates(False)
     addon.setSetting("boot_time", "Boot time : " + time.strftime('%Y-%m-%d %H:%M:%S'))
+    allowUpdates(True)
+    
     last_boot = now()
     
-    allow_updates = True
-    updateSettings()
+    updateSettings("main initialisation", True)
     
     # Initialise a bunch of variables
     delay = 60
-    
+    file_timer = 0
+    action_number_f = 0
+    addon_timer = 0
+    action_number_a = 0
+
+    do_it = False    
+    action_if_playing = False
+    action = ""
+    warn = -1
+    action_number = 0
+            
     while not monitor.abortRequested():
     
         t = now()
 
         if playback_timer > 0 and t > playback_timer:
-            xbmc.Player().stop()
+            player.stop()
             infoTrace("service.py", "Stopping play back.  Duration is " + str(playback_duration_minutes) + " minutes, time limit is " + str(playback_time))
-            
-        if action_timer > 0 and t > action_timer:
-            action = addon.getSetting("action_" + str(action_timer_number))
-            warn = int(addon.getSetting("action_warn_" + str(action_timer_number)))
+
+        # Timer Checking
+        if action_timer > 0 and t > action_timer and not do_it:
             do_it = True
-            if warn > 0:
+            action_number = str(action_timer_number)
+            action = addon.getSetting("action_" + action_number)
+            warn = int(addon.getSetting("action_warn_" + action_number))
+            action_if_playing = False
+            if addon.getSetting("action_if_playing_" + action_number) == "true": action_if_playing = True
+            infoTrace("service.py", "Timer " + str(action_timer) + " has triggered on " + str(t) + " for action #" + action_number + ".")
+            
+        # File Checking
+        if not player.isPlaying() and file_timer > file_check_freq and not do_it:
+            allowUpdates(False)
+            action_number_f += 1
+            if action_number_f > ACTION_COUNT:
+                action_number_f = 1
+            action_number = str(action_number_f)
+            debugTrace("Checking file for action #" + action_number)
+            if addon.getSetting("action_file_enabled_" + action_number) == "true":
+                unavailable = False
+                if addon.getSetting("action_file_unavailable_" + action_number) == "true": unavailable = True
+                file = addon.getSetting("action_file_" + action_number)
+                last_file_time = addon.getSetting("file_time_" + action_number)
+                last_reboot = addon.getSetting("file_reboot_" + action_number)
+                file_error = False
+                if not file == "":
+                    if xbmcvfs.exists(file):
+                        try:
+                            stats = xbmcvfs.Stat(file)
+                            file_time = str(stats.st_mtime())
+                            addon.setSetting("file_reboot_" + action_number, "")
+                            debugTrace("Checking file " + file + " " + file_time + " with " + last_file_time)
+                            if last_file_time == "":
+                                addon.setSetting("file_time_" + action_number, file_time)
+                            elif not last_file_time == file_time:
+                                addon.setSetting("file_time_" + action_number, file_time)
+                                do_it = True
+                                infoTrace("service.py", "File " + file + " had time stamp " + last_file_time + " and now has " + file_time + ", triggering action #" + action_number + ".")
+                        except Exception as e:                        
+                            errorTrace("service.py", "Couldn't get the time stamp of " + file + " for action #" + action_number + ", will try again later.")
+                            errorTrace("service.py", str(e))
+                            file_error = True
+                    else:
+                        infoTrace("service.py", "File " + file + " does not exist for action #" + action_number + ", will try again later.")
+                        file_error = True
+                    # Take action if file unavailable after 2 tries, and never take the action more than once (avoid reboot loops, etc)
+                    if file_error and unavailable:
+                        if last_reboot == "" : 
+                            addon.setSetting("file_reboot_" + action_number, "pending")
+                        else :
+                            do_it = True
+                            addon.setSetting("file_reboot_" + action_number, "true")
+                            infoTrace("service.py", "File " + file + " still cannot be found or accessed and is triggering action #" + action_number + ".")
+                else:
+                    if not last_file_time == "":
+                        addon.setSetting("file_time_" + action_number, "")
+                    if not last_reboot == "":
+                        addon.setSetting("file_reboot_" + action_number, "")
+                addon = xbmcaddon.Addon()
+                if do_it:
+                    action = addon.getSetting("action_" + action_number)
+                    warn = int(addon.getSetting("action_warn_" + action_number))
+                    action_if_playing = True
+            if action_number_f == ACTION_COUNT: file_timer = 0
+            allowUpdates(True)
+            
+        # Add-on Checking
+        if not player.isPlaying() and addon_timer > addon_check_freq and not do_it:            
+            allowUpdates(False)
+            action_number_a += 1
+            if action_number_a > ACTION_COUNT:
+                action_number_a = 1
+            action_number = str(action_number_a)
+            debugTrace("Checking add-on for action # " + action_number)
+            if addon.getSetting("action_addon_enabled_" + action_number) == "true":
+                selected = addon.getSetting("action_addon_" + action_number)
+                last = addon.getSetting("addon_name_" + action_number)
+                try:
+                    curr_version = xbmcaddon.Addon(selected).getAddonInfo("version")
+                    debugTrace("Starting to check add-on " + selected + ", currently at version " + curr_version)
+                    if not selected == last:                    
+                        addon.setSetting("addon_name_" + action_number, selected)
+                        addon.setSetting("addon_version_" + action_number, curr_version)
+                    else:
+                        last_version = addon.getSetting("addon_version_" + action_number)
+                        if not last_version == curr_version:
+                            addon.setSetting("addon_version_" + action_number, curr_version)
+                            do_it = True
+                            action = addon.getSetting("action_" + action_number)
+                            warn = int(addon.getSetting("action_warn_" + action_number))
+                            action_if_playing = True
+                            infoTrace("service.py", "Add-on " + selected + " has been updated from " + last_version + " to " + curr_version + " for action #" + action_number + ".")
+                except Exception as e:
+                    infoTrace("service.py", "Add-on " + selected + ", is not available to check for action #" + action_number)
+            else:
+                if not addon.getSetting("addon_name_" + action_number) == "":
+                    addon.setSetting("addon_name_" + action_number, "")
+                    addon.setSetting("addon_version_" + action_number, "")
+            if action_number_a == ACTION_COUNT: addon_timer = 0
+            allowUpdates(True)
+            addon = xbmcaddon.Addon()
+        
+        # Take any outstanding action
+        if do_it and (not player.isPlaying() or (player.isPlaying() and action_if_playing)):
+            if warn > 0 and not action == "None":
                 msg = "About to " + action + ", click cancel to abort."
                 if action == "Clear Cache":
                     msg = msg + "\n[COLOR red][B]Avoid using any input device until cache clearance is complete.[/B][/COLOR]"
@@ -335,27 +488,35 @@ if __name__ == '__main__':
                     xbmc.sleep(1000)
                 dialog.close()
             if do_it:
-                infoTrace("service.py", "Trigger fired, performing a " + action)
-                if action == "Clear Cache":
+                infoTrace("service.py", "Trigger fired for action #" + action_number + ", performing a " + action)
+                xbmc.sleep(1000)
+                if action == "None":
+                    xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but no action is defined.")
+                elif action == "Clear Cache":
                     clearCache(10000)
                 elif action == "Run Command":
-                    # FIXME
-                    a = 1
+                    xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but run command is not yet supported.")
                 else:
-                    infoTrace("service.py", "Trigger fired, performing a " + action)
-                    xbmc.executebuiltin(action)
+                    xbmc.executebuiltin(action)                    
             else:
                 infoTrace("service.py", action + " aborted by user")
                 
             # Get the next timer setting
-            updateSettings()
+            updateSettings("main after action", True)
+            
+            do_it = False
+            action_if_playing = False
         
-        # FIXME
-        # if not playing, check the versions and the files
-
+        # If the settings haven't been updated in a while, force one anyway because of timing windows
+        if not player.isPlaying() and refresh_timer > refresh_check_freq:
+            updateSettings("main refresh timer", True)
         
-        # Take a nap before checking timers again
+        # Have a nap before checking timers again
         if monitor.waitForAbort(delay):
             # Abort was requested while waiting. We should exit
             infoTrace("service.py", "Abort received, shutting down service")
             break
+        
+        file_timer = file_timer + delay
+        addon_timer = addon_timer + delay
+        refresh_timer = refresh_timer + delay

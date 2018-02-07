@@ -47,7 +47,8 @@ def clearCache(window):
     progDiag.update(0)
     
     percent = 0
-    percentJump = (100/len(caches))/4
+    percent_inc = (100/len(caches))/4   
+    # number of addons to clear divided by number of operations in each addon
     
     # Change the window and stop any media
     if not window == 0:
@@ -64,7 +65,7 @@ def clearCache(window):
         tname = name.title()       
         try:
             # Clear the cache
-            percent = percent + percentJump      
+            percent = percent + percent_inc      
             if addon.getSetting(name + "_cache") == "true":
                 progDiag.update(percent, "Clearing " + tname + " cache")
                 infoTrace("cache.py", "Clearing " + tname + " cache")
@@ -83,7 +84,7 @@ def clearCache(window):
                 xbmc.sleep(1000)
 
             # Clear the providers                
-            percent = percent + percentJump       
+            percent = percent + percent_inc       
             if addon.getSetting(name + "_providers") == "true":
                 progDiag.update(percent, "Clearing " + tname + " providers")
                 infoTrace("cache.py", "Clearing " + tname + " providers")
@@ -102,7 +103,7 @@ def clearCache(window):
                 xbmc.sleep(1000)
                 
             # Refresh the TV collection list
-            percent = percent + percentJump     
+            percent = percent + percent_inc     
             if addon.getSetting(name + "_tv_collection") == "true":
                 progDiag.update(percent, "Refreshing " + tname + " Trakt TV collection") 
                 infoTrace("cache.py", "Refreshing " + tname + " Trakt TV collection")                
@@ -125,7 +126,7 @@ def clearCache(window):
                 xbmc.sleep(1000)
                 
             # Refresh the movie collection list
-            percent = percent + percentJump
+            percent = percent + percent_inc
             if addon.getSetting(name + "_movie_collection") == "true":
                 progDiag.update(percent, "Refreshing " + tname + " Trakt movie collection")
                 infoTrace("cache.py", "Refreshing " + tname + " Trakt TV collection")                
