@@ -356,7 +356,7 @@ if __name__ == '__main__':
     addon = xbmcaddon.Addon()
     
     allowUpdates(False)
-    addon.setSetting("boot_time", "Boot time : " + time.strftime('%Y-%m-%d %H:%M:%S'))
+    addon.setSetting("boot_time", time.strftime('%Y-%m-%d %H:%M:%S'))
     allowUpdates(True)
     
     last_boot = now()
@@ -508,7 +508,6 @@ if __name__ == '__main__':
                 dialog.close()
             if do_it:
                 infoTrace("service.py", "Trigger fired for action #" + action_number + ", performing a " + action)
-                xbmc.sleep(1000)
                 if action == "None":
                     xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but no action is defined.")
                 elif action == "Clear Add-on Caches":

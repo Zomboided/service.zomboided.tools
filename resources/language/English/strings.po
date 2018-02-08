@@ -323,7 +323,7 @@ msgid "Enable debug for just Zomboided Tools"
 msgstr ""
 
 msgctxt "#32303"
-msgid "System boot"
+msgid "Service start time"
 msgstr ""
 
 msgctxt "#32304"
