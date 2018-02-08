@@ -18,8 +18,12 @@
     <category label="32051">
         <setting label="32061" type="lsep"/>
         <setting label="32062" type="labelenum" id="action_1" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072"/>
-        <setting label="32073" type="text" id="action_command_1" enable="true" visible="eq(-1,9)" default=""/>
-        <setting label="32074" type="slider" id="action_warn_1" default="10" range="0,10,30" option="int"/>
+        <setting label="32073" type="text" enable="false" visible="eq(-1,5)"/>
+        <setting label="32074" type="text" enable="false" visible="eq(-2,6)"/>
+        <setting label="32075" type="text" enable="false" visible="eq(-3,7)|eq(-3,8)"/>
+        <setting label="32076" type="text" id="action_command_1" enable="true" visible="eq(-4,9)" default=""/>
+        
+        <setting label="32077" type="slider" id="action_warn_1" default="10" range="0,10,30" option="int"/>
         <setting label=""      type="lsep"/>
         <setting label="32081" type="lsep"/>
         <setting label="32082" type="labelenum" id="action_timer_freq_1" lvalues="32083|32084|32085|32086|32087"/>

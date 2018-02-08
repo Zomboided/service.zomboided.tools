@@ -139,10 +139,22 @@ msgid "Run Command"
 msgstr ""
 
 msgctxt "#32073"
-msgid "Command"
+msgid "This option only works with selected video add-ons"
 msgstr ""
 
 msgctxt "#32074"
+msgid "This option only works with Emby"
+msgstr ""
+
+msgctxt "#32075"
+msgid "This option only works with VPN Manager"
+msgstr ""
+
+msgctxt "#32076"
+msgid "Command"
+msgstr ""
+
+msgctxt "#32077"
 msgid "Warning before action (seconds, 0 is off)"
 msgstr ""
 
