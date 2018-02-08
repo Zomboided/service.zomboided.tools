@@ -1,3 +1,6 @@
+v0.0.4
+- VPN support
+
 v0.0.3
 - Add-on and file change triggers
 
