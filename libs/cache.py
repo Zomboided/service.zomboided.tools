@@ -25,6 +25,7 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 from libs.utility import debugTrace, errorTrace, infoTrace, newPrint
+from libs.vpnapi import VPNAPI
 
 def clearCache(window):
     addon = xbmcaddon.Addon("service.zomboided.tools")
@@ -40,15 +41,31 @@ def clearCache(window):
     except:
         commDelay = 5000
 
+    api = None
+    if xbmc.getCondVisibility("System.HasAddon(service.vpn.manager)"):
+        try:
+            api = VPNAPI()
+        except Exception as e:
+            errorTrace("service.py", "Couldn't connect to the VPN Mgr API")
+            errorTrace("service.py", str(e))
+            api = None        
+        
     cleared = 0
-
+        
     progDiag = xbmcgui.DialogProgressBG()
     progDiag.create("Clearing Caches", "[B]Avoid any input![/B]")
     progDiag.update(0)
+    if not api == None: 
+        api.pause()
+    xbmc.sleep(commDelay)
     
     percent = 0
     percent_inc = (100/len(caches))/4   
     # number of addons to clear divided by number of operations in each addon
+
+    if not api == None:
+        progDiag.update(percent, "Pausing VPN filtering")
+        xbmc.sleep(commDelay)
     
     # Change the window and stop any media
     if not window == 0:
@@ -146,11 +163,15 @@ def clearCache(window):
                 cleared += 1
             else:
                 progDiag.update(percent, "Skipping " + tname + " Trakt movie collection")
-                xbmc.sleep(1000)
-                
+                xbmc.sleep(1000)        
         except Exception as e:
             errorTrace("cache.py", "Problem clearing " + tname + " caches")
             errorTrace("cache.py", str(e))    
+
+    if not api == None: 
+        progDiag.update(percent, "Restarting VPN filtering")
+        api.restart()
+        xbmc.sleep(commDelay)
 
     if cleared > 0:
         progDiag.update(100, "Finished clearing selected caches", " ")

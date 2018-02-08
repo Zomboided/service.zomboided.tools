@@ -119,18 +119,30 @@ msgid "Sleep"
 msgstr ""
 
 msgctxt "#32068"
-msgid "Clear Cache"
+msgid "Clear Add-on Caches"
 msgstr ""
 
 msgctxt "#32069"
-msgid "Run Command"
+msgid "Reset Emby Database"
 msgstr ""
 
 msgctxt "#32070"
-msgid "Command"
+msgid "Disconnect VPN"
 msgstr ""
 
 msgctxt "#32071"
+msgid "Reconnect VPN"
+msgstr ""
+
+msgctxt "#32072"
+msgid "Run Command"
+msgstr ""
+
+msgctxt "#32073"
+msgid "Command"
+msgstr ""
+
+msgctxt "#32074"
 msgid "Warning before action (seconds, 0 is off)"
 msgstr ""
 

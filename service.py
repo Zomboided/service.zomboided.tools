@@ -28,12 +28,22 @@ import datetime
 import calendar
 from libs.utility import setDebug, debugTrace, errorTrace, infoTrace, newPrint, now
 from libs.cache import clearCache
+from libs.vpnapi import VPNAPI
 
-setDebug(True)
+setDebug(False)
 
 # This is here to avoid a known Python locking bug https://bugs.python.org/issue7980
-datetime.datetime.strptime('2018-01-01', '%Y-%m-%d')
-
+i = 0
+while (i < 10):
+    try:
+        datetime.datetime.strptime('2018-01-01', '%Y-%m-%d')
+        break
+    except Exceptoin as e:
+        i += 1
+        errorTrace("service.py", "Couldn't call strptime cleanly during initialisation, call " + str(i))
+        errorTrace("service.py", str(e))
+        xbmc.sleep(5000)
+      
 debugTrace("-- Entered service.py --")
 
 days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -333,6 +343,15 @@ if __name__ == '__main__':
     monitor = KodiMonitor()
     player = KodiPlayer()
 
+    api = None
+    if xbmc.getCondVisibility("System.HasAddon(service.vpn.manager)"):
+        try:
+            api = VPNAPI()
+        except Exception as e:
+            errorTrace("service.py", "Couldn't connect to the VPN Mgr API")
+            errorTrace("service.py", str(e))
+            api = None
+    
     # Initialise some variables we'll be using repeatedly    
     addon = xbmcaddon.Addon()
     
@@ -492,10 +511,22 @@ if __name__ == '__main__':
                 xbmc.sleep(1000)
                 if action == "None":
                     xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but no action is defined.")
-                elif action == "Clear Cache":
+                elif action == "Clear Add-on Caches":
                     clearCache(10000)
+                elif action == "Reset Emby Database":
+                    xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but 'Reset Emby Database' is not yet supported.")
+                elif action == "Disconnect VPN":
+                    if api is not None:
+                        result = api.disconnect(False)
+                    else:
+                        xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but VPN Manager is not available.")
+                elif action == "Reconnect VPN":
+                    if api is not None:
+                        result = api.reconnect(True)
+                    else:
+                        xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but VPN Manager is not available.")
                 elif action == "Run Command":
-                    xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but run command is not yet supported.")
+                    xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but 'Run Command' is not yet supported.")
                 else:
                     xbmc.executebuiltin(action)                    
             else:
