@@ -1,3 +1,7 @@
+v0.0.5
+- Setings bug fixes
+- Trakt ID and secret modifications
+
 v0.0.4
 - VPN support
 

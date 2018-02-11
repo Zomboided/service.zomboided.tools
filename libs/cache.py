@@ -55,6 +55,7 @@ def clearCache(window):
     progDiag = xbmcgui.DialogProgressBG()
     progDiag.create("Clearing Caches", "[B]Avoid any input![/B]")
     progDiag.update(0)
+    # Pause the VPN filtering here so there's ample time for the filtering to stop
     if not api == None: 
         api.pause()
     xbmc.sleep(commDelay)
@@ -64,6 +65,7 @@ def clearCache(window):
     # number of addons to clear divided by number of operations in each addon
 
     if not api == None:
+        # This is just an info message, the VPN was paused earlier
         progDiag.update(percent, "Pausing VPN filtering")
         xbmc.sleep(commDelay)
     
@@ -168,6 +170,7 @@ def clearCache(window):
             errorTrace("cache.py", "Problem clearing " + tname + " caches")
             errorTrace("cache.py", str(e))    
 
+    # Restart the filtering
     if not api == None: 
         progDiag.update(percent, "Restarting VPN filtering")
         api.restart()
@@ -180,3 +183,4 @@ def clearCache(window):
     xbmc.sleep(2000)        
             
     progDiag.close() 
+    xbmc.sleep(1000)

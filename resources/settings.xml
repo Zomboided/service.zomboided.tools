@@ -17,12 +17,12 @@
     </category>
     <category label="32051">
         <setting label="32061" type="lsep"/>
-        <setting label="32062" type="labelenum" id="action_1" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072"/>
-        <setting label="32073" type="text" enable="false" visible="eq(-1,5)"/>
-        <setting label="32074" type="text" enable="false" visible="eq(-2,6)"/>
-        <setting label="32075" type="text" enable="false" visible="eq(-3,7)|eq(-3,8)"/>
-        <setting label="32076" type="text" id="action_command_1" enable="true" visible="eq(-4,9)" default=""/>        
-        <setting label="32077" type="slider" id="action_warn_1" default="10" range="0,10,30" option="int"/>
+        <setting label="32062" type="labelenum" id="action_1" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072|32073"/>
+        <setting label="32074" type="text" enable="false" visible="eq(-1,5)|eq(-1,6)"/>
+        <setting label="32075" type="text" enable="false" visible="eq(-2,7)"/>
+        <setting label="32076" type="text" enable="false" visible="eq(-3,8)|eq(-3,9)"/> 
+        <setting label="32077" type="text" id="action_command_1" enable="true" visible="eq(-4,10)" default=""/>        
+        <setting label="32078" type="slider" id="action_warn_1" default="10" range="0,10,30" option="int"/>
         <setting label=""      type="lsep"/>
         <setting label="32081" type="lsep"/>
         <setting label="32082" type="labelenum" id="action_timer_freq_1" lvalues="32083|32084|32085|32086|32087"/>
@@ -45,12 +45,12 @@
     </category>
     <category label="32052">
         <setting label="32061" type="lsep"/>
-        <setting label="32062" type="labelenum" id="action_2" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072"/>
-        <setting label="32073" type="text" enable="false" visible="eq(-1,5)"/>
-        <setting label="32074" type="text" enable="false" visible="eq(-2,6)"/>
-        <setting label="32075" type="text" enable="false" visible="eq(-3,7)|eq(-3,8)"/>
-        <setting label="32076" type="text" id="action_command_2" enable="true" visible="eq(-4,9)" default=""/>
-        <setting label="32071" type="slider" id="action_warn_2" default="10" range="0,10,30" option="int"/>
+        <setting label="32062" type="labelenum" id="action_2" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072|32073"/>
+        <setting label="32074" type="text" enable="false" visible="eq(-1,5)|eq(-1,6)"/>
+        <setting label="32075" type="text" enable="false" visible="eq(-2,7)"/>
+        <setting label="32076" type="text" enable="false" visible="eq(-3,8)|eq(-3,9)"/>
+        <setting label="32077" type="text" id="action_command_2" enable="true" visible="eq(-4,10)" default=""/>
+        <setting label="32078" type="slider" id="action_warn_2" default="10" range="0,10,30" option="int"/>
         <setting label=""      type="lsep"/>
         <setting label="32081" type="lsep"/>
         <setting label="32082" type="labelenum" id="action_timer_freq_2" lvalues="32083|32084|32085|32086|32087"/>
@@ -73,12 +73,12 @@
     </category>
     <category label="32053">
         <setting label="32061" type="lsep"/>
-        <setting label="32062" type="labelenum" id="action_3" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072"/>
-        <setting label="32073" type="text" enable="false" visible="eq(-1,5)"/>
-        <setting label="32074" type="text" enable="false" visible="eq(-2,6)"/>
-        <setting label="32075" type="text" enable="false" visible="eq(-3,7)|eq(-3,8)"/>
-        <setting label="32076" type="text" id="action_command_3" enable="true" visible="eq(-4,9)" default=""/>
-        <setting label="32071" type="slider" id="action_warn_3" default="10" range="0,10,30" option="int"/>
+        <setting label="32062" type="labelenum" id="action_3" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072|32073"/>
+        <setting label="32074" type="text" enable="false" visible="eq(-1,5)|eq(-1,6)"/>
+        <setting label="32075" type="text" enable="false" visible="eq(-2,7)"/>
+        <setting label="32076" type="text" enable="false" visible="eq(-3,8)|eq(-3,9)"/>
+        <setting label="32077" type="text" id="action_command_3" enable="true" visible="eq(-4,10)" default=""/>
+        <setting label="32078" type="slider" id="action_warn_3" default="10" range="0,10,30" option="int"/>
         <setting label=""      type="lsep"/>
         <setting label="32081" type="lsep"/>
         <setting label="32082" type="labelenum" id="action_timer_freq_3" lvalues="32083|32084|32085|32086|32087"/>
@@ -101,12 +101,12 @@
     </category>
     <category label="32054">
         <setting label="32061" type="lsep"/>
-        <setting label="32062" type="labelenum" id="action_4" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072"/>
-        <setting label="32073" type="text" enable="false" visible="eq(-1,5)"/>
-        <setting label="32074" type="text" enable="false" visible="eq(-2,6)"/>
-        <setting label="32075" type="text" enable="false" visible="eq(-3,7)|eq(-3,8)"/>
-        <setting label="32076" type="text" id="action_command_4" enable="true" visible="eq(-4,9)" default=""/>
-        <setting label="32071" type="slider" id="action_warn_4" default="10" range="0,10,30" option="int"/>
+        <setting label="32062" type="labelenum" id="action_4" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072|32073"/>
+        <setting label="32074" type="text" enable="false" visible="eq(-1,5)|eq(-1,6)"/>
+        <setting label="32075" type="text" enable="false" visible="eq(-2,7)"/>
+        <setting label="32076" type="text" enable="false" visible="eq(-3,8)|eq(-3,9)"/>
+        <setting label="32077" type="text" id="action_command_4" enable="true" visible="eq(-4,10)" default=""/>
+        <setting label="32078" type="slider" id="action_warn_4" default="10" range="0,10,30" option="int"/>
         <setting label=""      type="lsep"/>
         <setting label="32081" type="lsep"/>
         <setting label="32082" type="labelenum" id="action_timer_freq_4" lvalues="32083|32084|32085|32086|32087"/>
@@ -129,12 +129,12 @@
     </category>
     <category label="32055">
         <setting label="32061" type="lsep"/>
-        <setting label="32062" type="labelenum" id="action_5" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072"/>
-        <setting label="32073" type="text" enable="false" visible="eq(-1,5)"/>
-        <setting label="32074" type="text" enable="false" visible="eq(-2,6)"/>
-        <setting label="32075" type="text" enable="false" visible="eq(-3,7)|eq(-3,8)"/>
-        <setting label="32076" type="text" id="action_command_5" enable="true" visible="eq(-4,9)" default=""/>
-        <setting label="32071" type="slider" id="action_warn_5" default="10" range="0,10,30" option="int"/>
+        <setting label="32062" type="labelenum" id="action_5" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072|32073"/>
+        <setting label="32074" type="text" enable="false" visible="eq(-1,5)|eq(-1,6)"/>
+        <setting label="32075" type="text" enable="false" visible="eq(-2,7)"/>
+        <setting label="32076" type="text" enable="false" visible="eq(-3,8)|eq(-3,9)"/>
+        <setting label="32077" type="text" id="action_command_5" enable="true" visible="eq(-4,10)" default=""/>
+        <setting label="32078" type="slider" id="action_warn_5" default="10" range="0,10,30" option="int"/>
         <setting label=""      type="lsep"/>
         <setting label="32081" type="lsep"/>
         <setting label="32082" type="labelenum" id="action_timer_freq_5" lvalues="32083|32084|32085|32086|32087"/>
@@ -171,21 +171,26 @@
         <setting label="32307" type="slider" id="refresh_check" default="60" range="60,10,1440" option="int"/>        
         <setting label=""      type="lsep"/>
         <setting label="32308" type="lsep"/>
-        <setting label="32309" type="slider" id="cache_command_delay" default="10" range="0,1,60" option="int"/>
-        <setting label="32314" type="text" enable="false" visible="System.HasAddon(plugin.video.covenant)" />
-        <setting label="32310" type="bool" id="covenant_cache" visible="System.HasAddon(plugin.video.covenant)" default="true"/>
-        <setting label="32311" type="bool" id="covenant_providers" visible="System.HasAddon(plugin.video.covenant)" default="true"/>
-        <setting label="32312" type="bool" id="covenant_tv_collection" visible="System.HasAddon(plugin.video.covenant)" default="false"/>
-        <setting label="32313" type="bool" id="covenant_movie_collection" visible="System.HasAddon(plugin.video.covenant)" default="false"/>
-        <setting label="32314" type="text" enable="false" visible="System.HasAddon(plugin.video.exodus)"/>
-        <setting label="32310" type="bool" id="exodus_cache" visible="System.HasAddon(plugin.video.exodus)" default="true"/>
-        <setting label="32311" type="bool" id="exodus_providers" visible="System.HasAddon(plugin.video.exodus)" default="true"/>
-        <setting label="32312" type="bool" id="exodus_tv_collection" visible="System.HasAddon(plugin.video.exodus)" default="false"/>
-        <setting label="32313" type="bool" id="exodus_movie_collection" visible="System.HasAddon(plugin.video.exodus)" default="false"/>
-        <setting label="32316" type="text" enable="false" visble="System.HasAddon(plugin.video.fantastic)" />
-        <setting label="32310" type="bool" id="fantastic_cache" visible="System.HasAddon(plugin.video.fantastic)" default="true"/>
-        <setting label="32311" type="bool" id="fantastic_providers" visible="System.HasAddon(plugin.video.fantastic)" default="true"/>
-        <setting label="32312" type="bool" id="fantastic_tv_collection" visible="System.HasAddon(plugin.video.fantastic)" default="false"/>
-        <setting label="32313" type="bool" id="fantastic_movie_collection" visible="System.HasAddon(plugin.video.fantastic)" default="false"/>
+        <setting label="32309" type="text" id="trakt_id" enable="true" visible="true" default=""/>
+        <setting label="32310" type="text" id="trakt_secret" enable="true" visible="true" default=""/>
+        <setting label=""      type="lsep"/>
+        <setting label="32311" type="lsep"/>
+        <setting label="32312" type="slider" id="cache_command_delay" default="10" range="0,1,60" option="int"/>
+        <setting label="32317" type="text" enable="false" visible="System.HasAddon(plugin.video.covenant)" />
+        <setting label="32313" type="bool" id="covenant_cache" visible="System.HasAddon(plugin.video.covenant)" default="true"/>
+        <setting label="32314" type="bool" id="covenant_providers" visible="System.HasAddon(plugin.video.covenant)" default="true"/>
+        <setting label="32315" type="bool" id="covenant_tv_collection" visible="System.HasAddon(plugin.video.covenant)" default="false"/>
+        <setting label="32316" type="bool" id="covenant_movie_collection" visible="System.HasAddon(plugin.video.covenant)" default="false"/>
+        <setting label="32318" type="text" enable="false" visible="System.HasAddon(plugin.video.exodus)"/>
+        <setting label="32313" type="bool" id="exodus_cache" visible="System.HasAddon(plugin.video.exodus)" default="true"/>
+        <setting label="32314" type="bool" id="exodus_providers" visible="System.HasAddon(plugin.video.exodus)" default="true"/>
+        <setting label="32315" type="bool" id="exodus_tv_collection" visible="System.HasAddon(plugin.video.exodus)" default="false"/>
+        <setting label="32316" type="bool" id="exodus_movie_collection" visible="System.HasAddon(plugin.video.exodus)" default="false"/>
+        <setting label="32319" type="text" enable="false" visble="System.HasAddon(plugin.video.fantastic)" />
+        <setting label="32313" type="bool" id="fantastic_cache" visible="System.HasAddon(plugin.video.fantastic)" default="true"/>
+        <setting label="32314" type="bool" id="fantastic_providers" visible="System.HasAddon(plugin.video.fantastic)" default="true"/>
+        <setting label="32315" type="bool" id="fantastic_tv_collection" visible="System.HasAddon(plugin.video.fantastic)" default="false"/>
+        <setting label="32316" type="bool" id="fantastic_movie_collection" visible="System.HasAddon(plugin.video.fantastic)" default="false"/>
+        
     </category>
 </settings>

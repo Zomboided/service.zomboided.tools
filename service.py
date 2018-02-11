@@ -28,6 +28,7 @@ import datetime
 import calendar
 from libs.utility import setDebug, debugTrace, errorTrace, infoTrace, newPrint, now
 from libs.cache import clearCache
+from libs.trakt import updateTrakt, revertTrakt
 from libs.vpnapi import VPNAPI
 
 setDebug(False)
@@ -38,7 +39,7 @@ while (i < 10):
     try:
         datetime.datetime.strptime('2018-01-01', '%Y-%m-%d')
         break
-    except Exceptoin as e:
+    except Exception as e:
         i += 1
         errorTrace("service.py", "Couldn't call strptime cleanly during initialisation, call " + str(i))
         errorTrace("service.py", str(e))
@@ -512,6 +513,10 @@ if __name__ == '__main__':
                     xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but no action is defined.")
                 elif action == "Clear Add-on Caches":
                     clearCache(10000)
+                elif action == "Modify Trakt Tokens":
+                    updateTrakt(10000, False)
+                elif action == "Modify Trakt Tokens":
+                    revertTrakt(10000, False)
                 elif action == "Reset Emby Database":
                     xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but 'Reset Emby Database' is not yet supported.")
                 elif action == "Disconnect VPN":
