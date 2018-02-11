@@ -30,6 +30,7 @@ from libs.utility import debugTrace, errorTrace, infoTrace, newPrint
 def getAddons():
     addons = []
     files = []
+    list = ""
     if xbmc.getCondVisibility("System.HasAddon(plugin.video.covenant)"): 
         addons.append("Covenant")
         files.append(xbmc.translatePath("special://home/addons/script.module.covenant/lib/resources/lib/modules/trakt.py"))
@@ -39,22 +40,20 @@ def getAddons():
     if xbmc.getCondVisibility("System.HasAddon(plugin.video.fantastic)"):
         addons.append("Fantastic")
         files.append(xbmc.translatePath("special://home/addons/script.module.fantastic/lib/resources/lib/modules/trakt.py"))
-    return addons, files
-
-
-def updateTrakt(window, dialogs):
-    addon = xbmcaddon.Addon("service.zomboided.tools")
-    addon_name = addon.getAddonInfo("name")
-
-    addons, files = getAddons()
-    
-    list = ""
     if len(addons) > 0:
         i = 0
         for name in addons:
             if i == 0: list = name
             else: list = list + ", " + name
             i += 1
+    return addons, files, list
+
+
+def updateTrakt(window, dialogs):
+    addon = xbmcaddon.Addon("service.zomboided.tools")
+    addon_name = addon.getAddonInfo("name")
+
+    addons, files, list = getAddons()
         
     try:
         commDelay = int(addon.getSetting(cache_command_delay))
@@ -104,7 +103,7 @@ def updateTrakt(window, dialogs):
         updated = 0
         percent = 10
         if new_trakt_id == "" or new_trakt_secret == "":
-            progDiag.update(100, "No Trakt tokens were supplied.","Enter these in the Settings and try again.")
+            progDiag.update(100, "No Trakt ID or secret were supplied.","Enter these in the Settings and try again.")
             sleep(3000)
         else:
             i = 0
@@ -112,7 +111,7 @@ def updateTrakt(window, dialogs):
                 trakt_path = files[i]
                 trakt_path_old = trakt_path + ".old"
                 try:                    
-                    progDiag.update(percent, "Modifying " + name + " with new Trakt tokens.","Please wait.")
+                    progDiag.update(percent, "Modifying " + name + " with new Trakt ID and secret.","Please wait.")
                     updated += 1
                     if xbmcvfs.exists(trakt_path):
                         debugTrace("Attempted to update " + trakt_path)
@@ -144,11 +143,11 @@ def updateTrakt(window, dialogs):
                                 trakt_file.write(line)
                         trakt_file.close()
                     else:
-                        errorTrace("trakt.py", "Couldn't fine trakt module for " + name)
+                        errorTrace("trakt.py", "Couldn't fine trakt module for " + trakt_path)
+                        raise Exception ("Couldn't find trakt module for " + trakt_path)
                     xbmc.sleep(commDelay)
-                    percent = percent + percent_inc
                 except Exception as e:
-                    errorTrace("trakt.py", "Problem updating " + name + " with new Trakt tokens")
+                    errorTrace("trakt.py", "Problem updating " + name + " with new Trakt ID and secret")
                     errorTrace("trakt.py", str(e))
                     trakt_file.close()
                     if xbmcvfs.exists(trakt_path_old):
@@ -157,15 +156,17 @@ def updateTrakt(window, dialogs):
                         infoTrace("trakt.py", "Replaced " + name + " with original file before modification.")
                     else:
                         infoTrace("trakt.py", "No modifications were done to the original file")
+                    progDiag.update((percent + percent_inc - 5), "Could not modify Trakt data for " + name + "."," ")
+                percent = percent + percent_inc
                 i += 1
 
             if updated > 0:
-                progDiag.update(100, "Finished modifying Trakt tokens", " ")
+                progDiag.update(100, "Finished modifying Trakt add-ons", " ")
                 xbmc.sleep(1000)
                 progDiag.close()
-                if dialogs: xbmcgui.Dialog().ok(addon_name, "Trakt tokens have been modified. Now re-authorize to Trakt in " + list + ". Set up a trigger to update Trakt again if any of the add-ons are updated.")
+                if dialogs: xbmcgui.Dialog().ok(addon_name, "Trakt add-ons have been modified. Re-authorize Trakt in " + list + ". Set up a trigger to update Trakt again if any of the add-ons are updated.")
             else:
-                progDiag.update(100, "No Trakt tokens were altered", " ")
+                progDiag.update(100, "No Trakt add-ons were altered", " ")
                 xbmc.sleep(3000)  
                 progDiag.close()
                 
@@ -173,21 +174,56 @@ def updateTrakt(window, dialogs):
 def revertTrakt():
     addon = xbmcaddon.Addon("service.zomboided.tools")
     addon_name = addon.getAddonInfo("name")
-#
-#    addons, files = getAddons()
-#    
-#    if len(addons) > 0 and xbmcgui.Dialog().yesno(addon_name, "Revert modified add-ons back to original versions?"):
-#        for name in addons:
-#            trakt_path = files[i]
-#            trakt_path_old = trakt_path + ".old"
-#            try:                    
-#               progDiag.update(percent, "Reverting " + name + " back to original version.","Please wait.")
-#                updated += 1
-#                if xbmcvfs.exists(trakt_path_old):
-#                    try:
-#                        if xbmcvfs.exists(trakt_path): xbmcvfs.delete(trakt_path)
-#                        xbmcvfs.rename(trakt_path + ".old", trakt_path)
-#                    except Exception as e:
-#                        errorTrace("trakt.py", "Problem reverting " + name + " to original version.")
-#                        errorTrace("trakt.py", str(e))
-#    return
+
+    addons, files, list = getAddons()
+    
+    if len(addons) > 0 and xbmcgui.Dialog().yesno(addon_name, "Revert modified Trakt add-ons back to original versions?"):
+
+        percent = 0       
+        progDiag = xbmcgui.DialogProgress()
+        progDiag.create(addon_name, "Reverting Trakt add-ons for " + list + ".","Stopping any playing media.")
+        progDiag.update(percent)
+        percent_inc = (90/len(files))
+        
+        # Stop any media
+        player = xbmc.Player()
+        if player.isPlaying():
+            infoTrace("trakt.py", "Stopping media")
+            player.stop()
+            xbmc.sleep(1000)
+        
+        updated = 0
+        percent = 10
+        i = 0
+        for name in addons:
+            trakt_path = files[i]
+            trakt_path_old = trakt_path + ".old"
+            progDiag.update(percent, "Reverting " + name + " back to original version.","Please wait.")
+            xbmc.sleep(1000)
+            debugTrace("Reverting " + name + " to " + trakt_path)
+            if xbmcvfs.exists(trakt_path_old):
+                try:
+                    if xbmcvfs.exists(trakt_path): xbmcvfs.delete(trakt_path)
+                    xbmcvfs.rename(trakt_path + ".old", trakt_path)
+                    updated += 1
+                except Exception as e:
+                    errorTrace("trakt.py", "Problem reverting " + name + " to original version.")
+                    errorTrace("trakt.py", str(e))
+                    progDiag.update((percent + percent_inc - 5), "Could not revert " + name + " back to original version.  You might need to reinstall it."," ")
+                    xbmc.sleep(3000)
+            else:
+                errorTrace("trakt.py", "Couldn't find " + trakt_path_old)
+                progDiag.update((percent + percent_inc -5), "Could not find original version for " + name + ". Either it's not been modified or you might need to reinstall it."," ")
+                xbmc.sleep(3000)
+            percent = percent + percent_inc
+            i += 1
+            
+        if updated > 0:
+            progDiag.update(100, "Finished restoring Trakt add-ons", " ")
+            xbmc.sleep(1000)
+            progDiag.close()
+            xbmcgui.Dialog().ok(addon_name, "Trakt add-ons have been restored. Re-authorize Trakt in " + list + ".")
+        else:
+            progDiag.update(100, "No Trakt add-ons were restored", " ")
+            xbmc.sleep(3000)  
+            progDiag.close()            

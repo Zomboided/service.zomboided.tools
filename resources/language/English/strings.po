@@ -123,7 +123,7 @@ msgid "Clear Add-on Caches"
 msgstr ""
 
 msgctxt "#32069"
-msgid "Modify Trakt Tokens"
+msgid "Modify Trakt Add-ons"
 msgstr ""
 
 msgctxt "#32070"
@@ -347,7 +347,7 @@ msgid "Setting refresh rate (mins)"
 msgstr ""
 
 msgctxt "#32308"
-msgid "Trakt Tokens"
+msgid "Trakt Data"
 msgstr ""
 
 msgctxt "#32309"
@@ -359,37 +359,41 @@ msgid "Trakt Client Secret"
 msgstr ""
 
 msgctxt "#32311"
-msgid "Clear Caches"
+msgid "Clear cache after Trakt modifications"
 msgstr ""
 
 msgctxt "#32312"
-msgid "Command delay"
+msgid "Clear Caches"
 msgstr ""
 
 msgctxt "#32313"
-msgid "  Clear cache"
+msgid "Command delay"
 msgstr ""
 
 msgctxt "#32314"
-msgid "  Clear providers"
+msgid "  Clear cache"
 msgstr ""
 
 msgctxt "#32315"
-msgid "  Refresh Trakt TV collection"
+msgid "  Clear providers"
 msgstr ""
 
 msgctxt "#32316"
-msgid "  Refresh Trakt movie collection"
+msgid "  Refresh Trakt TV collection"
 msgstr ""
 
 msgctxt "#32317"
-msgid "Covenant"
+msgid "  Refresh Trakt movie collection"
 msgstr ""
 
 msgctxt "#32318"
-msgid "Exodus"
+msgid "Covenant"
 msgstr ""
 
 msgctxt "#32319"
+msgid "Exodus"
+msgstr ""
+
+msgctxt "#32320"
 msgid "Fantastic"
 msgstr ""

@@ -173,24 +173,25 @@
         <setting label="32308" type="lsep"/>
         <setting label="32309" type="text" id="trakt_id" enable="true" visible="true" default=""/>
         <setting label="32310" type="text" id="trakt_secret" enable="true" visible="true" default=""/>
+        <setting label="32311" type="bool" id="trakt_clear" enable="true" visible="true" default="true"/>
         <setting label=""      type="lsep"/>
-        <setting label="32311" type="lsep"/>
-        <setting label="32312" type="slider" id="cache_command_delay" default="10" range="0,1,60" option="int"/>
-        <setting label="32317" type="text" enable="false" visible="System.HasAddon(plugin.video.covenant)" />
-        <setting label="32313" type="bool" id="covenant_cache" visible="System.HasAddon(plugin.video.covenant)" default="true"/>
-        <setting label="32314" type="bool" id="covenant_providers" visible="System.HasAddon(plugin.video.covenant)" default="true"/>
-        <setting label="32315" type="bool" id="covenant_tv_collection" visible="System.HasAddon(plugin.video.covenant)" default="false"/>
-        <setting label="32316" type="bool" id="covenant_movie_collection" visible="System.HasAddon(plugin.video.covenant)" default="false"/>
-        <setting label="32318" type="text" enable="false" visible="System.HasAddon(plugin.video.exodus)"/>
-        <setting label="32313" type="bool" id="exodus_cache" visible="System.HasAddon(plugin.video.exodus)" default="true"/>
-        <setting label="32314" type="bool" id="exodus_providers" visible="System.HasAddon(plugin.video.exodus)" default="true"/>
-        <setting label="32315" type="bool" id="exodus_tv_collection" visible="System.HasAddon(plugin.video.exodus)" default="false"/>
-        <setting label="32316" type="bool" id="exodus_movie_collection" visible="System.HasAddon(plugin.video.exodus)" default="false"/>
-        <setting label="32319" type="text" enable="false" visble="System.HasAddon(plugin.video.fantastic)" />
-        <setting label="32313" type="bool" id="fantastic_cache" visible="System.HasAddon(plugin.video.fantastic)" default="true"/>
-        <setting label="32314" type="bool" id="fantastic_providers" visible="System.HasAddon(plugin.video.fantastic)" default="true"/>
-        <setting label="32315" type="bool" id="fantastic_tv_collection" visible="System.HasAddon(plugin.video.fantastic)" default="false"/>
-        <setting label="32316" type="bool" id="fantastic_movie_collection" visible="System.HasAddon(plugin.video.fantastic)" default="false"/>
+        <setting label="32312" type="lsep"/>
+        <setting label="32313" type="slider" id="cache_command_delay" default="10" range="0,1,60" option="int"/>
+        <setting label="32318" type="text" enable="false" visible="System.HasAddon(plugin.video.covenant)" />
+        <setting label="32314" type="bool" id="covenant_cache" visible="System.HasAddon(plugin.video.covenant)" default="true"/>
+        <setting label="32315" type="bool" id="covenant_providers" visible="System.HasAddon(plugin.video.covenant)" default="true"/>
+        <setting label="32316" type="bool" id="covenant_tv_collection" visible="System.HasAddon(plugin.video.covenant)" default="false"/>
+        <setting label="32317" type="bool" id="covenant_movie_collection" visible="System.HasAddon(plugin.video.covenant)" default="false"/>
+        <setting label="32319" type="text" enable="false" visible="System.HasAddon(plugin.video.exodus)"/>
+        <setting label="32314" type="bool" id="exodus_cache" visible="System.HasAddon(plugin.video.exodus)" default="true"/>
+        <setting label="32315" type="bool" id="exodus_providers" visible="System.HasAddon(plugin.video.exodus)" default="true"/>
+        <setting label="32316" type="bool" id="exodus_tv_collection" visible="System.HasAddon(plugin.video.exodus)" default="false"/>
+        <setting label="32317" type="bool" id="exodus_movie_collection" visible="System.HasAddon(plugin.video.exodus)" default="false"/>
+        <setting label="32320" type="text" enable="false" visble="System.HasAddon(plugin.video.fantastic)" />
+        <setting label="32314" type="bool" id="fantastic_cache" visible="System.HasAddon(plugin.video.fantastic)" default="true"/>
+        <setting label="32315" type="bool" id="fantastic_providers" visible="System.HasAddon(plugin.video.fantastic)" default="true"/>
+        <setting label="32316" type="bool" id="fantastic_tv_collection" visible="System.HasAddon(plugin.video.fantastic)" default="false"/>
+        <setting label="32317" type="bool" id="fantastic_movie_collection" visible="System.HasAddon(plugin.video.fantastic)" default="false"/>
         
     </category>
 </settings>

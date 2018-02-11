@@ -513,10 +513,9 @@ if __name__ == '__main__':
                     xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but no action is defined.")
                 elif action == "Clear Add-on Caches":
                     clearCache(10000)
-                elif action == "Modify Trakt Tokens":
+                elif action == "Modify Trakt Add-ons":
                     updateTrakt(10000, False)
-                elif action == "Modify Trakt Tokens":
-                    revertTrakt(10000, False)
+                    clearCache(10000)
                 elif action == "Reset Emby Database":
                     xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but 'Reset Emby Database' is not yet supported.")
                 elif action == "Disconnect VPN":

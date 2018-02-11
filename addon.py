@@ -25,7 +25,7 @@ import xbmcgui
 import os
 from libs.utility import debugTrace, errorTrace, infoTrace
 from libs.cache import clearCache
-from libs.trakt import updateTrakt
+from libs.trakt import updateTrakt, revertTrakt
 from libs.logbox import popupKodiLog
 from libs.speedtest import speedTest
 from libs.managefiles import copyLog
@@ -60,13 +60,13 @@ def topLevel():
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
     if xbmc.getCondVisibility('System.HasAddon(plugin.video.covenant)') or xbmc.getCondVisibility('System.HasAddon(plugin.video.exodus)') or xbmc.getCondVisibility('System.HasAddon(plugin.video.fantastic)'):
         url = base_url + "?clearcache"
-        li = xbmcgui.ListItem("Clear Caches", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
+        li = xbmcgui.ListItem("Clear Video Caches", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
         url = base_url + "?modifytrakt"
-        li = xbmcgui.ListItem("Modify Trakt Tokens", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
+        li = xbmcgui.ListItem("Modify Trakt Add-ons", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
         url = base_url + "?reverttrakt"
-        li = xbmcgui.ListItem("Revert Trakt Tokens", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
+        li = xbmcgui.ListItem("Revert Trakt Add-ons", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
     url = base_url + "?viewlog"
     li = xbmcgui.ListItem("View Log", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
@@ -90,11 +90,14 @@ if action == "settings" :
     debugTrace("Opening settings")
     xbmc.executebuiltin("Addon.OpenSettings(service.zomboided.tools)")    
 elif action == "clearcache" :
-    debugTrace("Clearing the cache")
+    debugTrace("Clearing video cache")
     clearCache(0)
 elif action == "modifytrakt" :
-    debugTrace("Modify Trakt tokens")
+    debugTrace("Modify Trakt add-ons")
     updateTrakt(10000, True)
+elif action == "reverttrakt" :
+    debugTrace("Revert Trakt add-ons")
+    revertTrakt()
 elif action == "viewlog" :
     debugTrace("Displaying log")
     popupKodiLog()
