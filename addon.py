@@ -24,7 +24,7 @@ import xbmcplugin
 import xbmcgui
 import os
 from libs.utility import debugTrace, errorTrace, infoTrace
-from libs.cache import clearCache
+from libs.cache import clearCache, resetEmby
 from libs.trakt import updateTrakt, revertTrakt
 from libs.logbox import popupKodiLog
 from libs.speedtest import speedTest
@@ -62,12 +62,18 @@ def topLevel():
         url = base_url + "?clearcache"
         li = xbmcgui.ListItem("Clear Video Caches", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
+    if addon.getSetting("enable_debug") == "true" and xbmc.getCondVisibility('System.HasAddon(plugin.video.emby)'):
+        url = base_url + "?resetemby"
+        li = xbmcgui.ListItem("Reset Emby Database", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
+        xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
+    if xbmc.getCondVisibility('System.HasAddon(plugin.video.covenant)') or xbmc.getCondVisibility('System.HasAddon(plugin.video.exodus)') or xbmc.getCondVisibility('System.HasAddon(plugin.video.fantastic)'):
         url = base_url + "?modifytrakt"
         li = xbmcgui.ListItem("Modify Trakt Add-ons", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
-        url = base_url + "?reverttrakt"
-        li = xbmcgui.ListItem("Revert Trakt Add-ons", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
-        xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
+        if addon.getSetting("enable_debug") == "true":
+            url = base_url + "?reverttrakt"
+            li = xbmcgui.ListItem("Revert Trakt Add-ons", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
+            xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
     url = base_url + "?viewlog"
     li = xbmcgui.ListItem("View Log", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
@@ -92,6 +98,9 @@ if action == "settings" :
 elif action == "clearcache" :
     debugTrace("Clearing video cache")
     clearCache(0)
+elif action == "resetemby" :
+    debugTrace("Reset Emby database")
+    resetEmby(0)
 elif action == "modifytrakt" :
     debugTrace("Modify Trakt add-ons")
     updateTrakt(10000, True)

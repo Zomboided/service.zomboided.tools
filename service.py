@@ -27,7 +27,7 @@ import time
 import datetime
 import calendar
 from libs.utility import setDebug, debugTrace, errorTrace, infoTrace, newPrint, now
-from libs.cache import clearCache
+from libs.cache import clearCache, resetEmby
 from libs.trakt import updateTrakt, revertTrakt
 from libs.vpnapi import VPNAPI
 
@@ -284,6 +284,7 @@ class KodiPlayer(xbmc.Player):
         # Determine the end time if there's a play back limit
         d_timer = 0
         t_timer = 0
+        playback_timer = 0
         if playback_duration_check: d_timer = t + (playback_duration_minutes * 60)
         if playback_time_check: t_timer = parseTimer("Play back timer", "Daily", playback_time, "", "", "")
         if not d_timer == 0 and (d_timer < t_timer or t_timer == 0): playback_timer = d_timer
@@ -320,16 +321,16 @@ class KodiPlayer(xbmc.Player):
                 self.resetPlaybackCounts()  
         
     def onPlayBackStopped(self, *arg):
+        playback_timer = 0
         self.resetPlaybackCounts()
         
     def onPlayBackEnded(self, *arg):
         t = now()
+        playback_timer = 0
         self.playlist_ended = t
         self.playlist_count += 1
-        playback_timer = 0
 
     def resetPlaybackCounts(self):
-        playback_timer = 0
         self.playlist_playing = False
         self.playlist_max = 0
         self.playlist_count = 0
@@ -381,6 +382,7 @@ if __name__ == '__main__':
     
         t = now()
 
+        newPrint("Playback timer is " + str(playback_timer))
         if playback_timer > 0 and t > playback_timer:
             player.stop()
             infoTrace("service.py", "Stopping play back.  Duration is " + str(playback_duration_minutes) + " minutes, time limit is " + str(playback_time))
@@ -515,9 +517,10 @@ if __name__ == '__main__':
                     clearCache(10000)
                 elif action == "Modify Trakt Add-ons":
                     updateTrakt(10000, False)
-                    clearCache(10000)
+                    if addon.getSetting("trakt_clear") == "true":
+                        clearCache(10000)
                 elif action == "Reset Emby Database":
-                    xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but 'Reset Emby Database' is not yet supported.")
+                    resetEmby(10000)
                 elif action == "Disconnect VPN":
                     if api is not None:
                         result = api.disconnect(False)
@@ -530,6 +533,7 @@ if __name__ == '__main__':
                         xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but VPN Manager is not available.")
                 elif action == "Run Command":
                     xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but 'Run Command' is not yet supported.")
+                    # FIXME
                 else:
                     xbmc.executebuiltin(action)                    
             else:

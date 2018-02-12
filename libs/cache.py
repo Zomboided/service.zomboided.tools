@@ -184,3 +184,51 @@ def clearCache(window):
             
     progDiag.close() 
     xbmc.sleep(1000)
+
+    
+def resetEmby(window):
+
+    addon = xbmcaddon.Addon("service.zomboided.tools")
+    addon_name = addon.getAddonInfo("name")
+
+    if xbmc.getCondVisibility("System.HasAddon(plugin.video.emby)"):
+
+        try:
+            commDelay = int(addon.getSetting(cache_command_delay))
+        except:
+            commDelay = 5000
+
+        progDiag = xbmcgui.DialogProgressBG()
+        progDiag.create("Resetting Emby database", "[B]Avoid any input![/B]")
+        progDiag.update(0)
+        xbmc.sleep(2000)
+
+        # Change the window and stop any media
+        if not window == 0:
+            player = xbmc.Player()
+            if player.isPlaying():
+                infoTrace("cache.py", "Stopping media to reset Emby database")
+                player.stop()
+            s = "ActivateWindow(" + str(window) + ")"
+            xbmc.executebuiltin(s)
+            xbmc.sleep(commDelay)
+
+        progDiag.update(10, "Resetting Emby database")
+        infoTrace("cache.py", "Resetting Emby databases")
+        command = "ActivateWindow(10025,plugin://plugin.video.emby/?mode=repair,return)"
+        xbmc.executebuiltin(command)
+        xbmc.sleep(commDelay)
+        xbmc.executebuiltin("Action(Select)")
+        xbmc.sleep(commDelay)
+        xbmc.executebuiltin("Action(Back)")
+        xbmc.sleep(commDelay)
+    
+        progDiag.update(100, "Initiated reset of Emby database", "Emby will report the progress")
+        xbmc.sleep(3000)
+            
+    else:
+        progDiag.update(100, "Emby is not available, cannot reset database")
+        xbmc.sleep(1000)        
+    
+    progDiag.close() 
+    xbmc.sleep(1000)

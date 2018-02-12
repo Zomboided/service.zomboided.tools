@@ -1,6 +1,7 @@
 v0.0.5
 - Setings bug fixes
-- Trakt ID and secret modifications
+- Trakt ID and secret modification support
+- Emby support
 
 v0.0.4
 - VPN support

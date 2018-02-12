@@ -311,89 +311,95 @@ msgctxt "#32162"
 msgid "Clear cache frequency"
 msgstr ""
 
-
-# Debug Screen
+# Video Addon Screen
 
 msgctxt "#32300"
-msgid "Debug"
+msgid "Video Add-ons"
 msgstr ""
 
 msgctxt "#32301"
-msgid "General"
-msgstr ""
-
-msgctxt "#32302"
-msgid "Enable debug for just Zomboided Tools"
-msgstr ""
-
-msgctxt "#32303"
-msgid "Service start time"
-msgstr ""
-
-msgctxt "#32304"
-msgid "Checking Frequency"
-msgstr ""
-
-msgctxt "#32305"
-msgid "Add-on version checking (mins)"
-msgstr ""
-
-msgctxt "#32306"
-msgid "File change checking (mins)"
-msgstr ""
-
-msgctxt "#32307"
-msgid "Setting refresh rate (mins)"
-msgstr ""
-
-msgctxt "#32308"
 msgid "Trakt Data"
 msgstr ""
 
-msgctxt "#32309"
+msgctxt "#32302"
 msgid "Trakt Client ID"
 msgstr ""
 
-msgctxt "#32310"
+msgctxt "#32303"
 msgid "Trakt Client Secret"
 msgstr ""
 
-msgctxt "#32311"
+msgctxt "#32304"
 msgid "Clear cache after Trakt modifications"
 msgstr ""
 
-msgctxt "#32312"
+msgctxt "#32305"
 msgid "Clear Caches"
 msgstr ""
 
-msgctxt "#32313"
+msgctxt "#32306"
 msgid "Command delay"
 msgstr ""
 
-msgctxt "#32314"
+msgctxt "#32307"
 msgid "  Clear cache"
 msgstr ""
 
-msgctxt "#32315"
+msgctxt "#32308"
 msgid "  Clear providers"
 msgstr ""
 
-msgctxt "#32316"
+msgctxt "#32309"
 msgid "  Refresh Trakt TV collection"
 msgstr ""
 
-msgctxt "#32317"
+msgctxt "#32310"
 msgid "  Refresh Trakt movie collection"
 msgstr ""
 
-msgctxt "#32318"
+msgctxt "#32311"
 msgid "Covenant"
 msgstr ""
 
-msgctxt "#32319"
+msgctxt "#32312"
 msgid "Exodus"
 msgstr ""
 
-msgctxt "#32320"
+msgctxt "#32313"
 msgid "Fantastic"
 msgstr ""
+
+# Debug Screen
+
+msgctxt "#32350"
+msgid "Debug"
+msgstr ""
+
+msgctxt "#32351"
+msgid "General"
+msgstr ""
+
+msgctxt "#32352"
+msgid "Enable debug for just Zomboided Tools"
+msgstr ""
+
+msgctxt "#32353"
+msgid "Service start time"
+msgstr ""
+
+msgctxt "#32354"
+msgid "Checking Frequency"
+msgstr ""
+
+msgctxt "#32355"
+msgid "Add-on version checking (mins)"
+msgstr ""
+
+msgctxt "#32356"
+msgid "File change checking (mins)"
+msgstr ""
+
+msgctxt "#32357"
+msgid "Setting refresh rate (mins)"
+msgstr ""
+
