@@ -104,7 +104,7 @@ def updateTrakt(window, dialogs):
         percent = 10
         if new_trakt_id == "" or new_trakt_secret == "":
             progDiag.update(100, "No Trakt ID or secret were supplied.","Enter these in the Settings and try again.")
-            sleep(3000)
+            xbmc.sleep(3000)
         else:
             i = 0
             for name in addons:
