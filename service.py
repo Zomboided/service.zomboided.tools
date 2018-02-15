@@ -267,8 +267,6 @@ def parseTimer(type, freq, rtime, day, date, period):
 # Player class which will be called when the playback state changes           
 class KodiPlayer(xbmc.Player):
     
-    global playback_timer
-    
     playlist_playing = False
     playlist_max = 0
     playlist_count = 0
@@ -279,12 +277,15 @@ class KodiPlayer(xbmc.Player):
         self.logger = None
 
     def onPlayBackStarted(self, *arg):
+        global playback_timer
+        
         t = now()
         
         # Determine the end time if there's a play back limit
         d_timer = 0
         t_timer = 0
         playback_timer = 0
+        
         if playback_duration_check: d_timer = t + (playback_duration_minutes * 60)
         if playback_time_check: t_timer = parseTimer("Play back timer", "Daily", playback_time, "", "", "")
         if not d_timer == 0 and (d_timer < t_timer or t_timer == 0): playback_timer = d_timer
@@ -302,7 +303,7 @@ class KodiPlayer(xbmc.Player):
             updateSettings("onPlayBackStarted", True)
             self.playlist_playing = True
             self.playlist_max = t + (playlist_max_minutes * 60)
-            self.playlist_count = 0
+            self.playlist_count = 1
             debugTrace("Detected playback starting")
             debugTrace("Max playback time is " + str(playlist_max_minutes))
             debugTrace("Max playback videos is " + str(playlist_max_count))
@@ -321,12 +322,14 @@ class KodiPlayer(xbmc.Player):
                 self.resetPlaybackCounts()  
         
     def onPlayBackStopped(self, *arg):
+        global playback_timer
         playback_timer = 0
         self.resetPlaybackCounts()
         
     def onPlayBackEnded(self, *arg):
-        t = now()
+        global playback_timer
         playback_timer = 0
+        t = now()
         self.playlist_ended = t
         self.playlist_count += 1
 
@@ -367,6 +370,7 @@ if __name__ == '__main__':
     
     # Initialise a bunch of variables
     delay = 60
+    delay = 5
     file_timer = 0
     action_number_f = 0
     addon_timer = 0
@@ -382,7 +386,6 @@ if __name__ == '__main__':
     
         t = now()
 
-        newPrint("Playback timer is " + str(playback_timer))
         if playback_timer > 0 and t > playback_timer:
             player.stop()
             infoTrace("service.py", "Stopping play back.  Duration is " + str(playback_duration_minutes) + " minutes, time limit is " + str(playback_time))
