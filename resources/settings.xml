@@ -39,7 +39,7 @@
         <setting label=""      type="text" id="file_reboot_1" enable="false" visible="false" default=""/>
         <setting label="32104" type="lsep"/>
         <setting label="32105" type="bool" id="action_addon_enabled_1" default="false"/>
-        <setting label="32106" type="addon" id="action_addon_1" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="false" default=""/>
+        <setting label="32106" type="addon" id="action_addon_1" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="true" default=""/>
         <setting label=""      type="text" id="addon_name_1" enable="false" visible="false" default=""/>
         <setting label=""      type="text" id="addon_version_1" enable="false" visible="false" default=""/>
     </category>
@@ -67,7 +67,7 @@
         <setting label=""      type="text" id="file_reboot_2" enable="false" visible="false" default=""/>
         <setting label="32104" type="lsep"/>
         <setting label="32105" type="bool" id="action_addon_enabled_2" default="false"/>
-        <setting label="32106" type="addon" id="action_addon_2" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="false" default=""/>
+        <setting label="32106" type="addon" id="action_addon_2" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="true" default=""/>
         <setting label=""      type="text" id="addon_name_2" enable="false" visible="false" default=""/>
         <setting label=""      type="text" id="addon_version_2" enable="false" visible="false" default=""/>
     </category>
@@ -95,7 +95,7 @@
         <setting label=""      type="text" id="file_reboot_3" enable="false" visible="false" default=""/>        
         <setting label="32104" type="lsep"/>
         <setting label="32105" type="bool" id="action_addon_enabled_3" default="false"/>
-        <setting label="32106" type="addon" id="action_addon_3" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="false" default=""/>
+        <setting label="32106" type="addon" id="action_addon_3" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="true" default=""/>
         <setting label=""      type="text" id="addon_name_3" enable="false" visible="false" default=""/>
         <setting label=""      type="text" id="addon_version_3" enable="false" visible="false" default=""/>
     </category>
@@ -123,7 +123,7 @@
         <setting label=""      type="text" id="file_reboot_4" enable="false" visible="false" default=""/>        
         <setting label="32104" type="lsep"/>
         <setting label="32105" type="bool" id="action_addon_enabled_4" default="false"/>
-        <setting label="32106" type="addon" id="action_addon_4" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="false" default=""/>
+        <setting label="32106" type="addon" id="action_addon_4" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="true" default=""/>
         <setting label=""      type="text" id="addon_name_4" enable="false" visible="false" default=""/>
         <setting label=""      type="text" id="addon_version_4" enable="false" visible="false" default=""/>
     </category>
@@ -151,7 +151,7 @@
         <setting label=""      type="text" id="file_reboot_5" enable="false" visible="false" default=""/>        
         <setting label="32104" type="lsep"/>
         <setting label="32105" type="bool" id="action_addon_enabled_5" default="false"/>
-        <setting label="32106" type="addon" id="action_addon_5" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="false" default=""/>
+        <setting label="32106" type="addon" id="action_addon_5" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="true" default=""/>
         <setting label=""      type="text" id="addon_name_5" enable="false" visible="false" default=""/>
         <setting label=""      type="text" id="addon_version_5" enable="false" visible="false" default=""/>
     </category>    

@@ -259,11 +259,11 @@ msgid "Add-on Change Trigger"
 msgstr ""
 
 msgctxt "#32105"
-msgid "Detect if add-on is updated"
+msgid "Detect if add-ons are updated"
 msgstr ""
 
 msgctxt "#32106"
-msgid "Add-on"
+msgid "Add-ons"
 msgstr ""
 
 

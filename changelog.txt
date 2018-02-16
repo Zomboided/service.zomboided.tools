@@ -1,3 +1,6 @@
+v0.0.9
+- Support multiple add-ons with add-on trigger
+
 v0.0.8
 - Playback bug fixes
 - Trakt bug fixes

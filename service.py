@@ -465,25 +465,61 @@ if __name__ == '__main__':
             action_number = str(action_number_a)
             debugTrace("Checking add-on for action # " + action_number)
             if addon.getSetting("action_addon_enabled_" + action_number) == "true":
-                selected = addon.getSetting("action_addon_" + action_number)
-                last = addon.getSetting("addon_name_" + action_number)
-                try:
-                    curr_version = xbmcaddon.Addon(selected).getAddonInfo("version")
-                    debugTrace("Starting to check add-on " + selected + ", currently at version " + curr_version)
-                    if not selected == last:                    
-                        addon.setSetting("addon_name_" + action_number, selected)
-                        addon.setSetting("addon_version_" + action_number, curr_version)
+                # Get the current list of add-ons and previously detected settings
+                addons_s = addon.getSetting("action_addon_" + action_number)
+                addons_l = addons_s.split(",")
+                last_s = addon.getSetting("addon_name_" + action_number)
+                last_l = last_s.split(",")
+                versions_s = addon.getSetting("addon_version_" + action_number)
+                versions_l = versions_s.split(",")
+                debugTrace("Addons are " + addons_s + ", previous addons are " + last_s + ", versions are " + versions_s)
+                # Compare the previous with the versions now
+                if len(addons_l) > 0 and addons_s == last_s:
+                    if len(versions_l) == len(last_l):
+                        i = 0
+                        for i in range(0, len(last_l)):
+                            try:
+                                command = "System.HasAddon(" + last_l[i] + ")"
+                                if xbmc.getCondVisibility(command):
+                                    version = xbmcaddon.Addon(last_l[i]).getAddonInfo("version")
+                                else:
+                                    version = " "
+                            except Exception as e:
+                                version = " "
+                            if version == " ":
+                                if not versions_l[i] == version :
+                                    errorTrace("service.py", "Add-on " + last_l[i] + ", is not available to check as part of action #" + action_number)
+                                    last_s = ""
+                                else:
+                                    debugTrace("Add-on " + last_l[i] + ", is still not available to check as part of action #" + action_number)
+                            elif not version == versions_l[i]:
+                                infoTrace("service.py", "Add-on " + last_l[i] + ", has been updated from " + versions_l[i] + " to " + version)
+                                do_it = True
+                                action = addon.getSetting("action_" + action_number)
+                                warn = int(addon.getSetting("action_warn_" + action_number))
+                                action_if_playing = True
+                                # Force new list of versions to be build below
+                                last_s = ""
+                                break
                     else:
-                        last_version = addon.getSetting("addon_version_" + action_number)
-                        if not last_version == curr_version:
-                            addon.setSetting("addon_version_" + action_number, curr_version)
-                            do_it = True
-                            action = addon.getSetting("action_" + action_number)
-                            warn = int(addon.getSetting("action_warn_" + action_number))
-                            action_if_playing = True
-                            infoTrace("service.py", "Add-on " + selected + " has been updated from " + last_version + " to " + curr_version + " for action #" + action_number + ".")
-                except Exception as e:
-                    infoTrace("service.py", "Add-on " + selected + ", is not available to check for action #" + action_number)
+                        last_s = ""
+                    
+                if last_s == "" or not addons_s == last_s:
+                    # Addons list is different, reset to current versions
+                    addon.setSetting("addon_name_" + action_number, addons_s)
+                    versions = ""
+                    for name in addons_l:
+                        try:
+                            command = "System.HasAddon(" + name + ")"
+                            if xbmc.getCondVisibility(command):
+                                version = xbmcaddon.Addon(name).getAddonInfo("version")
+                            else:
+                                version = " "
+                        except:
+                            version = " "
+                        if versions == "": versions = version
+                        else: versions = versions + "," + version
+                    addon.setSetting("addon_version_" + action_number, versions)
             else:
                 if not addon.getSetting("addon_name_" + action_number) == "":
                     addon.setSetting("addon_name_" + action_number, "")
