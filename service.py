@@ -75,9 +75,13 @@ refresh_check_freq = 0
 action_timer = 0
 action_timer_number = 0
 addon_timer = 0
+addon_timer_start = 0
+addon_timer_end = 0
 last_boot = 0
 playback_timer = 0
 file_timer = 0
+file_timer_start = 0
+file_timer_end = 0
 refresh_timer = 0
 
 # Monitor class which will get called when the settings change    
@@ -104,8 +108,12 @@ def updateSettings(caller, wait):
     global action_timer
     global action_timer_number
     global addon_timer
+    global addon_timer_start
+    global addon_timer_end
     global addon_check_freq
     global file_timer
+    global file_timer_start
+    global file_timer_end
     global file_check_freq
     global refresh_timer
     global refresh_check_freq
@@ -158,7 +166,8 @@ def updateSettings(caller, wait):
                                        addon.getSetting("action_time_" + j),
                                        addon.getSetting("action_day_" + j),
                                        addon.getSetting("action_date_" + j),
-                                       addon.getSetting("action_period_" + j))
+                                       addon.getSetting("action_period_" + j),
+                                       0)
         # Determine if this time is the nearest one and use it if it is
         if (action_timer == 0 and not next_action_timer == 0) or (next_action_timer > 0 and next_action_timer < action_timer):
             action_timer_number = i + 1
@@ -169,9 +178,21 @@ def updateSettings(caller, wait):
             last = addon.getSetting("addon_name_" + j)
             if not selected == last: addon_timer = addon_check_freq + 1
         
-    # Frequency add-ons and files are checked        
+    # Frequency add-ons are checked
     addon_check_freq = int(addon.getSetting("addon_check"))*60
+    time = addon.getSetting("addon_check_start")
+    addon_timer_start = parseTimer("Addon Check Start", "Daily", time, "", "", "", 0)
+    time = addon.getSetting("addon_check_end")
+    addon_timer_end = parseTimer("Addon Check End", "Daily", time, "", "", "", addon_timer_start)
+    
+    # Frequency files are checked
     file_check_freq = int(addon.getSetting("file_check"))*60
+    time = addon.getSetting("file_check_start")
+    file_timer_start = parseTimer("Addon Check Start", "Daily", time, "", "", "", 0)
+    time = addon.getSetting("file_check_end")
+    file_timer_end = parseTimer("Addon Check End", "Daily", time, "", "", "", file_timer_start)
+    
+    # Settings get refreshed infrequently, just in case...
     refresh_check_freq = int(addon.getSetting("refresh_check"))*60
     
     if not action_timer_number == 0:
@@ -205,15 +226,18 @@ def fixWarnTime(warning):
         if not w == new_w: addon.setSetting(warning, str(new_w))                           
                              
                              
-def parseTimer(type, freq, rtime, day, date, period):
+def parseTimer(type, freq, rtime, day, date, period, begin):
     debugTrace("Parsing " + type + ". Frequency is " + freq + ", time is + " + rtime + ", day is " + day + ", date is " + date + ", period is " + period)
     if freq == "" or freq == "Off": 
         return 0
     else:
         # Assume timer is today at the defined reboot time
         timer = time.strftime("%d %m %Y") + " " + rtime
-        # Sleep to avoid some weird thread locking problem
-        t = now()
+        # Parse the timer starting from a given time, or now
+        if begin > 0:
+            t = begin
+        else:
+            t = now()
         # Make some datetime objects representing now, last boot time and the timer
         current_dt = datetime.datetime.fromtimestamp(t)
         last_dt = datetime.datetime.fromtimestamp(last_boot)
@@ -259,7 +283,7 @@ def parseTimer(type, freq, rtime, day, date, period):
             errorTrace("service.py", "Couldn't parse timer, no timer set")
             return 0
         # Calculate the difference between the dates and return the timer value in epoch seconds
-        debugTrace("Time now is " + str(current_dt) + ", last reboot is " + str(last_dt) + ", timer is " + str(timer_dt))
+        debugTrace("Starting time is " + str(current_dt) + ", last reboot is " + str(last_dt) + ", timer is " + str(timer_dt))
         diff_seconds = int((timer_dt - current_dt).total_seconds())
         return (t + diff_seconds)
 
@@ -287,7 +311,7 @@ class KodiPlayer(xbmc.Player):
         playback_timer = 0
         
         if playback_duration_check: d_timer = t + (playback_duration_minutes * 60)
-        if playback_time_check: t_timer = parseTimer("Play back timer", "Daily", playback_time, "", "", "")
+        if playback_time_check: t_timer = parseTimer("Play back timer", "Daily", playback_time, "", "", "", 0)
         if not d_timer == 0 and (d_timer < t_timer or t_timer == 0): playback_timer = d_timer
         if not t_timer == 0 and (t_timer < d_timer or d_timer == 0): playback_timer = t_timer
         if playback_timer: debugTrace("Time is " + str(t) + " playing until " + str(playback_timer) + ". Duration was " + str(playback_duration_minutes) + ", time was " + playback_time)
@@ -593,6 +617,6 @@ if __name__ == '__main__':
             infoTrace("service.py", "Abort received, shutting down service")
             break
         
-        file_timer = file_timer + delay
-        addon_timer = addon_timer + delay
+        if t > addon_timer_start and t < addon_timer_end : addon_timer = addon_timer + delay
+        if t > file_timer_start and t < file_timer_end : file_timer = file_timer + delay
         refresh_timer = refresh_timer + delay

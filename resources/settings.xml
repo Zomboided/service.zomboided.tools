@@ -191,8 +191,12 @@
         <setting label=""      type="lsep"/>
         <setting label="32354" type="lsep"/>
         <setting label="32355" type="slider" id="addon_check" default="60" range="60,10,1440" option="int"/>
-        <setting label="32356" type="slider" id="file_check" default="60" range="60,10,1440" option="int"/>
-        <setting label="32357" type="slider" id="refresh_check" default="60" range="60,10,1440" option="int"/>        
+        <setting label="32356" type="time" id="addon_check_start" default="00:00"/>
+        <setting label="32357" type="time" id="addon_check_end" default="23:59"/>
+        <setting label="32358" type="slider" id="file_check" default="60" range="60,10,1440" option="int"/>
+        <setting label="32359" type="time" id="file_check_start" default="00:00"/>
+        <setting label="32360" type="time" id="file_check_end" default="23:59"/>
+        <setting label="32361" type="slider" id="refresh_check" default="60" range="60,10,1440" option="int"/>   
         <setting label=""      type="lsep"/>
     </category>
 </settings>

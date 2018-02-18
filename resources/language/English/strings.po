@@ -166,6 +166,10 @@ msgctxt "#32081"
 msgid "Timer Trigger"
 msgstr ""
 
+msgctxt "#32081"
+msgid "Timer Trigger"
+msgstr ""
+
 msgctxt "#32082"
 msgid "Frequency"
 msgstr ""
@@ -396,10 +400,26 @@ msgid "Add-on version checking (mins)"
 msgstr ""
 
 msgctxt "#32356"
-msgid "File change checking (mins)"
+msgid "Check add-ons from (24h)"
 msgstr ""
 
 msgctxt "#32357"
+msgid "Check add-ons until (24h)"
+msgstr ""
+
+msgctxt "#32358"
+msgid "File change checking (mins)"
+msgstr ""
+
+msgctxt "#32359"
+msgid "Check files from (24h)"
+msgstr ""
+
+msgctxt "#32360"
+msgid "Check files until (24h)"
+msgstr ""
+
+msgctxt "#32361"
 msgid "Setting refresh rate (mins)"
 msgstr ""
 
