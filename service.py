@@ -25,7 +25,6 @@ import xbmcvfs
 import os
 import time
 import datetime
-import _strptime
 import calendar
 from libs.utility import setDebug, debugTrace, errorTrace, infoTrace, newPrint, now
 from libs.cache import clearCache, resetEmby
@@ -249,7 +248,7 @@ def parseTimer(type, freq, rtime, day, date, period, begin):
             debugTrace("Couldn't call strptime cleanly during parseTimer")
             debugTrace(str(e))
             xbmc.sleep(5000)
-            timer_dt = datetime(*(time.strptime(timer, "%d %m %Y %H:%M")[0:6]))
+            timer_dt = datetime.datetime(*(time.strptime(timer, "%d %m %Y %H:%M")[0:6]))
         # Adjust timer based on the frequency
         if freq == "Daily":
             # If the timer is in the past, add a day
