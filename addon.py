@@ -97,10 +97,10 @@ if action == "settings" :
     xbmc.executebuiltin("Addon.OpenSettings(service.zomboided.tools)")    
 elif action == "clearcache" :
     debugTrace("Clearing video cache")
-    clearCache(0)
+    clearCache(0, True)
 elif action == "resetemby" :
     debugTrace("Reset Emby database")
-    resetEmby(0)
+    resetEmby(0, True)
 elif action == "modifytrakt" :
     debugTrace("Modify Trakt add-ons")
     updateTrakt(10000, True)

@@ -1,3 +1,7 @@
+v0.0.10
+- Command delay bug fixes
+- Better dialogs
+
 v0.0.9
 - Support multiple add-ons with add-on trigger
 

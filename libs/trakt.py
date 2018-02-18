@@ -56,9 +56,9 @@ def updateTrakt(window, dialogs):
     addons, files, list = getAddons()
         
     try:
-        commDelay = int(addon.getSetting(cache_command_delay))
+        commDelay = int(addon.getSetting("cache_command_delay"))*1000
     except:
-        commDelay = 5000
+        commDelay = 10000
     
     if len(addons) > 0 and (not dialogs or xbmcgui.Dialog().yesno(addon_name, "Modify some add-ons to use a custom Trakt ID and secret. You can get these by logging onto Trakt and creating an app at https://trakt.tv/oauth/applications.\nAre you sure you want to continue?")):
         
@@ -67,12 +67,13 @@ def updateTrakt(window, dialogs):
         progDiag.create(addon_name, "Modifying Trakt tokens for " + list + ".","Stopping any playing media.")
         progDiag.update(percent)
         percent_inc = (90/len(files))   
-
+        
         # Change the window and stop any media
         player = xbmc.Player()
         if player.isPlaying():
             infoTrace("trakt.py", "Stopping media")
             player.stop()
+            xbmc.sleep(1000)
         if not window == 0:
             s = "ActivateWindow(" + str(window) + ")"
             xbmc.executebuiltin(s)
@@ -145,7 +146,7 @@ def updateTrakt(window, dialogs):
                     else:
                         errorTrace("trakt.py", "Couldn't fine trakt module for " + trakt_path)
                         raise Exception ("Couldn't find trakt module for " + trakt_path)
-                    xbmc.sleep(commDelay)
+                    xbmc.sleep(1000)
                 except Exception as e:
                     errorTrace("trakt.py", "Problem updating " + name + " with new Trakt ID and secret")
                     errorTrace("trakt.py", str(e))

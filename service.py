@@ -370,7 +370,6 @@ if __name__ == '__main__':
     
     # Initialise a bunch of variables
     delay = 60
-    delay = 5
     file_timer = 0
     action_number_f = 0
     addon_timer = 0
@@ -553,13 +552,13 @@ if __name__ == '__main__':
                 if action == "None":
                     xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but no action is defined.")
                 elif action == "Clear Add-on Caches":
-                    clearCache(10000)
+                    clearCache(10000, False)
                 elif action == "Modify Trakt Add-ons":
                     updateTrakt(10000, False)
                     if addon.getSetting("trakt_clear") == "true":
-                        clearCache(10000)
+                        clearCache(10000, False)
                 elif action == "Reset Emby Database":
-                    resetEmby(10000)
+                    resetEmby(10000, False)
                 elif action == "Disconnect VPN":
                     if api is not None:
                         result = api.disconnect(False)
