@@ -231,17 +231,27 @@ def parseTimer(type, freq, rtime, day, date, period, begin):
     if freq == "" or freq == "Off": 
         return 0
     else:
-        # Assume timer is today at the defined reboot time
-        timer = time.strftime("%d %m %Y") + " " + rtime
-        # Parse the timer starting from a given time, or now
-        if begin > 0:
-            t = begin
-        else:
-            t = now()
-        # Make some datetime objects representing now, last boot time and the timer
-        current_dt = datetime.datetime.fromtimestamp(t)
-        last_dt = datetime.datetime.fromtimestamp(last_boot)
-        timer_dt = datetime.datetime.strptime(timer, "%d %m %Y %H:%M")
+        # This is here to avoid a known Python locking bug https://bugs.python.org/issue7980
+        i = 0
+        while (i < 10):
+            try:
+               # Assume timer is today at the defined reboot time
+                timer = time.strftime("%d %m %Y") + " " + rtime
+                # Parse the timer starting from a given time, or now
+                if begin > 0:
+                    t = begin
+                else:
+                    t = now()
+                # Make some datetime objects representing now, last boot time and the timer
+                current_dt = datetime.datetime.fromtimestamp(t)
+                last_dt = datetime.datetime.fromtimestamp(last_boot)
+                timer_dt = datetime.datetime.strptime(timer, "%d %m %Y %H:%M")
+                break
+            except Exception as e:
+                i += 1
+                errorTrace("service.py", "Couldn't call strptime cleanly during parseTimer, call " + str(i))
+                errorTrace("service.py", str(e))
+                xbmc.sleep(5000)
         # Adjust timer based on the frequency
         if freq == "Daily":
             # If the timer is in the past, add a day
