@@ -25,6 +25,7 @@ import xbmcvfs
 import os
 import time
 import datetime
+import _strptime
 import calendar
 from libs.utility import setDebug, debugTrace, errorTrace, infoTrace, newPrint, now
 from libs.cache import clearCache, resetEmby
@@ -40,6 +41,7 @@ while (i < 10):
         datetime.datetime.strptime('2018-01-01', '%Y-%m-%d')
         break
     except Exception as e:
+        datetime.datetime(*(time.strptime('2018-01-01', '%Y-%m-%d')[0:6]))
         i += 1
         errorTrace("service.py", "Couldn't call strptime cleanly during initialisation, call " + str(i))
         errorTrace("service.py", str(e))
@@ -231,27 +233,23 @@ def parseTimer(type, freq, rtime, day, date, period, begin):
     if freq == "" or freq == "Off": 
         return 0
     else:
-        # This is here to avoid a known Python locking bug https://bugs.python.org/issue7980
-        i = 0
-        while (i < 10):
-            try:
-               # Assume timer is today at the defined reboot time
-                timer = time.strftime("%d %m %Y") + " " + rtime
-                # Parse the timer starting from a given time, or now
-                if begin > 0:
-                    t = begin
-                else:
-                    t = now()
-                # Make some datetime objects representing now, last boot time and the timer
-                current_dt = datetime.datetime.fromtimestamp(t)
-                last_dt = datetime.datetime.fromtimestamp(last_boot)
-                timer_dt = datetime.datetime.strptime(timer, "%d %m %Y %H:%M")
-                break
-            except Exception as e:
-                i += 1
-                errorTrace("service.py", "Couldn't call strptime cleanly during parseTimer, call " + str(i))
-                errorTrace("service.py", str(e))
-                xbmc.sleep(5000)
+        # Assume timer is today at the defined reboot time
+        timer = time.strftime("%d %m %Y") + " " + rtime
+        # Parse the timer starting from a given time, or now
+        if begin > 0:
+            t = begin
+        else:
+            t = now()
+        # Make some datetime objects representing now, last boot time and the timer
+        current_dt = datetime.datetime.fromtimestamp(t)
+        last_dt = datetime.datetime.fromtimestamp(last_boot)
+        try:
+            timer_dt = datetime.datetime.strptime(timer, "%d %m %Y %H:%M")
+        except:
+            debugTrace("Couldn't call strptime cleanly during parseTimer")
+            debugTrace(str(e))
+            xbmc.sleep(5000)
+            timer_dt = datetime(*(time.strptime(timer, "%d %m %Y %H:%M")[0:6]))
         # Adjust timer based on the frequency
         if freq == "Daily":
             # If the timer is in the past, add a day
@@ -404,6 +402,7 @@ if __name__ == '__main__':
     
     # Initialise a bunch of variables
     delay = 60
+
     file_timer = 0
     action_number_f = 0
     addon_timer = 0
