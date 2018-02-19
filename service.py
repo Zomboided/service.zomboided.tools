@@ -34,17 +34,12 @@ from libs.vpnapi import VPNAPI
 setDebug(False)
 
 # This is here to avoid a known Python locking bug https://bugs.python.org/issue7980
-i = 0
-while (i < 10):
-    try:
-        datetime.datetime.strptime('2018-01-01', '%Y-%m-%d')
-        break
-    except Exception as e:
-        datetime.datetime(*(time.strptime('2018-01-01', '%Y-%m-%d')[0:6]))
-        i += 1
-        errorTrace("service.py", "Couldn't call strptime cleanly during initialisation, call " + str(i))
-        errorTrace("service.py", str(e))
-        xbmc.sleep(5000)
+#try:
+#    datetime.datetime.strptime('2018-01-01', '%Y-%m-%d')
+#except Exception as e:
+datetime.datetime(*(time.strptime('2018-01-01', '%Y-%m-%d')[0:6]))
+#    errorTrace("service.py", "Couldn't call strptime cleanly during initialisation, call ")
+#    errorTrace("service.py", str(e))
       
 debugTrace("-- Entered service.py --")
 
@@ -189,9 +184,9 @@ def updateSettings(caller, wait):
     # Frequency files are checked
     file_check_freq = int(addon.getSetting("file_check"))*60
     time = addon.getSetting("file_check_start")
-    file_timer_start = parseTimer("Addon Check Start", "Daily", time, "", "", "", 0)
+    file_timer_start = parseTimer("File Check Start", "Daily", time, "", "", "", 0)
     time = addon.getSetting("file_check_end")
-    file_timer_end = parseTimer("Addon Check End", "Daily", time, "", "", "", file_timer_start)
+    file_timer_end = parseTimer("File Check End", "Daily", time, "", "", "", file_timer_start)
     
     # Settings get refreshed infrequently, just in case...
     refresh_check_freq = int(addon.getSetting("refresh_check"))*60
@@ -242,13 +237,11 @@ def parseTimer(type, freq, rtime, day, date, period, begin):
         # Make some datetime objects representing now, last boot time and the timer
         current_dt = datetime.datetime.fromtimestamp(t)
         last_dt = datetime.datetime.fromtimestamp(last_boot)
-        try:
-            timer_dt = datetime.datetime.strptime(timer, "%d %m %Y %H:%M")
-        except:
-            debugTrace("Couldn't call strptime cleanly during parseTimer")
-            debugTrace(str(e))
-            xbmc.sleep(5000)
-            timer_dt = datetime.datetime(*(time.strptime(timer, "%d %m %Y %H:%M")[0:6]))
+        xbmc.sleep(1000)
+        #try:
+        #    timer_dt = datetime.datetime.strptime(timer, "%d %m %Y %H:%M")
+        #except:
+        timer_dt = datetime.datetime(*(time.strptime(timer, "%d %m %Y %H:%M")[0:6]))
         # Adjust timer based on the frequency
         if freq == "Daily":
             # If the timer is in the past, add a day
@@ -374,7 +367,7 @@ class KodiPlayer(xbmc.Player):
 if __name__ == '__main__':   
 
     infoTrace("service.py", "Starting Zomboided Tools service, version is " + addon.getAddonInfo("version"))
-    debugTrace("Kodi build is " + xbmc.getInfoLabel('System.BuildVersion'))
+    infoTrace("service.py", "Kodi build is " + xbmc.getInfoLabel('System.BuildVersion'))
 
     monitor = KodiMonitor()
     player = KodiPlayer()
@@ -565,6 +558,8 @@ if __name__ == '__main__':
                 msg = "About to " + action + ", click cancel to abort."
                 if action == "Clear Cache":
                     msg = msg + "\n[COLOR red][B]Avoid using any input device until cache clearance is complete.[/B][/COLOR]"
+                if action == "Run Command":
+                    msg = msg + "\nCommand is '[I]" + addon.getSetting("action_command_" + action_number) + "'[/I]" 
                 dialog = xbmcgui.DialogProgress()
                 dialog.create(addon_name, msg)
                 dialog.update(100)
@@ -601,11 +596,17 @@ if __name__ == '__main__':
                         result = api.reconnect(True)
                     else:
                         xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but VPN Manager is not available.")
-                elif action == "Run Command":
-                    xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but 'Run Command' is not yet supported.")
-                    # FIXME
+                elif action == "Run Command":                    
+                    c = addon.getSetting("action_command_" + action_number)
+                    infoTrace("service.py", "Executing command '" + c + "'")
+                    try:
+                        xbmc.executebuiltin(c)
+                    except Exception as e:
+                        xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but command failed to run.  See log for details.")
+                        errorTrace("service.py", "Could not run command '" + c + "' for action #" + action_number + ". Error shown on next line.")
+                        errorTrace("service.py", str(e))
                 else:
-                    xbmc.executebuiltin(action)                    
+                    xbmc.executebuiltin(action)
             else:
                 infoTrace("service.py", action + " aborted by user")
                 
