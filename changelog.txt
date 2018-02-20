@@ -1,3 +1,6 @@
+v0.0.16
+- Emby cache clearing fix
+
 v0.0.15
 - Add command execution
 

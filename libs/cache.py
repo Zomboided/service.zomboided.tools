@@ -179,20 +179,25 @@ def clearCache(window, dialogs):
                     xbmc.sleep(1000)        
             except Exception as e:
                 errorTrace("cache.py", "Problem clearing " + tname + " caches")
-                errorTrace("cache.py", str(e))    
-
+                errorTrace("cache.py", str(e))                 
+                
         # Restart the filtering
         if not api == None: 
             progDiag.update(percent, "Restarting VPN filtering")
             api.restart()
             xbmc.sleep(commDelay)
 
+        if not window == 0:
+            s = "ActivateWindow(" + str(window) + ")"
+            xbmc.executebuiltin(s)
+            xbmc.sleep(commDelay)                 
+            
         if cleared > 0:
             progDiag.update(100, "Finished clearing selected caches", " ")
         else:
             progDiag.update(100, "No caches were cleared", " ")
         xbmc.sleep(2000)        
-                
+        
         progDiag.close() 
         xbmc.sleep(1000)
 
@@ -231,8 +236,16 @@ def resetEmby(window, dialogs):
         xbmc.sleep(commDelay)
         xbmc.executebuiltin("Action(Select)")
         xbmc.sleep(commDelay)
+        xbmc.executebuiltin("Action(Right)")
+        xbmc.sleep(commDelay)
+        xbmc.executebuiltin("Action(Select)")
+        xbmc.sleep(commDelay)
         xbmc.executebuiltin("Action(Back)")
         xbmc.sleep(commDelay)
+        if not window == 0:
+            s = "ActivateWindow(" + str(window) + ")"
+            xbmc.executebuiltin(s)
+            xbmc.sleep(commDelay)        
     
         progDiag.update(100, "Initiated reset of Emby database", "Emby will report the progress")
         xbmc.sleep(3000)
