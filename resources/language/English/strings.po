@@ -313,7 +313,7 @@ msgid "Trakt Client Secret"
 msgstr ""
 
 msgctxt "#32304"
-msgid "Clear cache after Trakt modifications"
+msgid "Reset video add-ons after Trakt modifications"
 msgstr ""
 
 msgctxt "#32305"
@@ -325,7 +325,7 @@ msgid "Command execution delay"
 msgstr ""
 
 msgctxt "#32307"
-msgid "Disable VPN filtering during rules"
+msgid "Disable VPN filtering whilst running rules"
 msgstr ""
 
 msgctxt "#32308"
