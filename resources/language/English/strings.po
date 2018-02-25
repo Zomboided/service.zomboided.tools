@@ -119,51 +119,55 @@ msgid "Sleep"
 msgstr ""
 
 msgctxt "#32068"
-msgid "Clear Add-on Caches"
+msgid "Modify Trakt add-ons"
 msgstr ""
 
 msgctxt "#32069"
-msgid "Modify Trakt Add-ons"
+msgid "Reset video add-ons"
 msgstr ""
 
 msgctxt "#32070"
-msgid "Reset Emby Database"
+msgid "Reset Emby"
 msgstr ""
 
 msgctxt "#32071"
-msgid "Disconnect VPN"
+msgid "Run custom rules"
 msgstr ""
 
 msgctxt "#32072"
-msgid "Reconnect VPN"
-msgstr ""
-
-msgctxt "#32073"
 msgid "Run Command"
 msgstr ""
 
+msgctxt "#32073"
+msgid "Disconnect VPN Manager"
+msgstr ""
+
 msgctxt "#32074"
-msgid "This option only works with selected video add-ons"
+msgid "Reconnect VPN Manager"
 msgstr ""
 
 msgctxt "#32075"
-msgid "This option only works with Emby"
+msgid "Click to select rule sets"
 msgstr ""
 
 msgctxt "#32076"
-msgid "This option only works with VPN Manager"
+msgid "Rule sets"
 msgstr ""
 
 msgctxt "#32077"
-msgid "Command"
+msgid "Click to refine rules within sets"
 msgstr ""
 
 msgctxt "#32078"
-msgid "Warning before action (seconds, 0 is off)"
+msgid "Rules"
 msgstr ""
 
-msgctxt "#32081"
-msgid "Timer Trigger"
+msgctxt "#32079"
+msgid "Command"
+msgstr ""
+
+msgctxt "#32080"
+msgid "Warning before action (seconds, 0 is off)"
 msgstr ""
 
 msgctxt "#32081"
@@ -289,36 +293,11 @@ msgctxt "#32153"
 msgid "Sleep timer maximum"
 msgstr ""
 
-# Cache Clear Screen
 
-msgctxt "#32150"
-msgid "Caches"
-msgstr ""
-
-msgctxt "#32151"
-msgid "Select Kodi caches to manage"
-msgstr ""
-
-msgctxt "#32152"
-msgid "Kodi cache"
-msgstr ""
-
-msgctxt "#32160"
-msgid "Manage caches"
-msgstr ""
-
-msgctxt "#32161"
-msgid "Clear selected Kodi caches now"
-msgstr ""
-
-msgctxt "#32162"
-msgid "Clear cache frequency"
-msgstr ""
-
-# Video Addon Screen
+# Advanced Screen
 
 msgctxt "#32300"
-msgid "Video Add-ons"
+msgid "Advanced"
 msgstr ""
 
 msgctxt "#32301"
@@ -338,39 +317,31 @@ msgid "Clear cache after Trakt modifications"
 msgstr ""
 
 msgctxt "#32305"
-msgid "Clear Caches"
+msgid "Rules"
 msgstr ""
 
 msgctxt "#32306"
-msgid "Command delay"
+msgid "Command execution delay"
 msgstr ""
 
 msgctxt "#32307"
-msgid "  Clear cache"
+msgid "Disable VPN filtering during rules"
 msgstr ""
 
 msgctxt "#32308"
-msgid "  Clear providers"
+msgid "Click to refine video rule set"
 msgstr ""
 
 msgctxt "#32309"
-msgid "  Refresh Trakt TV collection"
+msgid "Video rules"
 msgstr ""
 
 msgctxt "#32310"
-msgid "  Refresh Trakt movie collection"
+msgid "Click to refine Emby rule set"
 msgstr ""
 
 msgctxt "#32311"
-msgid "Covenant"
-msgstr ""
-
-msgctxt "#32312"
-msgid "Exodus"
-msgstr ""
-
-msgctxt "#32313"
-msgid "Fantastic"
+msgid "Emby rules"
 msgstr ""
 
 # Debug Screen

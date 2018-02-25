@@ -27,7 +27,7 @@ import time
 import datetime
 import calendar
 from libs.utility import setDebug, debugTrace, errorTrace, infoTrace, newPrint, now
-from libs.cache import clearCache, resetEmby
+from libs.execute import runRules, WILDCARD
 from libs.trakt import updateTrakt, revertTrakt
 from libs.vpnapi import VPNAPI
 
@@ -578,14 +578,18 @@ if __name__ == '__main__':
                 infoTrace("service.py", "Trigger fired for action #" + action_number + ", performing a " + action)
                 if action == "None":
                     xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but no action is defined.")
-                elif action == "Clear Add-on Caches":
-                    clearCache(10000, False)
-                elif action == "Modify Trakt Add-ons":
+                elif action == "Reset video add-ons":
+                    mask = addon.getSetting("video_mask")
+                    if mask == WILDCARD: mask = ""
+                    runRules(False, "Video", mask)
+                elif action == "Modify Trakt add-ons":
                     updateTrakt(10000, False)
                     if addon.getSetting("trakt_clear") == "true":
                         clearCache(10000, False)
-                elif action == "Reset Emby Database":
-                    resetEmby(10000, False)
+                elif action == "Reset Emby":
+                    mask = addon.getSetting("emby_mask")
+                    if mask == WILDCARD: mask = ""
+                    runRules(False, "Emby", mask)
                 elif action == "Disconnect VPN":
                     if api is not None:
                         result = api.disconnect(False)
@@ -605,6 +609,11 @@ if __name__ == '__main__':
                         xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but command failed to run.  See log for details.")
                         errorTrace("service.py", "Could not run command '" + c + "' for action #" + action_number + ". Error shown on next line.")
                         errorTrace("service.py", str(e))
+                elif action == "Run custom rules":
+                    group = addon.getSetting("action_rules_group_" + action_number)
+                    mask = addon.getSetting("action_rules_mask_" + action_number)
+                    if mask == WILDCARD: mask = ""
+                    runRules(False, group, mask)
                 else:
                     xbmc.executebuiltin(action)
             else:

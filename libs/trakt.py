@@ -56,7 +56,7 @@ def updateTrakt(window, dialogs):
     addons, files, list = getAddons()
         
     try:
-        commDelay = int(addon.getSetting("cache_command_delay"))*1000
+        commDelay = int(addon.getSetting("command_delay"))*1000
     except:
         commDelay = 10000
     
