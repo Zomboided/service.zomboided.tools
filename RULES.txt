@@ -1,26 +1,26 @@
-# Line; Addon Title; Addon Function; Addon Name; Commands;
+# Line; Addon Title; Addon Function; Addon Name; Commands (preceding a command with *n and a space will cause the delay after running command to be multiplied by n);
 
 [Video]
 1; Covenant; clear cache; plugin.video.covenant; ActivateWindow(10025,plugin://plugin.video.covenant/?action=clearCache,return); Action(Left); Action(Select); Action(Back); ActivateWindow(10000)
 2; Covenant; clear providers; plugin.video.covenant; ActivateWindow(10025,plugin://plugin.video.covenant/?action=clearSources,return); Action(Left); Action(Select); Action(Back); ActivateWindow(10000)
-3; Covenant; refresh Trakt TV collection; plugin.video.covenant; ActivateWindow(10025,plugin://plugin.video.covenant/?action=mytvNavigator,return); Action(PageUp); Action(Down); Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
-4; Covenant; refresh Trakt TV watchlist; plugin.video.covenant; ActivateWindow(10025,plugin://plugin.video.covenant/?action=mymovieNavigator,return); Action(PageUp); Action(Down); Action(Down); Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
-5; Covenant; refresh Trakt movie collection; plugin.video.covenant; ActivateWindow(10025,plugin://plugin.video.covenant/?action=mymovieNavigator,return); Action(PageUp); Action(Down); Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
-6; Covenant; refresh Trakt movie watchlist; plugin.video.covenant; ActivateWindow(10025,plugin://plugin.video.covenant/?action=mymovieNavigator,return); Action(PageUp); Action(Down); Action(Down); Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
+3; Covenant; refresh Trakt TV collection; plugin.video.covenant; ActivateWindow(10025,plugin://plugin.video.covenant/?action=mytvNavigator,return); Action(PageUp); Action(Down); *3 Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
+4; Covenant; refresh Trakt TV watchlist; plugin.video.covenant; ActivateWindow(10025,plugin://plugin.video.covenant/?action=mymovieNavigator,return); Action(PageUp); Action(Down); Action(Down); *3 Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
+5; Covenant; refresh Trakt movie collection; plugin.video.covenant; ActivateWindow(10025,plugin://plugin.video.covenant/?action=mymovieNavigator,return); Action(PageUp); Action(Down); *3 Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
+6; Covenant; refresh Trakt movie watchlist; plugin.video.covenant; ActivateWindow(10025,plugin://plugin.video.covenant/?action=mymovieNavigator,return); Action(PageUp); Action(Down); Action(Down); *3 Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
 
 11; Exodus; clear cache; plugin.video.exodus; ActivateWindow(10025,plugin://plugin.video.exodus/?action=clearCache,return); Action(Left); Action(Select); Action(Back); ActivateWindow(10000)
 12; Exodus; clear providers; plugin.video.exodus; ActivateWindow(10025,plugin://plugin.video.exodus/?action=clearSources,return); Action(Left); Action(Select); Action(Back); ActivateWindow(10000)
-13; Exodus; refresh Trakt TV collection; plugin.video.exodus; ActivateWindow(10025,plugin://plugin.video.exodus/?action=mytvNavigator,return); Action(PageUp); Action(Down); Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
-14; Exodus; refresh Trakt TV watchlist; plugin.video.exodus; ActivateWindow(10025,plugin://plugin.video.exodus/?action=mymovieNavigator,return); Action(PageUp); Action(Down); Action(Down); Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
-15; Exodus; refresh Trakt movie collection; plugin.video.exodus; ActivateWindow(10025,plugin://plugin.video.exodus/?action=mymovieNavigator,return); Action(PageUp); Action(Down); Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
-16; Exodus; refresh Trakt movie watchlist; plugin.video.exodus; ActivateWindow(10025,plugin://plugin.video.exodus/?action=mymovieNavigator,return); Action(PageUp); Action(Down); Action(Down); Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
+13; Exodus; refresh Trakt TV collection; plugin.video.exodus; ActivateWindow(10025,plugin://plugin.video.exodus/?action=mytvNavigator,return); Action(PageUp); Action(Down); *3 Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
+14; Exodus; refresh Trakt TV watchlist; plugin.video.exodus; ActivateWindow(10025,plugin://plugin.video.exodus/?action=mymovieNavigator,return); Action(PageUp); Action(Down); Action(Down); *3 Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
+15; Exodus; refresh Trakt movie collection; plugin.video.exodus; ActivateWindow(10025,plugin://plugin.video.exodus/?action=mymovieNavigator,return); Action(PageUp); Action(Down); *3 Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
+16; Exodus; refresh Trakt movie watchlist; plugin.video.exodus; ActivateWindow(10025,plugin://plugin.video.exodus/?action=mymovieNavigator,return); Action(PageUp); Action(Down); Action(Down); *3 Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
 
 21; Fantastic; clear cache; plugin.video.fantastic; ActivateWindow(10025,plugin://plugin.video.fantastic/?action=clearCache,return); Action(Left); Action(Select); Action(Back); ActivateWindow(10000)
 22; Fantastic; clear providers; plugin.video.fantastic; ActivateWindow(10025,plugin://plugin.video.fantastic/?action=clearSources,return); Action(Left); Action(Select); Action(Back); ActivateWindow(10000)
-23; Fantastic; refresh Trakt TV collection; plugin.video.fantastic; ActivateWindow(10025,plugin://plugin.video.fantastic/?action=mytvNavigator,return); Action(PageUp); Action(Down); Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
-24; Fantastic; refresh Trakt TV watchlist; plugin.video.fantastic; ActivateWindow(10025,plugin://plugin.video.fantastic/?action=mymovieNavigator,return); Action(PageUp); Action(Down); Action(Down); Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
-25; Fantastic; refresh Trakt movie collection; plugin.video.fantastic; ActivateWindow(10025,plugin://plugin.video.fantastic/?action=mymovieNavigator,return); Action(PageUp); Action(Down); Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
-26; Fantastic; refresh Trakt movie watchlist; plugin.video.fantastic; ActivateWindow(10025,plugin://plugin.video.fantastic/?action=mymovieNavigator,return); Action(PageUp); Action(Down); Action(Down); Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
+23; Fantastic; refresh Trakt TV collection; plugin.video.fantastic; ActivateWindow(10025,plugin://plugin.video.fantastic/?action=mytvNavigator,return); Action(PageUp); Action(Down); *3 Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
+24; Fantastic; refresh Trakt TV watchlist; plugin.video.fantastic; ActivateWindow(10025,plugin://plugin.video.fantastic/?action=mymovieNavigator,return); Action(PageUp); Action(Down); Action(Down); *3 Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
+25; Fantastic; refresh Trakt movie collection; plugin.video.fantastic; ActivateWindow(10025,plugin://plugin.video.fantastic/?action=mymovieNavigator,return); Action(PageUp); Action(Down); *3 Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
+26; Fantastic; refresh Trakt movie watchlist; plugin.video.fantastic; ActivateWindow(10025,plugin://plugin.video.fantastic/?action=mymovieNavigator,return); Action(PageUp); Action(Down); Action(Down); *3 Action(Select); Action(Back); Action(Back); ActivateWindow(10000)
 [/Video]
 
 [Emby]

@@ -1,3 +1,7 @@
+v0.1.2
+- Variable delay in rules engine
+- Fix progress percent calculation
+
 v0.1.1
 - Trakt video addon reset bug fix
 

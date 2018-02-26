@@ -40,7 +40,7 @@ def parseRulesString(rule):
     else:
         commands = []
         for i in range(4, len(tokens)):
-            commands.append(tokens[i])
+            commands.append(tokens[i].strip(" \t\n\r"))
         return tokens[0], tokens[1], tokens[2], tokens[3], commands
         
 
@@ -96,11 +96,11 @@ def getRulesStrings(filter_string, allow_repeats):
                     else:
                         debugTrace("Filter excluded " + rule)
         except Exception as e:                        
-            errorTrace("cache.py", "Couldn't read " + rules_path)
-            errorTrace("cache.py", "Last line read was '" + rule + "'")
-            errorTrace("cache.py", str(e))
+            errorTrace("execute.py", "Couldn't read " + rules_path)
+            errorTrace("execute.py", "Last line read was '" + rule + "'")
+            errorTrace("execute.py", str(e))
     else:
-        errorTrace("cache.py", "File " + rules_path + " doesn't exist")
+        errorTrace("execute.py", "File " + rules_path + " doesn't exist")
     if len(just_rules) < 1:
         debugTrace("No rules were found in " + rules_path + " for filter " + filter_string)
     if len(just_groups) < 1:
@@ -169,7 +169,7 @@ def runRules(dialogs, filter, rules_mask):
         comm_delay = int(addon.getSetting("command_delay"))*1000
     except:
         comm_delay = 10000
-    
+
     if (not dialogs or xbmcgui.Dialog().yesno(addon_name, "About to take over the Kodi GUI.\n[B]You must avoid any input[/B] until the process is finished.\nAre you sure you want to continue?")):
 
         api = None
@@ -212,23 +212,33 @@ def runRules(dialogs, filter, rules_mask):
                 if xbmc.getCondVisibility("System.HasAddon(" + rule_addon + ")"): 
                     if (len(allowed_rules) == 0 or rule_number in allowed_rules):
                         progDiag.update(percent, "Running " + rule_title + ", " + rule_function)
+                        infoTrace("execute.py", "Running " + rule_number + ", " + rule_title + ", " + rule_function)
                         xbmc.sleep(2000)
-                        comm_percent = 0
-                        comm_percent_inc = percent_inc / (len(commands)+1)
+                        comm_percent = float(0)
+                        comm_percent_inc = float(percent_inc) / float((len(commands)+1))
                         for command in commands:
                             debugTrace("Executing " + command)
                             comm_percent += comm_percent_inc
-                            progDiag.update(percent + comm_percent)
-                            xbmc.executebuiltin(command)
-                            xbmc.sleep(comm_delay)
+                            progDiag.update(percent + int(comm_percent))
+                            comm_delay_mod = 1
+                            try:
+                                if command.startswith("*"):
+                                    comm_delay_mod = int(command[1:command.index(" ")])
+                                    command = command[command.index(" ") + 1:].strip(" \t\n\r")
+                                xbmc.executebuiltin(command)
+                                xbmc.sleep(comm_delay * comm_delay_mod)
+                            except Exception as e:
+                                errorTrace("service.py", "Couldn't run command " + command)
+                                errorTrace("service.py", str(e))
+                                progDiag.update(percent, "[B]Error running command, check log[/B]")    
                     else:    
                         progDiag.update(percent, "Skipping " + rule_title + ", " + rule_function)
                         debugTrace("Skipping " + rule_title + ", " + rule_function)
-                        xbmc.sleep(2000)
+                        xbmc.sleep(1000)
                 else:
                     progDiag.update(percent, "Looking for addons")
                     debugTrace("Couldn't find addon " + rule_addon)
-                    xbmc.sleep(2000)
+                    xbmc.sleep(1000)
             
             # Restart the VPN filtering
             if not api == None: 
