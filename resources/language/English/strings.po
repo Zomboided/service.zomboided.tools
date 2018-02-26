@@ -40,7 +40,7 @@ msgid "Stop playback at time"
 msgstr ""
 
 msgctxt "#32015"
-msgid "Stop time (minutes)"
+msgid "Stop time (24h)"
 msgstr ""
 
 msgctxt "#32016"
