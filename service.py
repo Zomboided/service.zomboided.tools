@@ -27,7 +27,7 @@ import time
 import datetime
 import calendar
 from libs.utility import setDebug, debugTrace, errorTrace, infoTrace, newPrint, now
-from libs.execute import runRules, WILDCARD
+from libs.execute import getGitRules, runRules, WILDCARD
 from libs.trakt import updateTrakt, revertTrakt
 from libs.vpnapi import VPNAPI
 
@@ -405,7 +405,11 @@ if __name__ == '__main__':
     action = ""
     warn = -1
     action_number = 0
-            
+          
+    # Fetch the latest rule set
+    if addon.getSetting("refresh_rules") == "true":
+        getGitRules()
+          
     while not monitor.abortRequested():
     
         t = now()

@@ -24,6 +24,7 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 import xbmcvfs
+import urllib2
 from libs.utility import debugTrace, errorTrace, infoTrace, newPrint
 from libs.vpnapi import VPNAPI
 
@@ -32,8 +33,10 @@ VIDEO_GROUP = "Video"
 EMBY_GROUP = "Emby"
 WILDCARD = "[I]All[/I]"
 
+RULES_PATH = xbmc.translatePath("special://home/addons/service.zomboided.tools/RULES.txt")
+
 def parseRulesString(rule):
-    # Line; Addon Title; Addon Function; Addon Name; Commands;
+    # Number; Addon Title; Addon Function; Addon Name; Commands;
     tokens = rule.split(";")
     if len(tokens) < 5:
         raise Exception("Could not parse rule " + rule)
@@ -44,11 +47,52 @@ def parseRulesString(rule):
         return tokens[0], tokens[1], tokens[2], tokens[3], commands
         
 
-def getRulesStrings(filter_string, allow_repeats):
+def getGitRules():
+    try:
+        # Download RULES.txt file from Github
+        debugTrace("Getting rules form Github")
+        download_url = "https://raw.githubusercontent.com/Zomboided/service.zomboided.tools/master/RULES.txt"
+        download_url = download_url.replace(" ", "%20")
+        rules = urllib2.urlopen(download_url)
+    except Exception as e:
+        # Can't get the rules 
+        errorTrace("vpnproviders.py", "Can't get RULES.txt from GitHub")
+        errorTrace("vpnproviders.py", str(e)) 
+        return
+    
+    try:
+        # Overwrite RULES.txt
+        output = open(RULES_PATH, 'w')
+        for r in rules:
+            output.write(r)
+        output.close()
+        infoTrace("execute.py", "Updated the rules file from GitHub")
+    except Exception as e:
+        errorTrace("execute.py", "Couldn't write the rules files downloaded from Github")
+        errorTrace("execute.py", str(e))
+        
+        
+def readRulesFiles():
     # <FIXME> want to allow for a userdata file to add to and overwrite any rules
-    # <FIXME> want to download the RULES.txt from Github
+
+    rules = None
+    if xbmcvfs.exists(RULES_PATH):
+        try:
+            debugTrace("Reading rules file " + RULES_PATH)
+            rules_file = open(RULES_PATH, 'r')
+            rules = rules_file.readlines()
+            rules_file.close()        
+        except Exception as e:
+            errorTrace("execute.py", "Couldn't open rules file " + RULES_PATH)
+            errorTrace("execute.py", str(e))
+            rules = None
+    else:
+        errorTrace("execute.py", "File " + RULES_PATH + " doesn't exist")
+    return rules
+
+    
+def getRulesStrings(filter_string, allow_repeats, ignore_disabled):
     # Load and parse the rules file, filtering the return values by any filter (group) passed in
-    rules_path = xbmc.translatePath("special://home/addons/service.zomboided.tools/RULES.txt")
     just_rules = []
     just_groups = []
     filters = []
@@ -56,13 +100,12 @@ def getRulesStrings(filter_string, allow_repeats):
         filters = filter_string.split(",")
     filter_active = True
     command = ""
-    if xbmcvfs.exists(rules_path):
-        debugTrace("Reading " + rules_path + " with filter " + filter_string)
+    rules = readRulesFiles()
+    if not rules == None:
+        filter_active = True
+        rule = ""
         try:
-            rules_file = open(rules_path, 'r')
-            rules = rules_file.readlines()
-            rules_file.close()
-            filter_active = True
+            debugTrace("Parsing rules file with filter " + filter_string)
             for r in rules:
                 rule = r.strip(" \t\n\r")
                 # Find the right rule if this is a repeat tag
@@ -91,20 +134,21 @@ def getRulesStrings(filter_string, allow_repeats):
                                     filter_active = True                                    
                     # Use the rule if it's not filtered out                                
                     elif filter_active: 
-                        debugTrace("Found rule " + rule)
-                        just_rules.append(rule)
+                        _, _, _, addon_name, _ = parseRulesString(rule)
+                        if not ignore_disabled or xbmc.getCondVisibility("System.HasAddon(" + addon_name + ")"):
+                            debugTrace("Found rule " + rule)
+                            just_rules.append(rule)
+                        else:
+                            debugTrace("Add-on disabled, excluded " + rule)
                     else:
                         debugTrace("Filter excluded " + rule)
         except Exception as e:                        
-            errorTrace("execute.py", "Couldn't read " + rules_path)
-            errorTrace("execute.py", "Last line read was '" + rule + "'")
+            errorTrace("execute.py", "Couldn't parse rules files, last line read was '" + rule + "'")
             errorTrace("execute.py", str(e))
-    else:
-        errorTrace("execute.py", "File " + rules_path + " doesn't exist")
     if len(just_rules) < 1:
-        debugTrace("No rules were found in " + rules_path + " for filter " + filter_string)
+        debugTrace("No rules were found in the rules files for filter " + filter_string)
     if len(just_groups) < 1:
-        debugTrace("No groups were found in " + rules_path)
+        debugTrace("No groups were found in the rules files")
     return just_rules, just_groups
 
 
@@ -115,17 +159,16 @@ def getReadableRules(filter, rules_mask):
     if not rules_mask == "":
         selected_rules = rules_mask.split(",")
     ret_list = []
-    rules, _ = getRulesStrings(filter, False)
+    rules, _ = getRulesStrings(filter, False, True)
     for rule_string in rules:
         rule_number, rule_title, rule_function, rule_addon, commands = parseRulesString(rule_string)
-        if xbmc.getCondVisibility("System.HasAddon(" + rule_addon + ")"):
-            if (len(selected_rules) > 0 and rule_number in selected_rules):
-                start_tag = "[B]"
-                end_tag = "[/B]"
-            else:
-                start_tag = ""
-                end_tag = ""
-            ret_list.append(start_tag + rule_number + ". " + rule_title + ", " + rule_function + end_tag)
+        if (len(selected_rules) > 0 and rule_number in selected_rules):
+            start_tag = "[B]"
+            end_tag = "[/B]"
+        else:
+            start_tag = ""
+            end_tag = ""
+        ret_list.append(start_tag + rule_number + ". " + rule_title + ", " + rule_function + end_tag)
     return ret_list
 
 
@@ -133,19 +176,18 @@ def getRulesAddons(filter):
     # Return a list of the active addons the rules are using, with a filter applied.
     # Addons that have been disabled will not be returned
     ret_list = []
-    rules, _ = getRulesStrings(filter, False)
+    rules, _ = getRulesStrings(filter, False, True)
     for rule_string in rules:
         rule_number, rule_title, rule_function, rule_addon, commands = parseRulesString(rule_string)
-        if xbmc.getCondVisibility("System.HasAddon(" + rule_addon + ")"):
-            if not rule_addon in ret_list: 
-                ret_list.append(rule_addon)
+        if not rule_addon in ret_list: 
+            ret_list.append(rule_addon)
     return ret_list    
     
 
 def getRulesGroups(selected_groups):
     # Return all of the groups in the rules file
     ret_list = []
-    _, groups = getRulesStrings("", False)
+    _, groups = getRulesStrings("", False, False)
     for group in groups:
         if (len(selected_groups) > 0 and group in selected_groups):
             start_tag = "[B]"
@@ -169,7 +211,7 @@ def runRules(dialogs, filter, rules_mask):
         comm_delay = int(addon.getSetting("command_delay"))*1000
     except:
         comm_delay = 10000
-
+    
     if (not dialogs or xbmcgui.Dialog().yesno(addon_name, "About to take over the Kodi GUI.\n[B]You must avoid any input[/B] until the process is finished.\nAre you sure you want to continue?")):
 
         api = None
@@ -191,7 +233,7 @@ def runRules(dialogs, filter, rules_mask):
         progDiag.update(0)
         xbmc.sleep(5000)
         
-        rules_strings, _ = getRulesStrings(filter, False)
+        rules_strings, _ = getRulesStrings(filter, False, True)
         if not rules_strings == None:
             
             percent = 0
@@ -225,7 +267,7 @@ def runRules(dialogs, filter, rules_mask):
                                 if command.startswith("*"):
                                     comm_delay_mod = int(command[1:command.index(" ")])
                                     command = command[command.index(" ") + 1:].strip(" \t\n\r")
-                                xbmc.executebuiltin(command)
+                                #xbmc.executebuiltin(command)
                                 xbmc.sleep(comm_delay * comm_delay_mod)
                             except Exception as e:
                                 errorTrace("service.py", "Couldn't run command " + command)
@@ -245,7 +287,7 @@ def runRules(dialogs, filter, rules_mask):
                 percent += percent_inc
                 progDiag.update(percent, "Restarting VPN filtering")           
                 api.restart()
-            xbmc.sleep(comm_delay)
+                xbmc.sleep(comm_delay)           
                 
             progDiag.update(100, "Finished running rules", " ")
             xbmc.sleep(2000)

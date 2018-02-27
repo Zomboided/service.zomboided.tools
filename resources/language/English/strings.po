@@ -321,26 +321,30 @@ msgid "Rules"
 msgstr ""
 
 msgctxt "#32306"
-msgid "Command execution delay"
+msgid "Download latest rules during startup"
 msgstr ""
 
 msgctxt "#32307"
-msgid "Disable VPN filtering whilst running rules"
+msgid "Command execution delay"
 msgstr ""
 
 msgctxt "#32308"
-msgid "Click to refine video rule set"
+msgid "Disable VPN filtering whilst running rules"
 msgstr ""
 
 msgctxt "#32309"
-msgid "Video rules"
+msgid "Click to refine video rule set"
 msgstr ""
 
 msgctxt "#32310"
-msgid "Click to refine Emby rule set"
+msgid "Video rules"
 msgstr ""
 
 msgctxt "#32311"
+msgid "Click to refine Emby rule set"
+msgstr ""
+
+msgctxt "#32312"
 msgid "Emby rules"
 msgstr ""
 
