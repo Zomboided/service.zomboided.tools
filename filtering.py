@@ -21,16 +21,13 @@
 import xbmcaddon
 import xbmcgui
 from libs.utility import debugTrace, errorTrace, infoTrace, newPrint
-from libs.execute import getReadableRules, getRulesGroups, WILDCARD
+from libs.rules import rules, VIDEO_GROUP, EMBY_GROUP, WILDCARD
 
 trigger = sys.argv[1]
 action = sys.argv[2]
 
 RULES = "rules"
 GROUPS = "groups"
-
-# Wildcard string used in settings.xml.  Also in filtering.py
-
     
 def showList(list, filter, type):
     groups = ""
@@ -64,12 +61,14 @@ debugTrace("-- Entered filtering.py with parameters " + trigger + ", " + action 
 addon = xbmcaddon.Addon("service.zomboided.tools")
 addon_name = addon.getAddonInfo("name")
 
+rules = rules(False)
+
 list = []
 
 if action == "Video":
     mask = addon.getSetting("video_mask")
     if mask == WILDCARD: mask = ""
-    list = getReadableRules(action, mask)
+    list = rules.getReadableRules(VIDEO_GROUP, mask)
     mask = showList(list, action, RULES)
     if not mask == None: 
         if mask == "": mask = WILDCARD
@@ -78,7 +77,7 @@ if action == "Video":
 elif action == "Emby":
     mask = addon.getSetting("emby_mask")
     if mask == WILDCARD: mask = ""
-    list = getReadableRules(action, mask)
+    list = rules.getReadableRules(EMBY_GROUP, mask)
     mask = showList(list, action, RULES)
     if not mask == None: 
         if mask == "": mask = WILDCARD
@@ -87,14 +86,14 @@ elif action == "Emby":
 elif action == "Rules":
     mask = addon.getSetting(addon.getSetting("action_rules_mask_" + trigger))
     if mask == WILDCARD: mask = ""
-    list = getReadableRules(addon.getSetting("action_rules_group_" + trigger), mask)
+    list = rules.getReadableRules(addon.getSetting("action_rules_group_" + trigger), mask)
     mask = showList(list, addon.getSetting("action_rules_group_" + trigger), RULES)
     if not mask == None:
         if mask == "": mask = WILDCARD
         addon.setSetting("action_rules_mask_" + trigger, mask)
 
 elif action == "Set":
-    list = getRulesGroups(addon.getSetting("action_rules_group_" + trigger))
+    list = rules.getRulesGroups(addon.getSetting("action_rules_group_" + trigger))
     mask = showList(list, "", GROUPS)
     if not mask == None: addon.setSetting("action_rules_group_" + trigger, mask)
     

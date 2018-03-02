@@ -27,7 +27,7 @@ import time
 import datetime
 import calendar
 from libs.utility import setDebug, debugTrace, errorTrace, infoTrace, newPrint, now
-from libs.execute import getGitRules, runRules, WILDCARD
+from libs.rules import rules, VIDEO_GROUP, EMBY_GROUP, WILDCARD
 from libs.trakt import updateTrakt, revertTrakt
 from libs.vpnapi import VPNAPI
 
@@ -406,10 +406,10 @@ if __name__ == '__main__':
     warn = -1
     action_number = 0
           
-    # Fetch the latest rule set
-    if addon.getSetting("refresh_rules") == "true":
-        getGitRules()
-          
+    # Load the rules
+    rules = rules(True)
+    rules.preloadRulesAddons()
+              
     while not monitor.abortRequested():
     
         t = now()
@@ -585,15 +585,15 @@ if __name__ == '__main__':
                 elif action == "Reset video add-ons":
                     mask = addon.getSetting("video_mask")
                     if mask == WILDCARD: mask = ""
-                    runRules(False, "Video", mask)
+                    rules.runRules(False, VIDEO_GROUP, mask)
                 elif action == "Modify Trakt add-ons":
                     updateTrakt(10000, False)
                     if addon.getSetting("trakt_clear") == "true":
-                        runRules(False, "Video", mask)
+                        rules.runRules(False, "Video", mask)
                 elif action == "Reset Emby":
                     mask = addon.getSetting("emby_mask")
                     if mask == WILDCARD: mask = ""
-                    runRules(False, "Emby", mask)
+                    rules.runRules(False, EMBY_GROUP, mask)
                 elif action == "Disconnect VPN":
                     if api is not None:
                         result = api.disconnect(False)
@@ -617,7 +617,7 @@ if __name__ == '__main__':
                     group = addon.getSetting("action_rules_group_" + action_number)
                     mask = addon.getSetting("action_rules_mask_" + action_number)
                     if mask == WILDCARD: mask = ""
-                    runRules(False, group, mask)
+                    rules.runRules(False, group, mask)
                 else:
                     xbmc.executebuiltin(action)
             else:

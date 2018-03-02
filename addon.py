@@ -24,7 +24,7 @@ import xbmcplugin
 import xbmcgui
 import os
 from libs.utility import debugTrace, errorTrace, infoTrace
-from libs.execute import runRules, getRulesAddons, EMBY_GROUP, VIDEO_GROUP, WILDCARD
+from libs.rules import rules, hasVideoAddons, hasEmbyAddons, EMBY_GROUP, VIDEO_GROUP, WILDCARD
 from libs.trakt import updateTrakt, revertTrakt
 from libs.logbox import popupKodiLog
 from libs.speedtest import speedTest
@@ -50,7 +50,6 @@ for token in args:
     inc = inc + 1  
 
 debugTrace("Parsed arguments to action=" + action + " params=" + params)
-
     
 def topLevel():
     # Build the top level menu with URL callbacks to this plugin
@@ -58,11 +57,11 @@ def topLevel():
     url = base_url + "?settings"
     li = xbmcgui.ListItem("Add-on Settings", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
-    if len(getRulesAddons(VIDEO_GROUP)) > 0:
+    if hasVideoAddons():
         url = base_url + "?resetvideo"
         li = xbmcgui.ListItem("Reset Video Add-ons", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
-    if addon.getSetting("enable_debug") == "true" and len(getRulesAddons(EMBY_GROUP)) > 0:
+    if addon.getSetting("enable_debug") == "true" and hasEmbyAddons():
         url = base_url + "?resetemby"
         li = xbmcgui.ListItem("Reset Emby", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
         xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
@@ -99,12 +98,14 @@ elif action == "resetvideo" :
     debugTrace("Reset video addons")
     mask = addon.getSetting("video_mask")
     if mask == WILDCARD: mask = ""
-    runRules(True, "Video", mask)
+    rules = rules(False)
+    rules.runRules(True, "Video", mask)
 elif action == "resetemby" :
     debugTrace("Reset Emby")
     mask = addon.getSetting("emby_mask")
     if mask == WILDCARD: mask = ""
-    runRules(True, "Emby", mask)
+    rules = rules(False)
+    rules.runRules(True, "Emby", mask)
 elif action == "modifytrakt" :
     debugTrace("Modify Trakt add-ons")
     updateTrakt(10000, True)

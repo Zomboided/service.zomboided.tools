@@ -1,3 +1,6 @@
+v0.2.0
+- Optimize rules engine
+
 v0.1.2
 - Variable delay in rules engine
 - Fix progress percent calculation
