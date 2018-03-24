@@ -68,6 +68,49 @@ msgid "Seconds between videos"
 msgstr ""
 
 
+# Sleep Screen
+
+msgctxt "#32030"
+msgid "Sleep"
+msgstr ""
+
+msgctxt "#32031"
+msgid "Sleep Timer - NOT SUPPORTED"
+msgstr ""
+
+msgctxt "#32032"
+msgid "Map sleep button"
+msgstr ""
+
+msgctxt "#32033"
+msgid "Sleep timer action"
+msgstr ""
+
+msgctxt "#32034"
+msgid "Command"
+msgstr ""
+
+msgctxt "#32035"
+msgid "Also turn off TV with CEC command"
+msgstr ""
+
+msgctxt "#32036"
+msgid "Notify before sleep (minutes, 0 is off)"
+msgstr ""
+
+msgctxt "#32037"
+msgid "Warning before sleep (seconds, 0 is off)"
+msgstr ""
+
+msgctxt "#32038"
+msgid "Sleep timer increments"
+msgstr ""
+
+msgctxt "#32039"
+msgid "Sleep timer maximum"
+msgstr ""
+
+
 # Trigger Screens
 
 msgctxt "#32051"
@@ -88,6 +131,26 @@ msgstr ""
 
 msgctxt "#32055"
 msgid "Action #5"
+msgstr ""
+
+msgctxt "#32056"
+msgid "Action #6"
+msgstr ""
+
+msgctxt "#32057"
+msgid "Action #7"
+msgstr ""
+
+msgctxt "#32058"
+msgid "Action #8"
+msgstr ""
+
+msgctxt "#32059"
+msgid "Action #9"
+msgstr ""
+
+msgctxt "#32060"
+msgid "Action #10"
 msgstr ""
 
 msgctxt "#32061"
@@ -119,178 +182,163 @@ msgid "Sleep"
 msgstr ""
 
 msgctxt "#32068"
-msgid "Modify Trakt add-ons"
+msgid "Stop Playing"
 msgstr ""
 
 msgctxt "#32069"
-msgid "Reset video add-ons"
+msgid "Modify Trakt add-ons"
 msgstr ""
 
 msgctxt "#32070"
-msgid "Reset Emby"
+msgid "Reset video add-ons"
 msgstr ""
 
 msgctxt "#32071"
-msgid "Run custom rules"
+msgid "Reset Emby"
 msgstr ""
 
 msgctxt "#32072"
-msgid "Run Command"
+msgid "Run custom rules"
 msgstr ""
 
 msgctxt "#32073"
-msgid "Disconnect VPN Manager"
+msgid "Run Command"
 msgstr ""
 
 msgctxt "#32074"
-msgid "Reconnect VPN Manager"
+msgid "Disconnect VPN Manager"
 msgstr ""
 
 msgctxt "#32075"
-msgid "Click to select rule sets"
-msgstr ""
-
-msgctxt "#32076"
-msgid "Rule sets"
-msgstr ""
-
-msgctxt "#32077"
-msgid "Click to refine rules within sets"
-msgstr ""
-
-msgctxt "#32078"
-msgid "Rules"
-msgstr ""
-
-msgctxt "#32079"
-msgid "Command"
-msgstr ""
-
-msgctxt "#32080"
-msgid "Warning before action (seconds, 0 is off)"
-msgstr ""
-
-msgctxt "#32081"
-msgid "Timer Trigger"
-msgstr ""
-
-msgctxt "#32082"
-msgid "Frequency"
-msgstr ""
-
-msgctxt "#32083"
-msgid "Off"
-msgstr ""
-
-msgctxt "#32084"
-msgid "Daily"
-msgstr ""
-
-msgctxt "#32085"
-msgid "Periodically"
+msgid "Reconnect VPN Manager"
 msgstr ""
 
 msgctxt "#32086"
-msgid "Weekly"
+msgid "Click to select rule sets"
 msgstr ""
 
 msgctxt "#32087"
-msgid "Monthly"
+msgid "Rule sets"
 msgstr ""
 
 msgctxt "#32088"
-msgid "Time (24h)"
+msgid "Click to refine rules within sets"
 msgstr ""
 
 msgctxt "#32089"
-msgid "Period (Days)"
+msgid "Rules"
 msgstr ""
 
 msgctxt "#32090"
+msgid "Command"
+msgstr ""
+
+msgctxt "#32110"
+msgid "Warning before action (seconds, 0 is off)"
+msgstr ""
+
+msgctxt "#32111"
+msgid "Timer Trigger"
+msgstr ""
+
+msgctxt "#32112"
+msgid "Frequency"
+msgstr ""
+
+msgctxt "#32113"
+msgid "Off"
+msgstr ""
+
+msgctxt "#32114"
+msgid "Daily"
+msgstr ""
+
+msgctxt "#32115"
+msgid "Periodically"
+msgstr ""
+
+msgctxt "#32116"
+msgid "Weekly"
+msgstr ""
+
+msgctxt "#32117"
+msgid "Monthly"
+msgstr ""
+
+msgctxt "#32118"
+msgid "Time (24h)"
+msgstr ""
+
+msgctxt "#32119"
+msgid "Period (Days)"
+msgstr ""
+
+msgctxt "#32120"
 msgid "Day (Weekly)"
 msgstr ""
 
-msgctxt "#32091"
+msgctxt "#32121"
 msgid "Monday"
 msgstr ""
 
-msgctxt "#32092"
+msgctxt "#32122"
 msgid "Tuesday"
 msgstr ""
 
-msgctxt "#32093"
+msgctxt "#32123"
 msgid "Wednesday"
 msgstr ""
 
-msgctxt "#32094"
+msgctxt "#32124"
 msgid "Thursday"
 msgstr ""
 
-msgctxt "#32095"
+msgctxt "#32125"
 msgid "Friday"
 msgstr ""
 
-msgctxt "#32096"
+msgctxt "#32126"
 msgid "Saturday"
 msgstr ""
 
-msgctxt "#32097"
+msgctxt "#32127"
 msgid "Sunday"
 msgstr ""
 
-msgctxt "#32098"
+msgctxt "#32128"
 msgid "Date (Monthly)"
 msgstr ""
 
-msgctxt "#32099"
+msgctxt "#32129"
 msgid "Take action if playing"
 msgstr ""
 
-msgctxt "#32100"
+msgctxt "#32130"
 msgid "File Change Trigger"
 msgstr ""
 
-msgctxt "#32101"
+msgctxt "#32131"
 msgid "Detect file changes"
 msgstr ""
 
-msgctxt "#32102"
+msgctxt "#32132"
 msgid "Detect if file not available"
 msgstr ""
 
-msgctxt "#32103"
+msgctxt "#32133"
 msgid "File"
 msgstr ""
 
-msgctxt "#32104"
+msgctxt "#32134"
 msgid "Add-on Change Trigger"
 msgstr ""
 
-msgctxt "#32105"
+msgctxt "#32135"
 msgid "Detect if add-ons are updated"
 msgstr ""
 
-msgctxt "#32106"
+msgctxt "#32136"
 msgid "Add-ons"
-msgstr ""
-
-
-# Sleep Screen
-
-msgctxt "#32150"
-msgid "Sleep"
-msgstr ""
-
-msgctxt "#32151"
-msgid "User sleep timer - NOT SUPPORTED"
-msgstr ""
-
-msgctxt "#32152"
-msgid "Sleep timer increments"
-msgstr ""
-
-msgctxt "#32153"
-msgid "Sleep timer maximum"
 msgstr ""
 
 

@@ -30,6 +30,9 @@ from libs.utility import setDebug, debugTrace, errorTrace, infoTrace, newPrint, 
 from libs.rules import rules, VIDEO_GROUP, EMBY_GROUP, WILDCARD
 from libs.trakt import updateTrakt, revertTrakt
 from libs.vpnapi import VPNAPI
+from libs.common import fixKeymaps, getSleep, setSleep, getSleepReq, setSleepReq, clearSleep, setSleepRemaining, getSleepRemaining
+from libs.common import getSleepReqTime, SLEEP_OFF, SLEEP_END, SLEEP_DELAY_TIME, clearAlert, addAlert, activeAlert, forceSleepLock, freeSleepLock
+
 
 setDebug(False)
 
@@ -46,7 +49,11 @@ debugTrace("-- Entered service.py --")
 days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
 # Number of actions enabled in the settings screen
-ACTION_COUNT = 5
+ACTION_COUNT = 10
+
+# Like an action, but in the land of nod
+SLEEP_ACTION = "Zzzz"
+
 
 # Set the addon name for use in the dialogs
 addon = xbmcaddon.Addon()
@@ -68,6 +75,7 @@ file_check_freq = 0
 refresh_check_freq = 0
 
 # Timers
+sleep_timer = 0
 action_timer = 0
 action_timer_number = 0
 addon_timer = 0
@@ -79,6 +87,7 @@ file_timer = 0
 file_timer_start = 0
 file_timer_end = 0
 refresh_timer = 0
+
 
 # Monitor class which will get called when the settings change    
 class KodiMonitor(xbmc.Monitor):
@@ -149,6 +158,7 @@ def updateSettings(caller, wait):
     # The warning timers should be 10 second increments so fix if it's not
     for i in range(1, (ACTION_COUNT + 1)):
         fixWarnTime("action_warn_" + str(i))
+    fixWarnTime("sleep_warn")
     addon = xbmcaddon.Addon()
         
     # Refresh the action settings
@@ -347,8 +357,12 @@ class KodiPlayer(xbmc.Player):
         
     def onPlayBackStopped(self, *arg):
         global playback_timer
+        global sleep_timer
         playback_timer = 0
         self.resetPlaybackCounts()
+        if getSleep() == "End":
+            addAlert()
+            sleep_timer = 1
         
     def onPlayBackEnded(self, *arg):
         global playback_timer
@@ -356,6 +370,9 @@ class KodiPlayer(xbmc.Player):
         t = now()
         self.playlist_ended = t
         self.playlist_count += 1
+        if getSleep() == "End":
+            addAlert()
+            sleep_timer = 1
 
     def resetPlaybackCounts(self):
         self.playlist_playing = False
@@ -393,12 +410,18 @@ if __name__ == '__main__':
     updateSettings("main initialisation", True)
     
     # Initialise a bunch of variables
-    delay = 60
+    delay = 10
+    delay_loop = 6
 
     file_timer = 0
     action_number_f = 0
     addon_timer = 0
     action_number_a = 0
+    last_sleep = SLEEP_OFF
+    sleep_timer = 0
+    sleep_notify = 0
+    notify_mins = "0"
+    clearSleep()
 
     do_it = False    
     action_if_playing = False
@@ -410,6 +433,10 @@ if __name__ == '__main__':
     rules = rules(True)
     rules.preloadRulesAddons()
               
+    # Check the keymaps for this add-on are intact
+    if fixKeymaps():
+        xbmcgui.Dialog().ok(addon_name, "The keymap had been renamed.  This has been reverted to the correct name, but you must restart for the keymap to take effect.") 
+              
     while not monitor.abortRequested():
     
         t = now()
@@ -417,7 +444,22 @@ if __name__ == '__main__':
         if playback_timer > 0 and t > playback_timer:
             player.stop()
             infoTrace("service.py", "Stopping play back.  Duration is " + str(playback_duration_minutes) + " minutes, time limit is " + str(playback_time))
-
+           
+        # Sleep Checking
+        if sleep_timer > 0 and not do_it:
+            if t > sleep_timer:
+                sleep_timer = 0
+                do_it = True
+                action_number = SLEEP_ACTION
+                action = addon.getSetting("sleep_action")
+                warn = int(addon.getSetting("sleep_warn"))
+                action_if_playing = True
+                infoTrace("service.py", "Sleep timer has triggered on " + str(t) + ".")
+                last_sleep = SLEEP_OFF
+            if sleep_notify > 0 and t > sleep_notify:
+                sleep_notify = 0
+                xbmcgui.Dialog().notification("Sleep in " + notify_mins + " minutes." , "", "", 3000, False)
+            
         # Timer Checking
         if action_timer > 0 and t > action_timer and not do_it:
             do_it = True
@@ -556,14 +598,54 @@ if __name__ == '__main__':
             allowUpdates(True)
             addon = xbmcaddon.Addon()
         
+        # Set up sleep timer
+        sleep_setting = getSleepReq()
+        if not sleep_setting == "":
+            if t - getSleepReqTime() < SLEEP_DELAY_TIME:
+                # This reduces the loop time so that sleep changes are noticed in a reasonable time
+                addAlert()
+            else:
+                forceSleepLock()
+                debugTrace("Found a sleep timer " + sleep_setting + ". Previous was " + last_sleep)
+                last_sleep = sleep_setting
+                if sleep_setting == SLEEP_OFF or sleep_setting == SLEEP_END:
+                    sleep_timer = 0
+                    sleep_notification = 0
+                    setSleepRemaining("")
+                else:
+                    if sleep_setting.isdigit():
+                        sleep_timer = t + (int(sleep_setting) * 60)
+                        notify_mins = addon.getSetting("sleep_notify")
+                        sleep_notify = 0
+                        if not (notify_mins == "" or notify_mins == "0"):
+                            sleep_notify = sleep_timer - (int(notify_mins) * 60)
+                        debugTrace("Time now is " + str(t) + ", sleep timer set for " + str(sleep_timer) + ", sleep notify is " + str(sleep_notify))
+                    else:
+                        errorTrace("Sleep timer was bad, found" + sleep_setting)
+                        sleep_timer = 0
+                        setSleepRemaining("")
+                        sleep_setting = SLEEP_OFF
+                setSleep(sleep_setting)
+                setSleepReq("")
+                freeSleepLock()
+        
+        # Update sleep remaining for sleep cycle display elsewhere
+        sleep_setting = getSleep()
+        if not (sleep_setting == SLEEP_OFF or sleep_setting == SLEEP_END):
+            setSleepRemaining(str((sleep_timer - t)/60))
+        
         # Take any outstanding action
         if do_it and (not player.isPlaying() or (player.isPlaying() and action_if_playing)):
             if warn > 0 and not action == "None":
-                msg = "About to " + action + ", click cancel to abort."
+                msg = ""
+                if action_number == SLEEP_ACTION: msg = "It's time to sleep! "
+                msg = msg + "About to " + action + ", click cancel to abort."
                 if action == "Clear Cache":
                     msg = msg + "\n[COLOR red][B]Avoid using any input device until cache clearance is complete.[/B][/COLOR]"
                 if action == "Run Command":
-                    msg = msg + "\nCommand is '[I]" + addon.getSetting("action_command_" + action_number) + "'[/I]" 
+                    if action_number == SLEEP_ACTION: c = addon.getSetting("sleep_command")
+                    else: c = addon.getSetting("action_command_" + action_number)
+                    msg = msg + "\nCommand is '[I]" + c + "'[/I]" 
                 dialog = xbmcgui.DialogProgress()
                 dialog.create(addon_name, msg)
                 dialog.update(100)
@@ -580,8 +662,13 @@ if __name__ == '__main__':
                 dialog.close()
             if do_it:
                 infoTrace("service.py", "Trigger fired for action #" + action_number + ", performing a " + action)
+                if action_number == SLEEP_ACTION and addon.getSetting("sleep_cec_off") == "true":
+                    infoTrace("service.py", "Turning off TV before action " + action)
+                    xbmc.executebuiltin("CECStandby")
                 if action == "None":
                     xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but no action is defined.")
+                elif action == "Stop Playing":
+                    player.stop()
                 elif action == "Reset video add-ons":
                     mask = addon.getSetting("video_mask")
                     if mask == WILDCARD: mask = ""
@@ -604,8 +691,9 @@ if __name__ == '__main__':
                         result = api.reconnect(True)
                     else:
                         xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but VPN Manager is not available.")
-                elif action == "Run Command":                    
-                    c = addon.getSetting("action_command_" + action_number)
+                elif action == "Run Command":
+                    if action_number == SLEEP_ACTION: c = addon.getSetting("sleep_command")
+                    else: c = addon.getSetting("action_command_" + action_number)
                     infoTrace("service.py", "Executing command '" + c + "'")
                     try:
                         xbmc.executebuiltin(c)
@@ -634,11 +722,16 @@ if __name__ == '__main__':
             updateSettings("main refresh timer", True)
         
         # Have a nap before checking timers again
-        if monitor.waitForAbort(delay):
-            # Abort was requested while waiting. We should exit
-            infoTrace("service.py", "Abort received, shutting down service")
-            break
-        
-        if t > addon_timer_start and t < addon_timer_end : addon_timer = addon_timer + delay
-        if t > file_timer_start and t < file_timer_end : file_timer = file_timer + delay
-        refresh_timer = refresh_timer + delay
+        delay_count = 0
+        for i in range(0, delay_loop):
+            if monitor.waitForAbort(delay):
+                # Abort was requested while waiting. We should exit
+                infoTrace("service.py", "Abort received, shutting down service")
+                break
+            if activeAlert(): break
+            delay_count += delay
+
+        clearAlert()
+        if t > addon_timer_start and t < addon_timer_end : addon_timer = addon_timer + delay_count
+        if t > file_timer_start and t < file_timer_end : file_timer = file_timer + delay_count
+        refresh_timer = refresh_timer + delay_count

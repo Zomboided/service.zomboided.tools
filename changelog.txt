@@ -1,3 +1,6 @@
+v0.3.0
+- Sleep timer
+
 v0.2.0
 - Optimize rules engine
 

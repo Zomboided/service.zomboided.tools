@@ -75,9 +75,8 @@ class rules:
         for a in addons:
             if not rule_addons == "": rule_addons = rule_addons + ","
             rule_addons = rule_addons + a
-        newPrint("Rule addons are" + rule_addons)
 
-        
+            
     def getGitRules(self):
         if self.addon.getSetting("refresh_rules") == "true":
             # Download RULES.txt file from Github
