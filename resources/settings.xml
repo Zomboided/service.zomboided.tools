@@ -22,11 +22,12 @@
         <setting label="32033" type="labelenum" id="sleep_action" lvalues="32068|32065|32066|32067|32073"/>
         <setting label="32034" type="text" id="sleep_command" enable="true" visible="eq(-1,4)" default=""/>  
         <setting label="32035" type="bool" id="sleep_cec_off" default="true"/>
-        <setting label="32036" type="slider" id="sleep_notify" default="1" range="0,1,5" option="int"/>
-        <setting label="32037" type="slider" id="sleep_warn" default="10" range="0,10,30" option="int"/>
+        <setting label="32036" type="text" enable="false" visible="eq(-1,true)"/>  
+        <setting label="32037" type="slider" id="sleep_notify" default="1" range="0,1,5" option="int"/>
+        <setting label="32038" type="slider" id="sleep_warn" default="10" range="0,10,30" option="int"/>
         <setting label=""      type="lsep"/>
-        <setting label="32038" type="slider" id="sleep_inc" default="15" range="5,5,30" option="int"/>
-        <setting label="32039" type="slider" id="sleep_max" default="60" range="15,15,120" option="int"/>
+        <setting label="32039" type="slider" id="sleep_inc" default="15" range="5,5,30" option="int"/>
+        <setting label="32040" type="slider" id="sleep_max" default="60" range="15,15,120" option="int"/>
     </category>
     <category label="32051">
         <setting label="32061" type="lsep"/>

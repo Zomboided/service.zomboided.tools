@@ -1,3 +1,6 @@
+v0.3.1
+- Sleep timer fixes
+
 v0.3.0
 - Sleep timer
 

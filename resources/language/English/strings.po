@@ -75,7 +75,7 @@ msgid "Sleep"
 msgstr ""
 
 msgctxt "#32031"
-msgid "Sleep Timer - NOT SUPPORTED"
+msgid "Sleep Timer"
 msgstr ""
 
 msgctxt "#32032"
@@ -95,18 +95,22 @@ msgid "Also turn off TV with CEC command"
 msgstr ""
 
 msgctxt "#32036"
-msgid "Notify before sleep (minutes, 0 is off)"
+msgid "Your TV needs to support CEC standby for this to work"
 msgstr ""
 
 msgctxt "#32037"
-msgid "Warning before sleep (seconds, 0 is off)"
+msgid "Notify before sleep (minutes, 0 is off)"
 msgstr ""
 
 msgctxt "#32038"
-msgid "Sleep timer increments"
+msgid "Warning before sleep (seconds, 0 is off)"
 msgstr ""
 
 msgctxt "#32039"
+msgid "Sleep timer increments"
+msgstr ""
+
+msgctxt "#32040"
 msgid "Sleep timer maximum"
 msgstr ""
 

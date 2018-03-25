@@ -456,6 +456,7 @@ if __name__ == '__main__':
                 action_if_playing = True
                 infoTrace("service.py", "Sleep timer has triggered on " + str(t) + ".")
                 last_sleep = SLEEP_OFF
+                setSleep(SLEEP_OFF)
             if sleep_notify > 0 and t > sleep_notify:
                 sleep_notify = 0
                 xbmcgui.Dialog().notification("Sleep in " + notify_mins + " minutes." , "", "", 3000, False)
