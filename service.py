@@ -305,6 +305,7 @@ class KodiPlayer(xbmc.Player):
     playlist_max = 0
     playlist_count = 0
     playlist_ended = 0
+    playing_file = False
 
     def __init__ (self):
         xbmc.Player.__init__(self)
@@ -312,6 +313,10 @@ class KodiPlayer(xbmc.Player):
 
     def onPlayBackStarted(self, *arg):
         global playback_timer
+        
+        # Deal with endPlayback not being called previously
+        if self.playing_file: self.runPlaybackEnded()
+        self.playing_file = True
         
         t = now()
         
@@ -358,21 +363,16 @@ class KodiPlayer(xbmc.Player):
     def onPlayBackStopped(self, *arg):
         global playback_timer
         global sleep_timer
+        self.playing_file = False
         playback_timer = 0
         self.resetPlaybackCounts()
+        debugTrace("Playback stopped, sleep is " + getSleep())
         if getSleep() == "End":
             addAlert()
             sleep_timer = 1
         
     def onPlayBackEnded(self, *arg):
-        global playback_timer
-        playback_timer = 0
-        t = now()
-        self.playlist_ended = t
-        self.playlist_count += 1
-        if getSleep() == "End":
-            addAlert()
-            sleep_timer = 1
+        self.runPlaybackEnded("onPlayBackEnded")
 
     def resetPlaybackCounts(self):
         self.playlist_playing = False
@@ -380,6 +380,22 @@ class KodiPlayer(xbmc.Player):
         self.playlist_count = 0
         self.playlist_ended = 0
 
+    def runPlaybackEnded(self, caller):
+        global playback_timer
+        global sleep_timer
+        self.playing_file = False
+        playback_timer = 0
+        t = now()
+        self.playlist_ended = t
+        self.playlist_count += 1
+        debugTrace("Playback ended called from " + caller + ", at " + str(self.playlist_ended) + ", count is " + str(self.playlist_count) + " sleep is " + getSleep())
+        if getSleep() == "End":
+            addAlert()
+            sleep_timer = 1
+        
+    def isStillPlaying(self):
+        return self.playing_file
+        
         
 if __name__ == '__main__':   
 
@@ -441,6 +457,10 @@ if __name__ == '__main__':
     
         t = now()
 
+        # This copes with endPlayback not being called properly (for whatever reason)
+        if player.isStillPlaying() and not player.isPlaying():
+            player.runPlaybackEnded("main loop")
+        
         if playback_timer > 0 and t > playback_timer:
             player.stop()
             infoTrace("service.py", "Stopping play back.  Duration is " + str(playback_duration_minutes) + " minutes, time limit is " + str(playback_time))
@@ -459,8 +479,8 @@ if __name__ == '__main__':
                 setSleep(SLEEP_OFF)
             if sleep_notify > 0 and t > sleep_notify:
                 sleep_notify = 0
-                xbmcgui.Dialog().notification("Sleep in " + notify_mins + " minutes." , "", "", 3000, False)
-            
+                xbmcgui.Dialog().notification("Sleeping in " + notify_mins + " minutes." , "", "", 3000, False)
+        
         # Timer Checking
         if action_timer > 0 and t > action_timer and not do_it:
             do_it = True
@@ -607,7 +627,7 @@ if __name__ == '__main__':
                 addAlert()
             else:
                 forceSleepLock()
-                debugTrace("Found a sleep timer " + sleep_setting + ". Previous was " + last_sleep)
+                infoTrace("service.py", "Setting a sleep timer, " + sleep_setting + ". Previous was " + last_sleep)
                 last_sleep = sleep_setting
                 if sleep_setting == SLEEP_OFF or sleep_setting == SLEEP_END:
                     sleep_timer = 0
@@ -637,16 +657,24 @@ if __name__ == '__main__':
         
         # Take any outstanding action
         if do_it and (not player.isPlaying() or (player.isPlaying() and action_if_playing)):
-            if warn > 0 and not action == "None":
+            if action == "Stop Playing" and not player.isPlaying():
+                if not action_number == SLEEP_ACTION or (action_number == SLEEP_ACTION and not addon.getSetting("sleep_cec_off") == "true"):
+                    # There's nothing to do here...
+                    do_it = False
+                    infoTrace("service.py", action + " unnecessary")
+            if do_it and warn > 0 and not action == "None":
                 msg = ""
-                if action_number == SLEEP_ACTION: msg = "It's time to sleep! "
-                msg = msg + "About to " + action + ", click cancel to abort."
+                if action_number == SLEEP_ACTION: 
+                    msg = "Going to sleep. "
+                if not action == "Stop Playing" or (action == "Stop Playing" and player.isPlaying()):
+                    msg = msg + "About to " + action + ". "
+                msg = msg + "Click cancel to abort. "
                 if action == "Clear Cache":
-                    msg = msg + "\n[COLOR red][B]Avoid using any input device until cache clearance is complete.[/B][/COLOR]"
+                    msg = msg + "[COLOR red][B]Avoid using any input device until cache clearance is complete.[/B][/COLOR]"
                 if action == "Run Command":
                     if action_number == SLEEP_ACTION: c = addon.getSetting("sleep_command")
                     else: c = addon.getSetting("action_command_" + action_number)
-                    msg = msg + "\nCommand is '[I]" + c + "'[/I]" 
+                    msg = msg + "Command is '[I]" + c + "'[/I]" 
                 dialog = xbmcgui.DialogProgress()
                 dialog.create(addon_name, msg)
                 dialog.update(100)
@@ -655,6 +683,7 @@ if __name__ == '__main__':
                 for i in range(1, 100):
                     if dialog.iscanceled():
                         do_it = False
+                        infoTrace("service.py", action + " aborted by user")
                         break
                     percent = 100-(i*tick)
                     if percent < 0: break
@@ -709,8 +738,6 @@ if __name__ == '__main__':
                     rules.runRules(False, group, mask)
                 else:
                     xbmc.executebuiltin(action)
-            else:
-                infoTrace("service.py", action + " aborted by user")
                 
             # Get the next timer setting
             updateSettings("main after action", True)
@@ -729,7 +756,7 @@ if __name__ == '__main__':
                 # Abort was requested while waiting. We should exit
                 infoTrace("service.py", "Abort received, shutting down service")
                 break
-            if activeAlert(): break
+            if activeAlert() or not player.isPlaying(): break
             delay_count += delay
 
         clearAlert()

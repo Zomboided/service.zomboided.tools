@@ -143,10 +143,10 @@ def requestSleep():
             debugTrace("New sleep request, " + current + ", remain is " + "")
         
         if current.isdigit():
-            xbmcgui.Dialog().notification("Sleep after " + current + " minutes." , "", "", 2000, False)
+            xbmcgui.Dialog().notification("Sleeping in " + current + " minutes." , "", "", 2000, False)
         else:
             if current == SLEEP_END:
-                xbmcgui.Dialog().notification("Sleep after end of current video." , "", "", 2000, False)
+                xbmcgui.Dialog().notification("Sleeping after end of current video." , "", "", 2000, False)
             else:
                 xbmcgui.Dialog().notification("Sleep is off." , "", "", 2000, False)
         
