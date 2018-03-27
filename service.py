@@ -30,7 +30,7 @@ from libs.utility import setDebug, debugTrace, errorTrace, infoTrace, newPrint, 
 from libs.rules import rules, VIDEO_GROUP, EMBY_GROUP, WILDCARD
 from libs.trakt import updateTrakt, revertTrakt
 from libs.vpnapi import VPNAPI
-from libs.common import fixKeymaps, getSleep, setSleep, getSleepReq, setSleepReq, clearSleep, setSleepRemaining, getSleepRemaining
+from libs.common import fixKeymaps, getSleep, setSleep, getSleepReq, setSleepReq, setSleepReqTime, clearSleep, setSleepRemaining, getSleepRemaining
 from libs.common import getSleepReqTime, SLEEP_OFF, SLEEP_END, SLEEP_DELAY_TIME, clearAlert, addAlert, activeAlert, forceSleepLock, freeSleepLock
 
 
@@ -54,6 +54,9 @@ ACTION_COUNT = 10
 # Like an action, but in the land of nod
 SLEEP_ACTION = "Zzzz"
 
+# Used in parse timer
+TODAY = -1
+TOMORROW = 0
 
 # Set the addon name for use in the dialogs
 addon = xbmcaddon.Addon()
@@ -87,6 +90,8 @@ file_timer = 0
 file_timer_start = 0
 file_timer_end = 0
 refresh_timer = 0
+auto_sleep_start = 0
+auto_sleep_end = 0
 
 
 # Monitor class which will get called when the settings change    
@@ -122,6 +127,8 @@ def updateSettings(caller, wait):
     global file_check_freq
     global refresh_timer
     global refresh_check_freq
+    global auto_sleep_start
+    global auto_sleep_end
     
     if not updatesAllowed() and not wait: return
     
@@ -184,20 +191,19 @@ def updateSettings(caller, wait):
             last = addon.getSetting("addon_name_" + j)
             if not selected == last: addon_timer = addon_check_freq + 1
         
+    t = now()
+    
     # Frequency add-ons are checked
     addon_check_freq = int(addon.getSetting("addon_check"))*60
-    time = addon.getSetting("addon_check_start")
-    addon_timer_start = parseTimer("Addon Check Start", "Daily", time, "", "", "", 0)
-    time = addon.getSetting("addon_check_end")
-    addon_timer_end = parseTimer("Addon Check End", "Daily", time, "", "", "", addon_timer_start)
+    addon_timer_start, addon_timer_end = parseTimePeriod(t, "Addon Check", addon.getSetting("addon_check_start"), addon.getSetting("addon_check_end"))
     
     # Frequency files are checked
     file_check_freq = int(addon.getSetting("file_check"))*60
-    time = addon.getSetting("file_check_start")
-    file_timer_start = parseTimer("File Check Start", "Daily", time, "", "", "", 0)
-    time = addon.getSetting("file_check_end")
-    file_timer_end = parseTimer("File Check End", "Daily", time, "", "", "", file_timer_start)
-    
+    file_timer_start, file_timer_end = parseTimePeriod(t, "File Check", addon.getSetting("file_check_start"), addon.getSetting("file_check_end"))
+
+    # Auto sleep timers
+    auto_sleep_start, auto_sleep_end = parseTimePeriod(t, "Auto Sleep", addon.getSetting("auto_sleep_start"), addon.getSetting("auto_sleep_end"))
+
     # Settings get refreshed infrequently, just in case...
     refresh_check_freq = int(addon.getSetting("refresh_check"))*60
     
@@ -207,7 +213,7 @@ def updateSettings(caller, wait):
         debugTrace("No action timers are set")
     allowUpdates(True)
 
-
+    
 def allowUpdates(bool):
     xbmc.sleep(1000)
     if bool:
@@ -247,7 +253,7 @@ def parseTimer(type, freq, rtime, day, date, period, begin):
         # Make some datetime objects representing now, last boot time and the timer
         current_dt = datetime.datetime.fromtimestamp(t)
         last_dt = datetime.datetime.fromtimestamp(last_boot)
-        xbmc.sleep(1000)
+        #xbmc.sleep(1000)
         #try:
         #    timer_dt = datetime.datetime.strptime(timer, "%d %m %Y %H:%M")
         #except:
@@ -255,7 +261,7 @@ def parseTimer(type, freq, rtime, day, date, period, begin):
         # Adjust timer based on the frequency
         if freq == "Daily":
             # If the timer is in the past, add a day
-            if timer_dt < current_dt: 
+            if timer_dt < current_dt and not begin == TODAY: 
                 d = datetime.timedelta(days = 1)
                 timer_dt = timer_dt + d
         elif freq == "Weekly":
@@ -298,6 +304,18 @@ def parseTimer(type, freq, rtime, day, date, period, begin):
         return (t + diff_seconds)
 
         
+def parseTimePeriod(t, timer_name, start_time, end_time):
+    happy = False
+    start = TODAY
+    while not happy:
+        timer_start = parseTimer(timer_name + " Start", "Daily", start_time, "", "", "", start)
+        timer_end = parseTimer(timer_name + " End", "Daily", end_time, "", "", "", timer_start)
+        # If the scheduled time is in the past, try again for the next day
+        if timer_end < t: start = TOMORROW
+        else: happy = True
+    return timer_start, timer_end
+    
+
 # Player class which will be called when the playback state changes           
 class KodiPlayer(xbmc.Player):
     
@@ -313,6 +331,8 @@ class KodiPlayer(xbmc.Player):
 
     def onPlayBackStarted(self, *arg):
         global playback_timer
+        
+        addon = xbmcaddon.Addon()
         
         # Deal with endPlayback not being called previously
         if self.playing_file: self.runPlaybackEnded()
@@ -358,7 +378,15 @@ class KodiPlayer(xbmc.Player):
             elif playlist_time_check and t > self.playlist_max and self.playlist_count >= playlist_min_count:
                 xbmc.Player().stop()
                 infoTrace("service.py", "Stopping playlist after reaching maximum time period")
-                self.resetPlaybackCounts()  
+                self.resetPlaybackCounts()
+        
+        if addon.getSetting("auto_sleep") == "true" and t > auto_sleep_start and t < auto_sleep_end:
+            if getSleep() == "Off":
+                setSleepReq("End")
+                setSleepReqTime(t-SLEEP_DELAY_TIME)
+                xbmcgui.Dialog().notification("Sleeping at end of video." , "", "", 2000, False)
+                addAlert()
+        
         
     def onPlayBackStopped(self, *arg):
         global playback_timer

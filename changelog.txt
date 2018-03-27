@@ -1,3 +1,7 @@
+v0.3.3
+- General timer fixes
+- Added auto sleep setting
+
 v0.3.2
 - More sleep timer fixes
 

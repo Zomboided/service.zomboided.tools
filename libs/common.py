@@ -146,7 +146,7 @@ def requestSleep():
             xbmcgui.Dialog().notification("Sleeping in " + current + " minutes." , "", "", 2000, False)
         else:
             if current == SLEEP_END:
-                xbmcgui.Dialog().notification("Sleeping after end of current video." , "", "", 2000, False)
+                xbmcgui.Dialog().notification("Sleeping at end of video." , "", "", 2000, False)
             else:
                 xbmcgui.Dialog().notification("Sleep is off." , "", "", 2000, False)
         
