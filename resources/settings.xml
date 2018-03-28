@@ -26,8 +26,12 @@
         <setting label="32037" type="slider" id="sleep_notify" default="1" range="0,1,5" option="int"/>
         <setting label="32038" type="slider" id="sleep_warn" default="10" range="0,10,30" option="int"/>
         <setting label=""      type="lsep"/>
-        <setting label="32039" type="slider" id="sleep_inc" default="15" range="5,5,30" option="int"/>
-        <setting label="32040" type="slider" id="sleep_max" default="60" range="15,15,120" option="int"/>
+        <setting label="32039" type="bool" id="auto_sleep" default="true"/>
+        <setting label="32040" type="time" id="auto_sleep_start" visible="eq(-1,true)" default="23:00"/>
+        <setting label="32041" type="time" id="auto_sleep_end" visible="eq(-2,true)" default="07:00"/>
+        <setting label=""      type="lsep"/>
+        <setting label="32042" type="slider" id="sleep_inc" default="15" range="5,5,30" option="int"/>
+        <setting label="32043" type="slider" id="sleep_max" default="60" range="15,15,120" option="int"/>
     </category>
     <category label="32051">
         <setting label="32061" type="lsep"/>
