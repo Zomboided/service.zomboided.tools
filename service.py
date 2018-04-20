@@ -37,12 +37,14 @@ from libs.common import getSleepReqTime, SLEEP_OFF, SLEEP_END, SLEEP_DELAY_TIME,
 setDebug(False)
 
 # This is here to avoid a known Python locking bug https://bugs.python.org/issue7980
-#try:
-#    datetime.datetime.strptime('2018-01-01', '%Y-%m-%d')
-#except Exception as e:
-datetime.datetime(*(time.strptime('2018-01-01', '%Y-%m-%d')[0:6]))
-#    errorTrace("service.py", "Couldn't call strptime cleanly during initialisation, call ")
-#    errorTrace("service.py", str(e))
+for i in range(1, 10):
+    try:
+        datetime.datetime(*(time.strptime('2018-01-01', '%Y-%m-%d')[0:6]))
+        break
+    except Exception as e:
+        errorTrace("service.py", "Couldn't call strptime cleanly during initialisation, call" + str(i))
+        errorTrace("service.py", str(e))
+        xbmc.sleep(3000)
       
 debugTrace("-- Entered service.py --")
 
@@ -495,7 +497,7 @@ if __name__ == '__main__':
            
         # Sleep Checking
         if sleep_timer > 0 and not do_it:
-            if t > sleep_timer:
+            if t >= sleep_timer:
                 sleep_timer = 0
                 do_it = True
                 action_number = SLEEP_ACTION
@@ -510,7 +512,7 @@ if __name__ == '__main__':
                 xbmcgui.Dialog().notification("Sleeping in " + notify_mins + " minutes." , "", "", 3000, False)
         
         # Timer Checking
-        if action_timer > 0 and t > action_timer and not do_it:
+        if action_timer > 0 and t >= action_timer and not do_it:
             do_it = True
             action_number = str(action_timer_number)
             action = addon.getSetting("action_" + action_number)
@@ -520,7 +522,7 @@ if __name__ == '__main__':
             infoTrace("service.py", "Timer " + str(action_timer) + " has triggered on " + str(t) + " for action #" + action_number + ".")
             
         # File Checking
-        if not player.isPlaying() and file_timer > file_check_freq and not do_it:
+        if not player.isPlaying() and file_timer >= file_check_freq and not do_it:
             allowUpdates(False)
             action_number_f += 1
             if action_number_f > ACTION_COUNT:
@@ -576,7 +578,7 @@ if __name__ == '__main__':
             allowUpdates(True)
             
         # Add-on Checking
-        if not player.isPlaying() and addon_timer > addon_check_freq and not do_it:            
+        if not player.isPlaying() and addon_timer >= addon_check_freq and not do_it:            
             allowUpdates(False)
             action_number_a += 1
             if action_number_a > ACTION_COUNT:
@@ -774,20 +776,25 @@ if __name__ == '__main__':
             action_if_playing = False
         
         # If the settings haven't been updated in a while, force one anyway because of timing windows
-        if not player.isPlaying() and refresh_timer > refresh_check_freq:
+        if not player.isPlaying() and refresh_timer >= refresh_check_freq:
+            # FIXME remove these debug statements
+            debugTrace("Time now is " + str(t) + ", " + str(datetime.datetime.fromtimestamp(t)) + ", next action timer is " + str(datetime.datetime.fromtimestamp(action_timer)))
+            debugTrace("Addon timer is " + str(addon_timer) + "/" + str(addon_check_freq) + ", file timer is " + str(file_timer) + "/" + str(file_check_freq))
             updateSettings("main refresh timer", True)
         
         # Have a nap before checking timers again
         delay_count = 0
         for i in range(0, delay_loop):
+            delay_count += delay
             if monitor.waitForAbort(delay):
                 # Abort was requested while waiting. We should exit
                 infoTrace("service.py", "Abort received, shutting down service")
                 break
             if activeAlert() or not player.isPlaying(): break
-            delay_count += delay
-
+                      
         clearAlert()
+        # FIXME could do something clever here to trigger on transition between not counting and starting to count so that
+        # another hour or so isn't added on to the checking start time.  Not sure if this works if it's on all the time?
         if t > addon_timer_start and t < addon_timer_end : addon_timer = addon_timer + delay_count
         if t > file_timer_start and t < file_timer_end : file_timer = file_timer + delay_count
         refresh_timer = refresh_timer + delay_count
