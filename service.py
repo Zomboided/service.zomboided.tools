@@ -342,6 +342,11 @@ class KodiPlayer(xbmc.Player):
         
         t = now()
         
+        try:
+            infoTrace("service.py", "Playing " + self.getPlayingFile())
+        except:
+            pass
+        
         # Determine the end time if there's a play back limit
         d_timer = 0
         t_timer = 0
@@ -439,6 +444,7 @@ if __name__ == '__main__':
     if xbmc.getCondVisibility("System.HasAddon(service.vpn.manager)"):
         try:
             api = VPNAPI()
+            debugTrace("Found VPN Manager")
         except Exception as e:
             errorTrace("service.py", "Couldn't connect to the VPN Mgr API")
             errorTrace("service.py", str(e))

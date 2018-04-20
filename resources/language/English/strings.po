@@ -222,11 +222,11 @@ msgid "Run Command"
 msgstr ""
 
 msgctxt "#32074"
-msgid "Disconnect VPN Manager"
+msgid "Disconnect VPN"
 msgstr ""
 
 msgctxt "#32075"
-msgid "Reconnect VPN Manager"
+msgid "Reconnect VPN"
 msgstr ""
 
 msgctxt "#32086"
