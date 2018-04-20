@@ -59,7 +59,7 @@ def fixKeymaps():
                         xbmc.sleep(1000)
                     return True
     except Exception as e:
-        errorTrace("common.py", "Problem fixing the keymap filename.")
+        errorTrace("common.py", "Problem fixing the keymap filename")
         errorTrace("common.py", str(e))
     return False
     

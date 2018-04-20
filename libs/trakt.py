@@ -64,8 +64,9 @@ def updateTrakt(window, dialogs):
         
         percent = 0       
         progDiag = xbmcgui.DialogProgress()
-        progDiag.create(addon_name, "Modifying Trakt tokens for " + list + ".","Stopping any playing media.")
+        progDiag.create(addon_name, "Modifying Trakt tokens for " + list,"Stopping media...")
         progDiag.update(percent)
+        xbmc.sleep(2000)
         percent_inc = (90/len(files))   
         
         # Change the window and stop any media
@@ -75,6 +76,7 @@ def updateTrakt(window, dialogs):
             player.stop()
             xbmc.sleep(1000)
         if not window == 0:
+            progDiag.update(2, "Preparing for update", "Please wait...")
             s = "ActivateWindow(" + str(window) + ")"
             xbmc.executebuiltin(s)
             xbmc.sleep(commDelay)
@@ -104,7 +106,7 @@ def updateTrakt(window, dialogs):
         updated = 0
         percent = 10
         if new_trakt_id == "" or new_trakt_secret == "":
-            progDiag.update(100, "No Trakt ID or secret were supplied.","Enter these in the Settings and try again.")
+            progDiag.update(100, "No Trakt ID or secret were supplied","Enter these in the Settings and try again")
             xbmc.sleep(3000)
         else:
             i = 0
@@ -112,7 +114,7 @@ def updateTrakt(window, dialogs):
                 trakt_path = files[i]
                 trakt_path_old = trakt_path + ".old"
                 try:                    
-                    progDiag.update(percent, "Modifying " + name + " with new Trakt ID and secret.","Please wait.")
+                    progDiag.update(percent, "Modifying " + name + " with new Trakt ID and secret","Please wait...")
                     updated += 1
                     if xbmcvfs.exists(trakt_path):
                         debugTrace("Attempted to update " + trakt_path)
@@ -157,7 +159,7 @@ def updateTrakt(window, dialogs):
                         infoTrace("trakt.py", "Replaced " + name + " with original file before modification.")
                     else:
                         infoTrace("trakt.py", "No modifications were done to the original file")
-                    progDiag.update((percent + percent_inc - 5), "Could not modify Trakt data for " + name + "."," ")
+                    progDiag.update((percent + percent_inc - 5), "Could not modify Trakt data for " + name," ")
                 percent = percent + percent_inc
                 i += 1
 
@@ -182,7 +184,7 @@ def revertTrakt():
 
         percent = 0       
         progDiag = xbmcgui.DialogProgress()
-        progDiag.create(addon_name, "Reverting Trakt add-ons for " + list + ".","Stopping any playing media.")
+        progDiag.create(addon_name, "Reverting Trakt add-ons for " + list,"Stopping any playing media...")
         progDiag.update(percent)
         percent_inc = (90/len(files))
         
@@ -199,7 +201,7 @@ def revertTrakt():
         for name in addons:
             trakt_path = files[i]
             trakt_path_old = trakt_path + ".old"
-            progDiag.update(percent, "Reverting " + name + " back to original version.","Please wait.")
+            progDiag.update(percent, "Reverting " + name + " back to original version","Please wait...")
             xbmc.sleep(1000)
             debugTrace("Reverting " + name + " to " + trakt_path)
             if xbmcvfs.exists(trakt_path_old):
@@ -210,11 +212,11 @@ def revertTrakt():
                 except Exception as e:
                     errorTrace("trakt.py", "Problem reverting " + name + " to original version.")
                     errorTrace("trakt.py", str(e))
-                    progDiag.update((percent + percent_inc - 5), "Could not revert " + name + " back to original version.  You might need to reinstall it."," ")
+                    progDiag.update((percent + percent_inc - 5), "Could not revert " + name + " back to original version", "You might need to reinstall it")
                     xbmc.sleep(3000)
             else:
                 errorTrace("trakt.py", "Couldn't find " + trakt_path_old)
-                progDiag.update((percent + percent_inc -5), "Could not find original version for " + name + ". Either it's not been modified or you might need to reinstall it."," ")
+                progDiag.update((percent + percent_inc -5), "Could not find original version for " + name, " Either it's not been modified or you might need to reinstall it")
                 xbmc.sleep(3000)
             percent = percent + percent_inc
             i += 1

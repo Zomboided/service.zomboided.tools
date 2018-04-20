@@ -325,18 +325,20 @@
     </category>    
     <category label="32300">
         <setting label="32301" type="lsep"/>
-        <setting label="32302" type="text" id="trakt_id" enable="true" visible="true" default=""/>
-        <setting label="32303" type="text" id="trakt_secret" enable="true" visible="true" default=""/>
-        <setting label="32304" type="bool" id="trakt_clear" enable="true" visible="true" default="true"/>
+        <setting label="32302" type="bool" id="refresh_rules" enable="true" visible="true" default="true"/>
+        <setting label="32303" type="slider" id="command_delay" default="15" range="0,1,60" option="int"/>
+        <setting label="32304" type="bool" id="disable_vpn_filter" enable="true" visible="true" default="true"/>
         <setting label=""      type="lsep"/>
         <setting label="32305" type="lsep"/>
-        <setting label="32306" type="bool" id="refresh_rules" enable="true" visible="true" default="true"/>
-        <setting label="32307" type="slider" id="command_delay" default="15" range="0,1,60" option="int"/>
-        <setting label="32308" type="bool" id="disable_vpn_filter" enable="true" visible="true" default="true"/>
-        <setting label="32309" type="action" visible="true" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 0, Video)"/>
-        <setting label="32310" type="text" id="video_mask" enable="false" visible="true" default="[I]All[/I]"/>  
-        <setting label="32311" type="action" visible="true" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 0, Emby)"/>
-        <setting label="32312" type="text" id="emby_mask" enable="false" visible="true" default="[I]All[/I]"/>  
+        <setting label="32306" type="text" id="trakt_id" enable="true" visible="true" default=""/>
+        <setting label="32307" type="text" id="trakt_secret" enable="true" visible="true" default=""/>
+        <setting label="32308" type="bool" id="trakt_clear" enable="true" visible="true" default="true"/>
+        <setting label=""      type="lsep"/>
+        <setting label="32309" type="lsep"/>
+        <setting label="32310" type="action" visible="true" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 0, Video)"/>
+        <setting label="32311" type="text" id="video_mask" enable="false" visible="true" default="[I]All[/I]"/>  
+        <setting label="32312" type="action" visible="true" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 0, Emby)"/>
+        <setting label="32313" type="text" id="emby_mask" enable="false" visible="true" default="[I]All[/I]"/>  
     </category>
     <category label="32350">
         <setting label="32351" type="lsep"/>

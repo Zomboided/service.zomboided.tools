@@ -312,7 +312,7 @@ class rules:
                 try:
                     api = VPNAPI()
                 except Exception as e:
-                    errorTrace("service.py", "Couldn't connect to the VPN Mgr API")
+                    errorTrace("service.py", "Couldn't connect to the VPN API")
                     errorTrace("service.py", str(e))
                     api = None
             

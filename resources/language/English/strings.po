@@ -358,64 +358,68 @@ msgid "Add-ons"
 msgstr ""
 
 
-# Advanced Screen
+# Rules Screen
 
 msgctxt "#32300"
-msgid "Advanced"
-msgstr ""
-
-msgctxt "#32301"
-msgid "Trakt Data"
-msgstr ""
-
-msgctxt "#32302"
-msgid "Trakt Client ID"
-msgstr ""
-
-msgctxt "#32303"
-msgid "Trakt Client Secret"
-msgstr ""
-
-msgctxt "#32304"
-msgid "Reset video add-ons after Trakt modifications"
-msgstr ""
-
-msgctxt "#32305"
 msgid "Rules"
 msgstr ""
 
-msgctxt "#32306"
+msgctxt "#32301"
+msgid "General"
+msgstr ""
+
+msgctxt "#32302"
 msgid "Download latest rules during startup"
 msgstr ""
 
-msgctxt "#32307"
+msgctxt "#32303"
 msgid "Command execution delay"
 msgstr ""
 
-msgctxt "#32308"
+msgctxt "#32304"
 msgid "Disable VPN filtering whilst running rules"
 msgstr ""
 
+msgctxt "#32305"
+msgid "Trakt"
+msgstr ""
+
+msgctxt "#32306"
+msgid "Trakt Client ID"
+msgstr ""
+
+msgctxt "#32307"
+msgid "Trakt Client Secret"
+msgstr ""
+
+msgctxt "#32308"
+msgid "Run video rules after Trakt modifications"
+msgstr ""
+
 msgctxt "#32309"
-msgid "Click to refine video rule set"
+msgid "Rule Sets"
 msgstr ""
 
 msgctxt "#32310"
-msgid "Video rules"
+msgid "Click to refine video rule set"
 msgstr ""
 
 msgctxt "#32311"
-msgid "Click to refine Emby rule set"
+msgid "Video rules"
 msgstr ""
 
 msgctxt "#32312"
+msgid "Click to refine Emby rule set"
+msgstr ""
+
+msgctxt "#32313"
 msgid "Emby rules"
 msgstr ""
 
-# Debug Screen
+# Advanced Screen
 
 msgctxt "#32350"
-msgid "Debug"
+msgid "Advanced"
 msgstr ""
 
 msgctxt "#32351"

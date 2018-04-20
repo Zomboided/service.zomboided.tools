@@ -483,6 +483,7 @@ if __name__ == '__main__':
           
     # Load the rules
     rules = rules(True)
+    # FIXME Either deal with a network that might be unstable (VPN starting...), or add a delay option
     rules.preloadRulesAddons()
               
     # Check the keymaps for this add-on are intact
