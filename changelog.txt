@@ -1,3 +1,6 @@
+v0.3.8
+- More timer fixing...how difficult can it be...
+
 v0.3.3
 - General timer fixes
 - Added auto sleep setting

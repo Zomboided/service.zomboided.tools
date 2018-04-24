@@ -252,7 +252,6 @@ def parseTimer(type, freq, rtime, day, date, period, begin):
             t = begin
         else:
             t = now()
-        debugTrace("Time now or starting time is " + str(t))
         # Make some datetime objects representing now, last boot time and the timer
         current_dt = datetime.datetime.fromtimestamp(t)
         last_dt = datetime.datetime.fromtimestamp(last_boot)
@@ -272,8 +271,8 @@ def parseTimer(type, freq, rtime, day, date, period, begin):
             current_day = current_dt.weekday()
             timer_day = days.index(day)
             if current_day > timer_day:
-                adjust_day = current_day - timer_day + 1
-            elif timer_day < current_day:
+                adjust_day = 7 - (current_day - timer_day)
+            elif current_day < timer_day:
                 adjust_day = timer_day - current_day
             else:
                 # Same day, if it's in the past, add a week
