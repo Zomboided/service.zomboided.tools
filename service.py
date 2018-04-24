@@ -252,6 +252,7 @@ def parseTimer(type, freq, rtime, day, date, period, begin):
             t = begin
         else:
             t = now()
+        debugTrace("Time now or starting time is " + str(t))
         # Make some datetime objects representing now, last boot time and the timer
         current_dt = datetime.datetime.fromtimestamp(t)
         last_dt = datetime.datetime.fromtimestamp(last_boot)
@@ -516,7 +517,7 @@ if __name__ == '__main__':
                 setSleep(SLEEP_OFF)
             if sleep_notify > 0 and t > sleep_notify:
                 sleep_notify = 0
-                xbmcgui.Dialog().notification("Sleeping in " + notify_mins + " minutes." , "", "", 3000, False)
+                xbmcgui.Dialog().notification("Sleeping in " + notify_mins + " minutes." , "", "", 5000, False)
         
         # Timer Checking
         if action_timer > 0 and t >= action_timer and not do_it:

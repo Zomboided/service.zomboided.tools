@@ -373,7 +373,7 @@ msgid "Download latest rules during startup"
 msgstr ""
 
 msgctxt "#32303"
-msgid "Command execution delay"
+msgid "Command execution delay (seconds)"
 msgstr ""
 
 msgctxt "#32304"
