@@ -104,7 +104,10 @@ class KodiMonitor(xbmc.Monitor):
         #debugTrace("Requested update to service process via settings monitor")
         updateSettings("onSettingsChanged", False)
 
-
+        
+# FIXME Can I run the updates settings to read from a file (and back up to one), and also allow offsetting
+        
+        
 # Pick through the addon settings and translate them to variables we'll be using        
 def updateSettings(caller, wait):
     global playback_duration_check
@@ -290,9 +293,9 @@ def parseTimer(type, freq, rtime, day, date, period, begin):
                     timer_dt = timer_dt.replace(year = timer_dt.year + 1)
                 else:
                     timer_dt = timer_dt.replace(month = timer_dt.month + 1)
-                _, max_day = calendar.monthrange(timer_dt.year, timer_dt.month)
-                if new_day > max_day: new_day = max_day 
-                timer_dt = timer_dt.replace(day = new_day)
+            _, max_day = calendar.monthrange(timer_dt.year, timer_dt.month)
+            if new_day > max_day: new_day = max_day 
+            timer_dt = timer_dt.replace(day = new_day)
         elif freq == "Periodically":
             timer_dt == datetime.datetime.combine(last_dt.date(), timer_dt.timetz())
             d = datetime.timedelta(days = int(period))
@@ -466,8 +469,10 @@ if __name__ == '__main__':
     delay_loop = 6
 
     file_timer = 0
+    last_file_check = 0
     action_number_f = 0
     addon_timer = 0
+    last_addon_check = 0
     action_number_a = 0
     last_sleep = SLEEP_OFF
     sleep_timer = 0
@@ -784,9 +789,6 @@ if __name__ == '__main__':
         
         # If the settings haven't been updated in a while, force one anyway because of timing windows
         if not player.isPlaying() and refresh_timer >= refresh_check_freq:
-            # FIXME remove these debug statements
-            debugTrace("Time now is " + str(t) + ", " + str(datetime.datetime.fromtimestamp(t)) + ", next action timer is " + str(datetime.datetime.fromtimestamp(action_timer)))
-            debugTrace("Addon timer is " + str(addon_timer) + "/" + str(addon_check_freq) + ", file timer is " + str(file_timer) + "/" + str(file_check_freq))
             updateSettings("main refresh timer", True)
         
         # Have a nap before checking timers again
@@ -800,8 +802,18 @@ if __name__ == '__main__':
             if activeAlert() or not player.isPlaying(): break
                       
         clearAlert()
-        # FIXME could do something clever here to trigger on transition between not counting and starting to count so that
-        # another hour or so isn't added on to the checking start time.  Not sure if this works if it's on all the time?
-        if t > addon_timer_start and t < addon_timer_end : addon_timer = addon_timer + delay_count
-        if t > file_timer_start and t < file_timer_end : file_timer = file_timer + delay_count
+
+        # Increment the timers if they're active
+        if t > addon_timer_start and t < addon_timer_end:
+            if t - last_addon_check > addon_check_freq:
+                addon_timer = addon_check_freq
+            else:
+                addon_timer = addon_timer + delay_count
+            last_addon_check = t
+        if t > file_timer_start and t < file_timer_end: 
+            if t - last_file_check > file_check_freq:
+                file_timer = file_check_freq
+            else:
+                file_timer = file_timer + delay_count
+            last_file_check = t
         refresh_timer = refresh_timer + delay_count
