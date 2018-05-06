@@ -80,15 +80,29 @@ class rules:
     def getGitRules(self):
         if self.addon.getSetting("refresh_rules") == "true":
             # Download RULES.txt file from Github
-            try:
-                debugTrace("Getting rules from Github")
-                download_url = "https://raw.githubusercontent.com/Zomboided/service.zomboided.tools/master/RULES.txt"
-                download_url = download_url.replace(" ", "%20")
-                download_rules = urllib2.urlopen(download_url)
-            except Exception as e:
-                errorTrace("vpnproviders.py", "Can't get RULES.txt from GitHub")
-                errorTrace("vpnproviders.py", str(e)) 
-                return
+            for i in range(0, 6):
+                try:
+                    debugTrace("Getting rules from Github")
+                    download_url = "https://raw.githubusercontent.com/Zomboided/service.zomboided.tools/master/RULES.txt"
+                    download_url = download_url.replace(" ", "%20")
+                    download_rules = urllib2.urlopen(download_url)
+                    break
+                except urllib2.HTTPError as e:
+                    errorTrace("rules.py", "Can't get the rules from Github")
+                    errorTrace("rules.py", "API call was " + download_url)
+                    errorTrace("rules.py", "Response was " + str(e.code) + " " + e.reason)
+                    errorTrace("rules.py", e.read())
+                except Exception as e:
+                    errorTrace("rules.py", "Can't get the rules from Github")
+                    errorTrace("rules.py", "API call was " + download_url)
+                    errorTrace("rules.py", "Response was " + str(type(e)) + " " + str(e))
+                finally:
+                    # Give up if this is the last time round
+                    if i == 5: 
+                        errorTrace("rules.py", "Can't get rules from Github, using existing set")
+                        return
+                    # Otherwise wait 30 seconds before trying to get the rules again
+                    xbmc.sleep(30000)
             try:
                 # Overwrite RULES.txt
                 output = open(RULES_PATH, 'w')

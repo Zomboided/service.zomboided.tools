@@ -179,13 +179,24 @@ def updateSettings(caller, wait):
     for i in range(0, ACTION_COUNT):
         # Check the timer settings
         j = str(i+1)
+        
+        # Start counting periodical timers from the time they were set.  If it's not
+        # a periodical timer, then reset it so it starts from now next time it's set
+        if addon.getSetting("action_timer_freq_" + j) == "Periodically":
+            if addon.getSetting("action_period_last_" + j) == "":
+                addon.setSetting("action_period_last_" + j, str(now()))
+            begin = int(addon.getSetting("action_period_last_" + j))
+        else:
+            addon.setSetting("action_period_last_" + j, "")
+            begin = 0
+        
         next_action_timer = parseTimer("Action Timer " + j,
                                        addon.getSetting("action_timer_freq_" + j),
                                        addon.getSetting("action_time_" + j),
                                        addon.getSetting("action_day_" + j),
                                        addon.getSetting("action_date_" + j),
-                                       addon.getSetting("action_period_" + j),
-                                       0)
+                                       addon.getSetting("action_period_" + j),                                       
+                                       begin)
         # Determine if this time is the nearest one and use it if it is
         if (action_timer == 0 and not next_action_timer == 0) or (next_action_timer > 0 and next_action_timer < action_timer):
             action_timer_number = i + 1
@@ -244,7 +255,7 @@ def fixWarnTime(warning):
                              
                              
 def parseTimer(type, freq, rtime, day, date, period, begin):
-    debugTrace("Parsing " + type + ". Frequency is " + freq + ", time is + " + rtime + ", day is " + day + ", date is " + date + ", period is " + period)
+    debugTrace("Parsing " + type + ". Frequency is " + freq + ", time is + " + rtime + ", day is " + day + ", date is " + date + ", period is " + period + ", begin is " + str(begin))
     if freq == "" or freq == "Off": 
         return 0
     else:
@@ -255,6 +266,7 @@ def parseTimer(type, freq, rtime, day, date, period, begin):
             t = begin
         else:
             t = now()
+                    
         # Make some datetime objects representing now, last boot time and the timer
         current_dt = datetime.datetime.fromtimestamp(t)
         last_dt = datetime.datetime.fromtimestamp(last_boot)
@@ -487,8 +499,8 @@ if __name__ == '__main__':
     action_number = 0
           
     # Load the rules
+    # This can delay for up to 3 minutes if there's no network available
     rules = rules(True)
-    # FIXME Either deal with a network that might be unstable (VPN starting...), or add a delay option
     rules.preloadRulesAddons()
               
     # Check the keymaps for this add-on are intact
@@ -780,7 +792,10 @@ if __name__ == '__main__':
                     rules.runRules(False, group, mask)
                 else:
                     xbmc.executebuiltin(action)
-                
+            
+            # Clear the last period timer, so periodical timers gets reset to count from today
+            if not action_number == SLEEP_ACTION:
+                addon.setSetting("action_period_last_" + action_number, "")            
             # Get the next timer setting
             updateSettings("main after action", True)
             

@@ -1,3 +1,7 @@
+v0.3.9
+- Periodical timer fixes
+- Retry rules download
+
 v0.3.8
 - More timer fixing...how difficult can it be...
 
