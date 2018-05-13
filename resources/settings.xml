@@ -48,9 +48,9 @@
         <setting label="32118" type="time" id="action_time_1" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_1" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
         <setting label=""      type="text" id="action_period_last_1" enable="false" visible="false" default=""/>
-        <setting label="32120" type="labelenum" id="action_day_1" visible="eq(-3,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
-        <setting label="32128" type="slider" id="action_date_1" visible="eq(-4,4)" default="1" range="1,1,31" option="int"/>
-        <setting label="32129" type="bool" id="action_if_playing_1" visible="!eq(-5,0)" default="true"/>
+        <setting label="32120" type="labelenum" id="action_day_1" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
+        <setting label="32128" type="slider" id="action_date_1" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
+        <setting label="32129" type="bool" id="action_if_playing_1" visible="!eq(-6,0)" default="true"/>
         <setting label="32130" type="lsep"/>
         <setting label="32131" type="bool" id="action_file_enabled_1" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_1" visible="!eq(-1,false)" default="false"/>
@@ -78,9 +78,9 @@
         <setting label="32118" type="time" id="action_time_2" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_2" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
         <setting label=""      type="text" id="action_period_last_2" enable="false" visible="false" default=""/>
-        <setting label="32120" type="labelenum" id="action_day_2" visible="eq(-3,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
-        <setting label="32128" type="slider" id="action_date_2" visible="eq(-4,4)" default="1" range="1,1,31" option="int"/>
-        <setting label="32129" type="bool" id="action_if_playing_2" visible="!eq(-5,0)" default="true"/>
+        <setting label="32120" type="labelenum" id="action_day_2" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
+        <setting label="32128" type="slider" id="action_date_2" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
+        <setting label="32129" type="bool" id="action_if_playing_2" visible="!eq(-6,0)" default="true"/>
         <setting label="32130" type="lsep"/>
         <setting label="32131" type="bool" id="action_file_enabled_2" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_2" visible="!eq(-1,false)" default="false"/>
@@ -108,9 +108,9 @@
         <setting label="32118" type="time" id="action_time_3" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_3" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
         <setting label=""      type="text" id="action_period_last_3" enable="false" visible="false" default=""/>
-        <setting label="32120" type="labelenum" id="action_day_3" visible="eq(-3,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
-        <setting label="32128" type="slider" id="action_date_3" visible="eq(-4,4)" default="1" range="1,1,31" option="int"/>
-        <setting label="32129" type="bool" id="action_if_playing_3" visible="!eq(-5,0)" default="true"/>
+        <setting label="32120" type="labelenum" id="action_day_3" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
+        <setting label="32128" type="slider" id="action_date_3" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
+        <setting label="32129" type="bool" id="action_if_playing_3" visible="!eq(-6,0)" default="true"/>
         <setting label="32130" type="lsep"/>
         <setting label="32131" type="bool" id="action_file_enabled_3" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_3" visible="!eq(-1,false)" default="false"/>
@@ -138,9 +138,9 @@
         <setting label="32118" type="time" id="action_time_4" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_4" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
         <setting label=""      type="text" id="action_period_last_4" enable="false" visible="false" default=""/>
-        <setting label="32120" type="labelenum" id="action_day_4" visible="eq(-3,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
-        <setting label="32128" type="slider" id="action_date_4" visible="eq(-4,4)" default="1" range="1,1,31" option="int"/>
-        <setting label="32129" type="bool" id="action_if_playing_4" visible="!eq(-5,0)" default="true"/>
+        <setting label="32120" type="labelenum" id="action_day_4" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
+        <setting label="32128" type="slider" id="action_date_4" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
+        <setting label="32129" type="bool" id="action_if_playing_4" visible="!eq(-6,0)" default="true"/>
         <setting label="32130" type="lsep"/>
         <setting label="32131" type="bool" id="action_file_enabled_4" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_4" visible="!eq(-1,false)" default="false"/>
@@ -168,9 +168,9 @@
         <setting label="32118" type="time" id="action_time_5" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_5" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
         <setting label=""      type="text" id="action_period_last_5" enable="false" visible="false" default=""/>
-        <setting label="32120" type="labelenum" id="action_day_5" visible="eq(-3,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
-        <setting label="32128" type="slider" id="action_date_5" visible="eq(-4,4)" default="1" range="1,1,31" option="int"/>
-        <setting label="32129" type="bool" id="action_if_playing_5" visible="!eq(-5,0)" default="true"/>
+        <setting label="32120" type="labelenum" id="action_day_5" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
+        <setting label="32128" type="slider" id="action_date_5" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
+        <setting label="32129" type="bool" id="action_if_playing_5" visible="!eq(-6,0)" default="true"/>
         <setting label="32130" type="lsep"/>
         <setting label="32131" type="bool" id="action_file_enabled_5" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_5" visible="!eq(-1,false)" default="false"/>
@@ -198,9 +198,9 @@
         <setting label="32118" type="time" id="action_time_6" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_6" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
         <setting label=""      type="text" id="action_period_last_6" enable="false" visible="false" default=""/>
-        <setting label="32120" type="labelenum" id="action_day_6" visible="eq(-3,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
-        <setting label="32128" type="slider" id="action_date_6" visible="eq(-4,4)" default="1" range="1,1,31" option="int"/>
-        <setting label="32129" type="bool" id="action_if_playing_6" visible="!eq(-5,0)" default="true"/>
+        <setting label="32120" type="labelenum" id="action_day_6" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
+        <setting label="32128" type="slider" id="action_date_6" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
+        <setting label="32129" type="bool" id="action_if_playing_6" visible="!eq(-6,0)" default="true"/>
         <setting label="32130" type="lsep"/>
         <setting label="32131" type="bool" id="action_file_enabled_6" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_6" visible="!eq(-1,false)" default="false"/>
@@ -228,9 +228,9 @@
         <setting label="32118" type="time" id="action_time_7" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_7" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
         <setting label=""      type="text" id="action_period_last_7" enable="false" visible="false" default=""/>
-        <setting label="32120" type="labelenum" id="action_day_7" visible="eq(-3,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
-        <setting label="32128" type="slider" id="action_date_7" visible="eq(-4,4)" default="1" range="1,1,31" option="int"/>
-        <setting label="32129" type="bool" id="action_if_playing_7" visible="!eq(-5,0)" default="true"/>
+        <setting label="32120" type="labelenum" id="action_day_7" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
+        <setting label="32128" type="slider" id="action_date_7" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
+        <setting label="32129" type="bool" id="action_if_playing_7" visible="!eq(-6,0)" default="true"/>
         <setting label="32130" type="lsep"/>
         <setting label="32131" type="bool" id="action_file_enabled_7" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_7" visible="!eq(-1,false)" default="false"/>
@@ -258,9 +258,9 @@
         <setting label="32118" type="time" id="action_time_8" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_8" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
         <setting label=""      type="text" id="action_period_last_8" enable="false" visible="false" default=""/>
-        <setting label="32120" type="labelenum" id="action_day_8" visible="eq(-3,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
-        <setting label="32128" type="slider" id="action_date_8" visible="eq(-4,4)" default="1" range="1,1,31" option="int"/>
-        <setting label="32129" type="bool" id="action_if_playing_8" visible="!eq(-5,0)" default="true"/>
+        <setting label="32120" type="labelenum" id="action_day_8" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
+        <setting label="32128" type="slider" id="action_date_8" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
+        <setting label="32129" type="bool" id="action_if_playing_8" visible="!eq(-6,0)" default="true"/>
         <setting label="32130" type="lsep"/>
         <setting label="32131" type="bool" id="action_file_enabled_8" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_8" visible="!eq(-1,false)" default="false"/>
@@ -288,9 +288,9 @@
         <setting label="32118" type="time" id="action_time_9" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_9" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
         <setting label=""      type="text" id="action_period_last_9" enable="false" visible="false" default=""/>
-        <setting label="32120" type="labelenum" id="action_day_9" visible="eq(-3,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
-        <setting label="32128" type="slider" id="action_date_9" visible="eq(-4,4)" default="1" range="1,1,31" option="int"/>
-        <setting label="32129" type="bool" id="action_if_playing_9" visible="!eq(-5,0)" default="true"/>
+        <setting label="32120" type="labelenum" id="action_day_9" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
+        <setting label="32128" type="slider" id="action_date_9" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
+        <setting label="32129" type="bool" id="action_if_playing_9" visible="!eq(-6,0)" default="true"/>
         <setting label="32130" type="lsep"/>
         <setting label="32131" type="bool" id="action_file_enabled_9" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_9" visible="!eq(-1,false)" default="false"/>
@@ -318,9 +318,9 @@
         <setting label="32118" type="time" id="action_time_10" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_10" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
         <setting label=""      type="text" id="action_period_last_10" enable="false" visible="false" default=""/>
-        <setting label="32120" type="labelenum" id="action_day_10" visible="eq(-3,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
-        <setting label="32128" type="slider" id="action_date_10" visible="eq(-4,4)" default="1" range="1,1,31" option="int"/>
-        <setting label="32129" type="bool" id="action_if_playing_10" visible="!eq(-5,0)" default="true"/>
+        <setting label="32120" type="labelenum" id="action_day_10" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
+        <setting label="32128" type="slider" id="action_date_10" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
+        <setting label="32129" type="bool" id="action_if_playing_10" visible="!eq(-6,0)" default="true"/>
         <setting label="32130" type="lsep"/>
         <setting label="32131" type="bool" id="action_file_enabled_10" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_10" visible="!eq(-1,false)" default="false"/>
