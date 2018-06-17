@@ -22,6 +22,7 @@ import xbmc
 import xbmcaddon
 import xbmcvfs
 import xbmcgui
+import datetime
 from glob import glob
 from libs.utility import debugTrace, errorTrace, infoTrace, newPrint, now
 
@@ -143,12 +144,17 @@ def requestSleep():
             debugTrace("New sleep request, " + current + ", remain is " + "")
         
         if current.isdigit():
-            xbmcgui.Dialog().notification("Sleeping in " + current + " minutes." , "", "", 2000, False)
+            if current == "0":
+                xbmcgui.Dialog().notification("Sleeping in less than a minute" , "", "", 2000, False)
+            elif current == "1":
+                xbmcgui.Dialog().notification("Sleeping in 1 minute" , "", "", 2000, False)
+            else:
+                xbmcgui.Dialog().notification("Sleeping in " + current + " minutes" , "", "", 2000, False)
         else:
             if current == SLEEP_END:
-                xbmcgui.Dialog().notification("Sleeping at end of video." , "", "", 2000, False)
+                xbmcgui.Dialog().notification("Sleeping at end of video" , "", "", 2000, False)
             else:
-                xbmcgui.Dialog().notification("Sleep is off." , "", "", 2000, False)
+                xbmcgui.Dialog().notification("Sleep is off" , "", "", 2000, False)
         
         addAlert()
         setSleepReqTime(t)
@@ -212,8 +218,19 @@ def clearSleep():
     setSleepRemaining("")
     clearAlert()
     freeSleepLock()
-    
 
+    
+def recordAction(action):
+    try:
+        # FIXME prune or old/new this file, add a setting to switch this on and off
+        log_file = open(xbmc.translatePath("special://logpath/ztools.log"), 'a+')
+        time = datetime.datetime.fromtimestamp(now())
+        log_file.write(str(time) + " " + action + "\n")
+        log_file.close()
+    except Exception as e:
+        errorTrace("common.py", "Couldn't record action")
+        errorTrace("common.py", str(e))
+    
     
     
     

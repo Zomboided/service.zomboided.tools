@@ -55,9 +55,12 @@ def showLogBox(caption, text):
 
 def popupKodiLog():
     dialog_text = ""
-    log_file = open(xbmc.translatePath("special://logpath/kodi.log"), 'r')
-    log_output = log_file.readlines()
-    log_file.close()    
-    for line in log_output:
-        dialog_text = dialog_text + line
+    try:
+        log_file = open(xbmc.translatePath("special://logpath/kodi.log"), 'r')
+        log_output = log_file.readlines()
+        log_file.close()    
+        for line in log_output:
+            dialog_text = dialog_text + line
+    except:
+        dialog_text = "Log file " + xbmc.translatePath("special://logpath/kodi.log") + " weirdly does not exist...maybe try rebooting?"
     showLogBox("Kodi Log", dialog_text)

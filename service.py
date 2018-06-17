@@ -26,12 +26,13 @@ import os
 import time
 import datetime
 import calendar
-from libs.utility import setDebug, debugTrace, errorTrace, infoTrace, newPrint, now
+from libs.utility import ifDebug, setDebug, debugTrace, errorTrace, infoTrace, newPrint, now
 from libs.rules import rules, VIDEO_GROUP, EMBY_GROUP, WILDCARD
 from libs.trakt import updateTrakt, revertTrakt
 from libs.vpnapi import VPNAPI
 from libs.common import fixKeymaps, getSleep, setSleep, getSleepReq, setSleepReq, setSleepReqTime, clearSleep, setSleepRemaining, getSleepRemaining
 from libs.common import getSleepReqTime, SLEEP_OFF, SLEEP_END, SLEEP_DELAY_TIME, clearAlert, addAlert, activeAlert, forceSleepLock, freeSleepLock
+from libs.common import recordAction
 
 
 setDebug(False)
@@ -359,6 +360,7 @@ class KodiPlayer(xbmc.Player):
         
         try:
             infoTrace("service.py", "Playing " + self.getPlayingFile())
+            recordAction("Playing " + self.getPlayingFile())
         except:
             pass
         
@@ -403,7 +405,8 @@ class KodiPlayer(xbmc.Player):
                 self.resetPlaybackCounts()
         
         if addon.getSetting("auto_sleep") == "true" and t > auto_sleep_start and t < auto_sleep_end:
-            if getSleep() == "Off":
+            if getSleep() == SLEEP_OFF:
+                debugTrace("Setting auto sleep")
                 setSleepReq("End")
                 setSleepReqTime(t-SLEEP_DELAY_TIME)
                 xbmcgui.Dialog().notification("Sleeping at end of video." , "", "", 2000, False)
@@ -417,7 +420,7 @@ class KodiPlayer(xbmc.Player):
         playback_timer = 0
         self.resetPlaybackCounts()
         debugTrace("Playback stopped, sleep is " + getSleep())
-        if getSleep() == "End":
+        if getSleep() == SLEEP_END:
             addAlert()
             sleep_timer = 1
         
@@ -439,7 +442,7 @@ class KodiPlayer(xbmc.Player):
         self.playlist_ended = t
         self.playlist_count += 1
         debugTrace("Playback ended called from " + caller + ", at " + str(self.playlist_ended) + ", count is " + str(self.playlist_count) + " sleep is " + getSleep())
-        if getSleep() == "End":
+        if getSleep() == SLEEP_END:
             addAlert()
             sleep_timer = 1
         
@@ -456,6 +459,7 @@ if __name__ == '__main__':
     player = KodiPlayer()
 
     api = None
+    # <FIXME> Add nord support
     if xbmc.getCondVisibility("System.HasAddon(service.vpn.manager)"):
         try:
             api = VPNAPI()
@@ -530,10 +534,13 @@ if __name__ == '__main__':
                 action_if_playing = True
                 infoTrace("service.py", "Sleep timer has triggered on " + str(t) + ".")
                 last_sleep = SLEEP_OFF
-                setSleep(SLEEP_OFF)
+                clearSleep()
             if sleep_notify > 0 and t > sleep_notify:
                 sleep_notify = 0
-                xbmcgui.Dialog().notification("Sleeping in " + notify_mins + " minutes." , "", "", 5000, False)
+                if notify_mins == "1":
+                    xbmcgui.Dialog().notification("Sleeping in 1 minute" , "", "", 5000, False)
+                else:
+                    xbmcgui.Dialog().notification("Sleeping in " + notify_mins + " minutes" , "", "", 5000, False)
         
         # Timer Checking
         if action_timer > 0 and t >= action_timer and not do_it:
@@ -746,6 +753,7 @@ if __name__ == '__main__':
                 dialog.close()
             if do_it:
                 infoTrace("service.py", "Trigger fired for action #" + action_number + ", performing a " + action)
+                recordAction("Action #" + action_number + " fired, performing a " + action)
                 if action_number == SLEEP_ACTION and addon.getSetting("sleep_cec_off") == "true":
                     infoTrace("service.py", "Turning off TV before action " + action)
                     xbmc.executebuiltin("CECStandby")
