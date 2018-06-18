@@ -1,3 +1,7 @@
+v0.4.2
+- Manage action log pruning
+- Setting to enable/disable action log
+
 v0.4.1
 - Sleep timer fixes
 - Separate action log

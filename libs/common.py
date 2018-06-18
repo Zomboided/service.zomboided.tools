@@ -23,6 +23,7 @@ import xbmcaddon
 import xbmcvfs
 import xbmcgui
 import datetime
+import os
 from glob import glob
 from libs.utility import debugTrace, errorTrace, infoTrace, newPrint, now
 
@@ -221,17 +222,36 @@ def clearSleep():
 
     
 def recordAction(action):
-    try:
-        # FIXME prune or old/new this file, add a setting to switch this on and off
-        log_file = open(xbmc.translatePath("special://logpath/ztools.log"), 'a+')
-        time = datetime.datetime.fromtimestamp(now())
-        log_file.write(str(time) + " " + action + "\n")
-        log_file.close()
-    except Exception as e:
-        errorTrace("common.py", "Couldn't record action")
-        errorTrace("common.py", str(e))
+    log = getActionLogName(False)
+    old_log = getActionLogName(True)
+    addon = xbmcaddon.Addon("service.zomboided.tools")
+    if addon.getSetting("enable_action_log") == "true":
+        try:
+            if xbmcvfs.exists(log):
+                st = xbmcvfs.Stat(log)
+                size = st.st_size()
+                if size > 1024000: # Limit log files to 1MB...this allow for ~10000 entries
+                    debugTrace("Action log size is " + str(size) + ", starting new action log")
+                    if xbmcvfs.exists(old_log):
+                        xbmcvfs.delete(old_log)
+                    xbmcvfs.rename(log, old_log)
+        except Exception as e:
+            errorTrace("common.py", "Couldn't manage existing action log file")
+            errorTrace("common.py", str(e))
+
+        try:
+            log_file = open(log, 'a+')
+            time = datetime.datetime.fromtimestamp(now())
+            log_file.write(str(time) + " " + action + "\n")
+            log_file.close()
+        except Exception as e:
+            errorTrace("common.py", "Couldn't record action")
+            errorTrace("common.py", str(e))
     
     
-    
-    
-    
+def getActionLogName(old):
+    name = "ztools."
+    if old: name = name + "old."
+    name = name + "log"
+    name = xbmc.translatePath("special://logpath/" + name)
+    return name

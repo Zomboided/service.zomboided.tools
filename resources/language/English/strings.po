@@ -431,38 +431,41 @@ msgid "Enable debug for just Zomboided Tools"
 msgstr ""
 
 msgctxt "#32353"
-msgid "Service start time"
+msgid "Enable separate ztools.log action log"
 msgstr ""
 
 msgctxt "#32354"
-msgid "Checking Frequency"
+msgid "Service start time"
 msgstr ""
 
 msgctxt "#32355"
-msgid "Add-on version checking (mins)"
+msgid "Checking Frequency"
 msgstr ""
 
 msgctxt "#32356"
-msgid "Check add-ons from (24h)"
+msgid "Add-on version checking (mins)"
 msgstr ""
 
 msgctxt "#32357"
-msgid "Check add-ons until (24h)"
+msgid "Check add-ons from (24h)"
 msgstr ""
 
 msgctxt "#32358"
-msgid "File change checking (mins)"
+msgid "Check add-ons until (24h)"
 msgstr ""
 
 msgctxt "#32359"
-msgid "Check files from (24h)"
+msgid "File change checking (mins)"
 msgstr ""
 
 msgctxt "#32360"
-msgid "Check files until (24h)"
+msgid "Check files from (24h)"
 msgstr ""
 
 msgctxt "#32361"
-msgid "Setting refresh rate (mins)"
+msgid "Check files until (24h)"
 msgstr ""
 
+msgctxt "#32362"
+msgid "Setting refresh rate (mins)"
+msgstr ""
