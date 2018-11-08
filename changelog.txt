@@ -1,3 +1,6 @@
+v0.4.3
+- Add more Trakt support
+
 v0.4.2
 - Manage action log pruning
 - Setting to enable/disable action log

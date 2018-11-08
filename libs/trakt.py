@@ -40,6 +40,9 @@ def getAddons():
     if xbmc.getCondVisibility("System.HasAddon(plugin.video.fantastic)"):
         addons.append("Fantastic")
         files.append(xbmc.translatePath("special://home/addons/script.module.fantastic/lib/resources/lib/modules/trakt.py"))
+    if xbmc.getCondVisibility("System.HasAddon(plugin.video.incursion)"):
+        addons.append("Incursion")
+        files.append(xbmc.translatePath("special://home/addons/script.module.incursion/lib/resources/lib/modules/trakt.py"))
     if len(addons) > 0:
         i = 0
         for name in addons:
