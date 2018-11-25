@@ -1,3 +1,6 @@
+v0.5.0
+- Raspberry Pi button support
+
 v0.4.3
 - Add more Trakt support
 

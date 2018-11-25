@@ -27,8 +27,8 @@
         <setting label="32038" type="slider" id="sleep_warn" default="10" range="0,10,30" option="int"/>
         <setting label=""      type="lsep"/>
         <setting label="32039" type="bool" id="auto_sleep" default="true"/>
-        <setting label="32040" type="time" id="auto_sleep_start" visible="eq(-1,true)" default="23:00"/>
-        <setting label="32041" type="time" id="auto_sleep_end" visible="eq(-2,true)" default="07:00"/>
+        <setting label="32040" type="time" id="auto_sleep_start" visible="eq(-1,true)" default="22:30"/>
+        <setting label="32041" type="time" id="auto_sleep_end" visible="eq(-2,true)" default="06:00"/>
         <setting label=""      type="lsep"/>
         <setting label="32042" type="slider" id="sleep_inc" default="15" range="5,5,30" option="int"/>
         <setting label="32043" type="slider" id="sleep_max" default="60" range="15,15,120" option="int"/>
@@ -352,18 +352,39 @@
     </category>
     <category label="32350">
         <setting label="32351" type="lsep"/>
-        <setting label="32352" type="bool" id="enable_debug" default="false"/>
-        <setting label="32353" type="bool" id="enable_action_log" default="false"/>
-        <setting label="32354" type="text" id="boot_time" enable="false" visible="true" default="Last restart time is unknown"/>
+        <setting label="32352" type="text" visible="true"/>
+        <setting label="32353" type="bool" id="button_enabled" default="false"/>
+        <setting label="32355" type="number" id="button_gpio_number" visible="eq(-1,true)" default="3"/>
+        <setting label="32354" type="text" enable="false" visible="eq(-2,true)"/>
         <setting label=""      type="lsep"/>
-        <setting label="32355" type="lsep"/>
-        <setting label="32356" type="slider" id="addon_check" default="60" range="60,10,1440" option="int"/>
-        <setting label="32357" type="time" id="addon_check_start" default="00:00"/>
-        <setting label="32358" type="time" id="addon_check_end" default="23:59"/>
-        <setting label="32359" type="slider" id="file_check" default="60" range="60,10,1440" option="int"/>
-        <setting label="32360" type="time" id="file_check_start" default="00:00"/>
-        <setting label="32361" type="time" id="file_check_end" default="23:59"/>
-        <setting label="32362" type="slider" id="refresh_check" default="60" range="60,10,1440" option="int"/>   
+        <setting label="32356" type="lsep" visible="eq(-4,true)"/>
+        <setting label=""      type="bool" id="button_override" visible="false" default="false"/>
+        <setting label="32357" type="text" visible="eq(-1,true)+eq(-6,true)"/>
+        <setting label="32358" type="text" id="button_command_1" enable="eq(-7,true)" visible="eq(-7,true)" default=""/>
+        <setting label="32359" type="text" id="button_command_2" enable="!eq(-1,)" visible="eq(-8,true)" default=""/>
+        <setting label="32360" type="text" id="button_command_3" enable="!eq(-1,)" visible="eq(-9,true)" default=""/>
+        <setting label="32361" type="text" id="button_command_4" enable="!eq(-1,)" visible="eq(-10,true)" default=""/>
+        <setting label="32362" type="text" id="button_command_5" enable="!eq(-1,)" visible="eq(-11,true)" default=""/>
+        <setting label="32363" type="text" id="button_command_6" enable="!eq(-1,)" visible="eq(-12,true)" default=""/>
+        <setting label="32364" type="text" id="button_command_7" enable="!eq(-1,)" visible="eq(-13,true)" default=""/>
+        <setting label="32365" type="text" id="button_command_8" enable="!eq(-1,)" visible="eq(-14,true)" default=""/>
+        <setting label="32366" type="text" id="button_command_9" enable="!eq(-1,)" visible="eq(-15,true)" default=""/>
+        <setting label="32367" type="text" id="button_command_10" enable="!eq(-1,)" visible="eq(-16,true)" default=""/>
+    </category>
+    <category label="32450">
+        <setting label="32451" type="lsep"/>
+        <setting label="32452" type="bool" id="enable_debug" default="false"/>
+        <setting label="32453" type="bool" id="enable_action_log" default="false"/>
+        <setting label="32454" type="text" id="boot_time" enable="false" visible="true" default="Last restart time is unknown"/>
+        <setting label=""      type="lsep"/>
+        <setting label="32455" type="lsep"/>
+        <setting label="32456" type="slider" id="addon_check" default="60" range="60,10,1440" option="int"/>
+        <setting label="32457" type="time" id="addon_check_start" default="01:00"/>
+        <setting label="32458" type="time" id="addon_check_end" default="06:59"/>
+        <setting label="32459" type="slider" id="file_check" default="60" range="60,10,1440" option="int"/>
+        <setting label="32460" type="time" id="file_check_start" default="00:00"/>
+        <setting label="32461" type="time" id="file_check_end" default="23:59"/>
+        <setting label="32462" type="slider" id="refresh_check" default="60" range="60,10,1440" option="int"/>   
         <setting label=""      type="lsep"/>
     </category>
 </settings>

@@ -32,7 +32,7 @@ from libs.trakt import updateTrakt, revertTrakt
 from libs.vpnapi import VPNAPI
 from libs.common import fixKeymaps, getSleep, setSleep, getSleepReq, setSleepReq, setSleepReqTime, clearSleep, setSleepRemaining, getSleepRemaining
 from libs.common import getSleepReqTime, SLEEP_OFF, SLEEP_END, SLEEP_DELAY_TIME, clearAlert, addAlert, activeAlert, forceSleepLock, freeSleepLock
-from libs.common import recordAction
+from libs.common import recordAction, getButtonCommands, makeButtonsFile, fixAutostart
 
 
 setDebug(False)
@@ -228,6 +228,14 @@ def updateSettings(caller, wait):
         debugTrace("Action timer " + str(action_timer_number) + " is the first timer with " + str(action_timer))
     else:
         debugTrace("No action timers are set")
+        
+    # Create the buttons file and make it autostart
+    getButtonCommands()
+    addon = xbmcaddon.Addon()
+    if makeButtonsFile():
+        debugTrace("Created a new button file")
+        if fixAutostart(): debugTrace("Updated autostart to run zbutton.py")
+    
     allowUpdates(True)
 
     

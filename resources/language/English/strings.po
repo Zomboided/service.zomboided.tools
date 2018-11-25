@@ -416,56 +416,131 @@ msgctxt "#32313"
 msgid "Emby rules"
 msgstr ""
 
-# Advanced Screen
+# Button Screen
 
 msgctxt "#32350"
-msgid "Advanced"
+msgid "Button"
 msgstr ""
 
 msgctxt "#32351"
-msgid "General"
+msgid "Raspberry Pi GPIO button detection"
 msgstr ""
 
 msgctxt "#32352"
-msgid "Enable debug for just Zomboided Tools"
+msgid "[B]Changes will only be applied after reboot[/B]"
 msgstr ""
 
 msgctxt "#32353"
-msgid "Enable separate ztools.log action log"
+msgid "Detect button press"
 msgstr ""
 
 msgctxt "#32354"
-msgid "Service start time"
+msgid "[I]This will use autostart.sh to run zbutton.py[/I]"
 msgstr ""
 
 msgctxt "#32355"
-msgid "Checking Frequency"
+msgid "Button GPIO BCM number"
 msgstr ""
 
 msgctxt "#32356"
-msgid "Add-on version checking (mins)"
+msgid "OS commands executed on button press"
 msgstr ""
 
 msgctxt "#32357"
-msgid "Check add-ons from (24h)"
+msgid "[B]COMMANDS.txt will populate these commands[/B]"
 msgstr ""
 
 msgctxt "#32358"
-msgid "Check add-ons until (24h)"
+msgid "Command 1"
 msgstr ""
 
 msgctxt "#32359"
-msgid "File change checking (mins)"
+msgid "Command 2"
 msgstr ""
 
 msgctxt "#32360"
-msgid "Check files from (24h)"
+msgid "Command 3"
 msgstr ""
 
 msgctxt "#32361"
-msgid "Check files until (24h)"
+msgid "Command 4"
 msgstr ""
 
 msgctxt "#32362"
+msgid "Command 5"
+msgstr ""
+
+msgctxt "#32363"
+msgid "Command 6"
+msgstr ""
+
+msgctxt "#32364"
+msgid "Command 7"
+msgstr ""
+
+msgctxt "#32365"
+msgid "Command 8"
+msgstr ""
+
+msgctxt "#32366"
+msgid "Command 9"
+msgstr ""
+
+msgctxt "#32367"
+msgid "Command 10"
+msgstr ""
+
+
+# Advanced Screen
+
+msgctxt "#32450"
+msgid "Advanced"
+msgstr ""
+
+msgctxt "#32451"
+msgid "General"
+msgstr ""
+
+msgctxt "#32452"
+msgid "Enable debug for just Zomboided Tools"
+msgstr ""
+
+msgctxt "#32453"
+msgid "Enable separate ztools.log action log"
+msgstr ""
+
+msgctxt "#32454"
+msgid "Service start time"
+msgstr ""
+
+msgctxt "#32455"
+msgid "Checking Frequency"
+msgstr ""
+
+msgctxt "#32456"
+msgid "Add-on version checking (mins)"
+msgstr ""
+
+msgctxt "#32457"
+msgid "Check add-ons from (24h)"
+msgstr ""
+
+msgctxt "#32458"
+msgid "Check add-ons until (24h)"
+msgstr ""
+
+msgctxt "#32459"
+msgid "File change checking (mins)"
+msgstr ""
+
+msgctxt "#32460"
+msgid "Check files from (24h)"
+msgstr ""
+
+msgctxt "#32461"
+msgid "Check files until (24h)"
+msgstr ""
+
+msgctxt "#32462"
 msgid "Setting refresh rate (mins)"
 msgstr ""

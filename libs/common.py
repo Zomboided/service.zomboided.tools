@@ -255,3 +255,112 @@ def getActionLogName(old):
     name = name + "log"
     name = xbmc.translatePath("special://logpath/" + name)
     return name
+
+    
+def getButtonCommands():
+    # Use button activated commands from a userdata file instead of entering them
+    addon = xbmcaddon.Addon("service.zomboided.tools")
+    filename = xbmc.translatePath("special://userdata/addon_data/service.zomboided.tools/COMMANDS.txt")
+    
+    # This will just warn the user on the settings screen we're using a file instead
+    if xbmcvfs.exists(filename):
+        addon.setSetting("button_override", "true")
+    else:
+        addon.setSteting("button_override", "false")
+    
+    if addon.getSetting("button_enabled") == "true":
+        # Check if there's a bunch of commands in userdata to use instead
+        try:
+            if xbmcvfs.exists(filename):
+                # Read the commands file and update settings
+                commands_file = open(filename, 'r')
+                commands = commands_file.readlines()
+                commands_file.close()
+                i = 1
+                for command in commands:
+                    command = command.strip(' \t\n\r')
+                    # Ignore lines beginning with a #
+                    if not command.startswith("#"):
+                        addon.setSetting("button_command_" + str(i), command)
+                        i += 1
+                    if i == 11: break
+                # Clear out any old commands
+                for j in range(i, 10):
+                    addon.setSetting("button_command_" + str(j), "")
+        except Exception as e:
+            errorTrace("common.py", "Couldn't use the userdata COMMANDS.txt file to populate the settings")
+            errorTrace("common.py", str(e))
+            
+                
+def getButtonsPythonName():
+    return xbmc.translatePath("special://home/addons/service.zomboided.tools/zbutton.py")
+
+    
+def makeButtonsFile():
+    # Use the buttons template to build a file to run at boot to check for a button press and run some commands
+    addon = xbmcaddon.Addon("service.zomboided.tools")
+    template_filename = xbmc.translatePath("special://home/addons/service.zomboided.tools/BUTTONS.txt")
+    python_filename = getButtonsPythonName()
+    # Read the template file in
+    try:
+        if xbmcvfs.exists(template_filename):
+            template_file = open(template_filename, 'r')
+            template = template_file.readlines()
+            template_file.close()
+            i = 0
+            for line in template:                
+                if "#GPIONUMBER" in line:
+                    template[i] = line.replace("#GPIONUMBER", addon.getSetting("button_gpio_number"))
+                if "#OSCOMMANDS" in line:
+                    commands = ""
+                    for j in range(1, 10):
+                        cmd = addon.getSetting("button_command_" + str(j))
+                        if not cmd == "":
+                            if not j == 1: commands = commands + "    "
+                            commands = commands + 'os.system("' + cmd + '")\n'
+                        else: break
+                    template[i] = line.replace("#OSCOMMANDS", commands)
+                i += 1
+    except Exception as e:
+        errorTrace("common.py", "Couldn't read the buttons template file")
+        errorTrace("common.py", str(e))        
+        return False
+
+    # Write a new button file
+    debugTrace("Writing an updated python button file")
+    try:
+        output = open(python_filename, 'w')
+        for line in template:       
+            output.write(line)
+        output.close()
+        return True    
+    except Exception as e:
+        errorTrace("common.py", "Couldn't write the new python buttons file")
+        errorTrace("common.py", str(e))        
+        return False
+        
+        
+def fixAutostart():
+    # Write the autostart.sh file to start the buttons python file at boot in the background
+    addon = xbmcaddon.Addon("service.zomboided.tools")
+    try:
+        if xbmcvfs.exists("/storage/.config/"):
+            python_filename = getButtonsPythonName()
+            if xbmcvfs.exists(python_filename):
+                output = open("/storage/.config/autostart.sh", 'w')
+                output.write("(")
+                output.write("python " + python_filename)
+                output.write(") &")
+                output.close()
+            return True
+        else:
+            errorTrace("common.py", "/storage/.config directory doesn't exist, can't create a autostart.sh file for zbutton.py")
+            return False
+    except Exception as e:
+        errorTrace("common.py", "Couldn't write the new python buttons file")
+        errorTrace("common.py", str(e))        
+        return False
+    
+    
+    
+    

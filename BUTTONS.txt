@@ -1,0 +1,20 @@
+#!/usr/bin/python
+
+import sys
+sys.path.append('/storage/.kodi/addons/virtual.rpi-tools/lib')
+import RPi.GPIO as GPIO
+import os
+
+# PIN is the pin number, using BCM numbering
+gpio_pin_number=#GPIONUMBER
+GPIO.setmode(GPIO.BCM)
+
+GPIO.setup(gpio_pin_number, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+try:
+    GPIO.wait_for_edge(gpio_pin_number, GPIO.FALLING)
+    # Insert whatever commands are necessary here
+    #OSCOMMANDS
+except:
+    pass
+GPIO.cleanup()
