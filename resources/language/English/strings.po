@@ -435,58 +435,62 @@ msgid "Detect button press"
 msgstr ""
 
 msgctxt "#32354"
-msgid "[I]This will use autostart.sh to run zbutton.py[/I]"
-msgstr ""
-
-msgctxt "#32355"
 msgid "Button GPIO BCM number"
 msgstr ""
 
+msgctxt "#32355"
+msgid "LED indicator GPIO BCM number"
+msgstr ""
+
 msgctxt "#32356"
-msgid "OS commands executed on button press"
+msgid "[I]Requires Raspberry Pi Tools and uses autostart.sh[/I]"
 msgstr ""
 
 msgctxt "#32357"
-msgid "[B]COMMANDS.txt will populate these commands[/B]"
+msgid "OS commands executed on button press"
 msgstr ""
 
 msgctxt "#32358"
-msgid "Command 1"
+msgid "[B]COMMANDS.txt will populate these commands[/B]"
 msgstr ""
 
 msgctxt "#32359"
-msgid "Command 2"
+msgid "Command 1"
 msgstr ""
 
 msgctxt "#32360"
-msgid "Command 3"
+msgid "Command 2"
 msgstr ""
 
 msgctxt "#32361"
-msgid "Command 4"
+msgid "Command 3"
 msgstr ""
 
 msgctxt "#32362"
-msgid "Command 5"
+msgid "Command 4"
 msgstr ""
 
 msgctxt "#32363"
-msgid "Command 6"
+msgid "Command 5"
 msgstr ""
 
 msgctxt "#32364"
-msgid "Command 7"
+msgid "Command 6"
 msgstr ""
 
 msgctxt "#32365"
-msgid "Command 8"
+msgid "Command 7"
 msgstr ""
 
 msgctxt "#32366"
-msgid "Command 9"
+msgid "Command 8"
 msgstr ""
 
 msgctxt "#32367"
+msgid "Command 9"
+msgstr ""
+
+msgctxt "#32368"
 msgid "Command 10"
 msgstr ""
 

@@ -266,7 +266,7 @@ def getButtonCommands():
     if xbmcvfs.exists(filename):
         addon.setSetting("button_override", "true")
     else:
-        addon.setSteting("button_override", "false")
+        addon.setSetting("button_override", "false")
     
     if addon.getSetting("button_enabled") == "true":
         # Check if there's a bunch of commands in userdata to use instead
@@ -309,8 +309,10 @@ def makeButtonsFile():
             template_file.close()
             i = 0
             for line in template:                
-                if "#GPIONUMBER" in line:
-                    template[i] = line.replace("#GPIONUMBER", addon.getSetting("button_gpio_number"))
+                if "#GPIOBUTTON" in line:
+                    template[i] = line.replace("#GPIOBUTTON", addon.getSetting("button_gpio_number"))
+                if "#GPIOLED" in line:
+                    template[i] = line.replace("#GPIOLED", addon.getSetting("led_gpio_number"))
                 if "#OSCOMMANDS" in line:
                     commands = ""
                     for j in range(1, 10):

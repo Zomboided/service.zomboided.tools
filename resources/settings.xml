@@ -354,22 +354,23 @@
         <setting label="32351" type="lsep"/>
         <setting label="32352" type="text" visible="true"/>
         <setting label="32353" type="bool" id="button_enabled" default="false"/>
-        <setting label="32355" type="number" id="button_gpio_number" visible="eq(-1,true)" default="3"/>
-        <setting label="32354" type="text" enable="false" visible="eq(-2,true)"/>
+        <setting label="32354" type="number" id="button_gpio_number" visible="eq(-1,true)" default="3"/>
+        <setting label="32355" type="number" id="led_gpio_number" visible="eq(-2,true)" default="18"/>
+        <setting label="32356" type="text" enable="false" visible="eq(-3,true)"/>
         <setting label=""      type="lsep"/>
-        <setting label="32356" type="lsep" visible="eq(-4,true)"/>
+        <setting label="32357" type="lsep" visible="eq(-5,true)"/>
         <setting label=""      type="bool" id="button_override" visible="false" default="false"/>
-        <setting label="32357" type="text" visible="eq(-1,true)+eq(-6,true)"/>
-        <setting label="32358" type="text" id="button_command_1" enable="eq(-7,true)" visible="eq(-7,true)" default=""/>
-        <setting label="32359" type="text" id="button_command_2" enable="!eq(-1,)" visible="eq(-8,true)" default=""/>
-        <setting label="32360" type="text" id="button_command_3" enable="!eq(-1,)" visible="eq(-9,true)" default=""/>
-        <setting label="32361" type="text" id="button_command_4" enable="!eq(-1,)" visible="eq(-10,true)" default=""/>
-        <setting label="32362" type="text" id="button_command_5" enable="!eq(-1,)" visible="eq(-11,true)" default=""/>
-        <setting label="32363" type="text" id="button_command_6" enable="!eq(-1,)" visible="eq(-12,true)" default=""/>
-        <setting label="32364" type="text" id="button_command_7" enable="!eq(-1,)" visible="eq(-13,true)" default=""/>
-        <setting label="32365" type="text" id="button_command_8" enable="!eq(-1,)" visible="eq(-14,true)" default=""/>
-        <setting label="32366" type="text" id="button_command_9" enable="!eq(-1,)" visible="eq(-15,true)" default=""/>
-        <setting label="32367" type="text" id="button_command_10" enable="!eq(-1,)" visible="eq(-16,true)" default=""/>
+        <setting label="32358" type="text" visible="eq(-1,true)+eq(-7,true)"/>
+        <setting label="32359" type="text" id="button_command_1" enable="eq(-8,true)" visible="eq(-8,true)" default=""/>
+        <setting label="32360" type="text" id="button_command_2" enable="!eq(-1,)" visible="eq(-9,true)" default=""/>
+        <setting label="32361" type="text" id="button_command_3" enable="!eq(-1,)" visible="eq(-10,true)" default=""/>
+        <setting label="32362" type="text" id="button_command_4" enable="!eq(-1,)" visible="eq(-11,true)" default=""/>
+        <setting label="32363" type="text" id="button_command_5" enable="!eq(-1,)" visible="eq(-12,true)" default=""/>
+        <setting label="32364" type="text" id="button_command_6" enable="!eq(-1,)" visible="eq(-13,true)" default=""/>
+        <setting label="32365" type="text" id="button_command_7" enable="!eq(-1,)" visible="eq(-14,true)" default=""/>
+        <setting label="32366" type="text" id="button_command_8" enable="!eq(-1,)" visible="eq(-15,true)" default=""/>
+        <setting label="32367" type="text" id="button_command_9" enable="!eq(-1,)" visible="eq(-16,true)" default=""/>
+        <setting label="32368" type="text" id="button_command_10" enable="!eq(-1,)" visible="eq(-17,true)" default=""/>
     </category>
     <category label="32450">
         <setting label="32451" type="lsep"/>

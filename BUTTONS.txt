@@ -5,16 +5,20 @@ sys.path.append('/storage/.kodi/addons/virtual.rpi-tools/lib')
 import RPi.GPIO as GPIO
 import os
 
-# PIN is the pin number, using BCM numbering
-gpio_pin_number=#GPIONUMBER
+# Pin is the pin number, using BCM numbering
+gpio_button_number=#GPIOBUTTON
+gpio_led_number=#GPIOLED
 GPIO.setmode(GPIO.BCM)
 
-GPIO.setup(gpio_pin_number, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.output(gpio_led_number, GPIO.LOW)
+GPIO.setup(gpio_button_number, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 try:
-    GPIO.wait_for_edge(gpio_pin_number, GPIO.FALLING)
+    GPIO.wait_for_edge(gpio_button_number, GPIO.FALLING)
+    GPIO.output(gpio_led_number, GPIO.HIGH)
     # Insert whatever commands are necessary here
     #OSCOMMANDS
+    GPIO.output(gpio_led_number, GPIO.LOW)
 except:
     pass
 GPIO.cleanup()
