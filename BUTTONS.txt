@@ -10,6 +10,9 @@ gpio_button_number=#GPIOBUTTON
 gpio_led_number=#GPIOLED
 GPIO.setmode(GPIO.BCM)
 
+GPIO.setwarnings(False)
+
+GPIO.setup(gpio_led_number, GPIO.OUT)
 GPIO.output(gpio_led_number, GPIO.LOW)
 GPIO.setup(gpio_button_number, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
