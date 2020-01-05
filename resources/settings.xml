@@ -18,18 +18,18 @@
     <category label="32030">
         <setting label="32031" type="lsep"/>
         <setting label="32032" type="action" option="close" action="RunScript(special://home/addons/service.zomboided.tools/mapkey.py, sleep)"/>
-        <setting label=""      type="lsep"/>
+        <setting label=" "      type="lsep"/>
         <setting label="32033" type="labelenum" id="sleep_action" lvalues="32068|32065|32066|32067|32073"/>
         <setting label="32034" type="text" id="sleep_command" enable="true" visible="eq(-1,4)" default=""/>  
         <setting label="32035" type="bool" id="sleep_cec_off" default="true"/>
         <setting label="32036" type="text" enable="false" visible="eq(-1,true)"/>  
         <setting label="32037" type="slider" id="sleep_notify" default="1" range="0,1,5" option="int"/>
         <setting label="32038" type="slider" id="sleep_warn" default="10" range="0,10,30" option="int"/>
-        <setting label=""      type="lsep"/>
+        <setting label=" "      type="lsep"/>
         <setting label="32039" type="bool" id="auto_sleep" default="true"/>
         <setting label="32040" type="time" id="auto_sleep_start" visible="eq(-1,true)" default="22:30"/>
         <setting label="32041" type="time" id="auto_sleep_end" visible="eq(-2,true)" default="06:00"/>
-        <setting label=""      type="lsep"/>
+        <setting label=" "      type="lsep"/>
         <setting label="32042" type="slider" id="sleep_inc" default="15" range="5,5,30" option="int"/>
         <setting label="32043" type="slider" id="sleep_max" default="60" range="15,15,120" option="int"/>
     </category>
@@ -42,12 +42,12 @@
         <setting label="32089" type="text" id="action_rules_mask_1" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
         <setting label="32090" type="text" id="action_command_1" enable="true" visible="eq(-5,10)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_1" default="10" range="0,10,30" option="int"/>
-        <setting label=""      type="lsep"/>
+        <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
         <setting label="32112" type="labelenum" id="action_timer_freq_1" lvalues="32113|32114|32115|32116|32117"/>
         <setting label="32118" type="time" id="action_time_1" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_1" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
-        <setting label=""      type="text" id="action_period_last_1" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="action_period_last_1" enable="false" visible="false" default=""/>
         <setting label="32120" type="labelenum" id="action_day_1" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
         <setting label="32128" type="slider" id="action_date_1" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
         <setting label="32129" type="bool" id="action_if_playing_1" visible="!eq(-6,0)" default="true"/>
@@ -55,13 +55,13 @@
         <setting label="32131" type="bool" id="action_file_enabled_1" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_1" visible="!eq(-1,false)" default="false"/>
         <setting label="32133" type="file" id="action_file_1" visible="!eq(-2,false)" default=""/>
-        <setting label=""      type="text" id="file_time_1" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="file_reboot_1" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_time_1" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_reboot_1" enable="false" visible="false" default=""/>
         <setting label="32134" type="lsep"/>
         <setting label="32135" type="bool" id="action_addon_enabled_1" default="false"/>
         <setting label="32136" type="addon" id="action_addon_1" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="true" default=""/>
-        <setting label=""      type="text" id="addon_name_1" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="addon_version_1" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_name_1" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_version_1" enable="false" visible="false" default=""/>
     </category>
     <category label="32052">
         <setting label="32061" type="lsep"/>
@@ -72,12 +72,12 @@
         <setting label="32089" type="text" id="action_rules_mask_2" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
         <setting label="32090" type="text" id="action_command_2" enable="true" visible="eq(-5,10)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_2" default="10" range="0,10,30" option="int"/>
-        <setting label=""      type="lsep"/>
+        <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
         <setting label="32112" type="labelenum" id="action_timer_freq_2" lvalues="32113|32114|32115|32116|32117"/>
         <setting label="32118" type="time" id="action_time_2" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_2" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
-        <setting label=""      type="text" id="action_period_last_2" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="action_period_last_2" enable="false" visible="false" default=""/>
         <setting label="32120" type="labelenum" id="action_day_2" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
         <setting label="32128" type="slider" id="action_date_2" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
         <setting label="32129" type="bool" id="action_if_playing_2" visible="!eq(-6,0)" default="true"/>
@@ -85,13 +85,13 @@
         <setting label="32131" type="bool" id="action_file_enabled_2" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_2" visible="!eq(-1,false)" default="false"/>
         <setting label="32133" type="file" id="action_file_2" visible="!eq(-2,false)" default=""/>
-        <setting label=""      type="text" id="file_time_2" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="file_reboot_2" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_time_2" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_reboot_2" enable="false" visible="false" default=""/>
         <setting label="32134" type="lsep"/>
         <setting label="32135" type="bool" id="action_addon_enabled_2" default="false"/>
         <setting label="32136" type="addon" id="action_addon_2" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="true" default=""/>
-        <setting label=""      type="text" id="addon_name_2" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="addon_version_2" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_name_2" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_version_2" enable="false" visible="false" default=""/>
     </category>
     <category label="32053">
         <setting label="32061" type="lsep"/>
@@ -102,12 +102,12 @@
         <setting label="32089" type="text" id="action_rules_mask_3" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
         <setting label="32090" type="text" id="action_command_3" enable="true" visible="eq(-5,10)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_3" default="10" range="0,10,30" option="int"/>
-        <setting label=""      type="lsep"/>
+        <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
         <setting label="32112" type="labelenum" id="action_timer_freq_3" lvalues="32113|32114|32115|32116|32117"/>
         <setting label="32118" type="time" id="action_time_3" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_3" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
-        <setting label=""      type="text" id="action_period_last_3" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="action_period_last_3" enable="false" visible="false" default=""/>
         <setting label="32120" type="labelenum" id="action_day_3" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
         <setting label="32128" type="slider" id="action_date_3" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
         <setting label="32129" type="bool" id="action_if_playing_3" visible="!eq(-6,0)" default="true"/>
@@ -115,13 +115,13 @@
         <setting label="32131" type="bool" id="action_file_enabled_3" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_3" visible="!eq(-1,false)" default="false"/>
         <setting label="32133" type="file" id="action_file_3" visible="!eq(-2,false)" default=""/>
-        <setting label=""      type="text" id="file_time_3" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="file_reboot_3" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_time_3" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_reboot_3" enable="false" visible="false" default=""/>
         <setting label="32134" type="lsep"/>
         <setting label="32135" type="bool" id="action_addon_enabled_3" default="false"/>
         <setting label="32136" type="addon" id="action_addon_3" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="true" default=""/>
-        <setting label=""      type="text" id="addon_name_3" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="addon_version_3" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_name_3" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_version_3" enable="false" visible="false" default=""/>
     </category>
     <category label="32054">
         <setting label="32061" type="lsep"/>
@@ -132,12 +132,12 @@
         <setting label="32089" type="text" id="action_rules_mask_4" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
         <setting label="32090" type="text" id="action_command_4" enable="true" visible="eq(-5,10)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_4" default="10" range="0,10,30" option="int"/>
-        <setting label=""      type="lsep"/>
+        <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
         <setting label="32112" type="labelenum" id="action_timer_freq_4" lvalues="32113|32114|32115|32116|32117"/>
         <setting label="32118" type="time" id="action_time_4" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_4" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
-        <setting label=""      type="text" id="action_period_last_4" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="action_period_last_4" enable="false" visible="false" default=""/>
         <setting label="32120" type="labelenum" id="action_day_4" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
         <setting label="32128" type="slider" id="action_date_4" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
         <setting label="32129" type="bool" id="action_if_playing_4" visible="!eq(-6,0)" default="true"/>
@@ -145,13 +145,13 @@
         <setting label="32131" type="bool" id="action_file_enabled_4" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_4" visible="!eq(-1,false)" default="false"/>
         <setting label="32133" type="file" id="action_file_4" visible="!eq(-2,false)" default=""/>
-        <setting label=""      type="text" id="file_time_4" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="file_reboot_4" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_time_4" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_reboot_4" enable="false" visible="false" default=""/>
         <setting label="32134" type="lsep"/>
         <setting label="32135" type="bool" id="action_addon_enabled_4" default="false"/>
         <setting label="32136" type="addon" id="action_addon_4" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="true" default=""/>
-        <setting label=""      type="text" id="addon_name_4" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="addon_version_4" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_name_4" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_version_4" enable="false" visible="false" default=""/>
     </category>
         <category label="32055">
         <setting label="32061" type="lsep"/>
@@ -162,12 +162,12 @@
         <setting label="32089" type="text" id="action_rules_mask_5" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
         <setting label="32090" type="text" id="action_command_5" enable="true" visible="eq(-5,10)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_5" default="10" range="0,10,30" option="int"/>
-        <setting label=""      type="lsep"/>
+        <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
         <setting label="32112" type="labelenum" id="action_timer_freq_5" lvalues="32113|32114|32115|32116|32117"/>
         <setting label="32118" type="time" id="action_time_5" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_5" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
-        <setting label=""      type="text" id="action_period_last_5" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="action_period_last_5" enable="false" visible="false" default=""/>
         <setting label="32120" type="labelenum" id="action_day_5" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
         <setting label="32128" type="slider" id="action_date_5" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
         <setting label="32129" type="bool" id="action_if_playing_5" visible="!eq(-6,0)" default="true"/>
@@ -175,13 +175,13 @@
         <setting label="32131" type="bool" id="action_file_enabled_5" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_5" visible="!eq(-1,false)" default="false"/>
         <setting label="32133" type="file" id="action_file_5" visible="!eq(-2,false)" default=""/>
-        <setting label=""      type="text" id="file_time_5" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="file_reboot_5" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_time_5" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_reboot_5" enable="false" visible="false" default=""/>
         <setting label="32134" type="lsep"/>
         <setting label="32135" type="bool" id="action_addon_enabled_5" default="false"/>
         <setting label="32136" type="addon" id="action_addon_5" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="true" default=""/>
-        <setting label=""      type="text" id="addon_name_5" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="addon_version_5" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_name_5" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_version_5" enable="false" visible="false" default=""/>
     </category>
     <category label="32056">
         <setting label="32061" type="lsep"/>
@@ -192,12 +192,12 @@
         <setting label="32089" type="text" id="action_rules_mask_6" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
         <setting label="32090" type="text" id="action_command_6" enable="true" visible="eq(-5,10)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_6" default="10" range="0,10,30" option="int"/>
-        <setting label=""      type="lsep"/>
+        <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
         <setting label="32112" type="labelenum" id="action_timer_freq_6" lvalues="32113|32114|32115|32116|32117"/>
         <setting label="32118" type="time" id="action_time_6" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_6" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
-        <setting label=""      type="text" id="action_period_last_6" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="action_period_last_6" enable="false" visible="false" default=""/>
         <setting label="32120" type="labelenum" id="action_day_6" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
         <setting label="32128" type="slider" id="action_date_6" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
         <setting label="32129" type="bool" id="action_if_playing_6" visible="!eq(-6,0)" default="true"/>
@@ -205,13 +205,13 @@
         <setting label="32131" type="bool" id="action_file_enabled_6" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_6" visible="!eq(-1,false)" default="false"/>
         <setting label="32133" type="file" id="action_file_6" visible="!eq(-2,false)" default=""/>
-        <setting label=""      type="text" id="file_time_6" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="file_reboot_6" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_time_6" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_reboot_6" enable="false" visible="false" default=""/>
         <setting label="32134" type="lsep"/>
         <setting label="32135" type="bool" id="action_addon_enabled_6" default="false"/>
         <setting label="32136" type="addon" id="action_addon_6" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="true" default=""/>
-        <setting label=""      type="text" id="addon_name_6" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="addon_version_6" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_name_6" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_version_6" enable="false" visible="false" default=""/>
     </category>
     <category label="32057">
         <setting label="32061" type="lsep"/>
@@ -222,12 +222,12 @@
         <setting label="32089" type="text" id="action_rules_mask_7" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
         <setting label="32090" type="text" id="action_command_7" enable="true" visible="eq(-5,10)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_7" default="10" range="0,10,30" option="int"/>
-        <setting label=""      type="lsep"/>
+        <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
         <setting label="32112" type="labelenum" id="action_timer_freq_7" lvalues="32113|32114|32115|32116|32117"/>
         <setting label="32118" type="time" id="action_time_7" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_7" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
-        <setting label=""      type="text" id="action_period_last_7" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="action_period_last_7" enable="false" visible="false" default=""/>
         <setting label="32120" type="labelenum" id="action_day_7" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
         <setting label="32128" type="slider" id="action_date_7" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
         <setting label="32129" type="bool" id="action_if_playing_7" visible="!eq(-6,0)" default="true"/>
@@ -235,13 +235,13 @@
         <setting label="32131" type="bool" id="action_file_enabled_7" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_7" visible="!eq(-1,false)" default="false"/>
         <setting label="32133" type="file" id="action_file_7" visible="!eq(-2,false)" default=""/>
-        <setting label=""      type="text" id="file_time_7" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="file_reboot_7" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_time_7" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_reboot_7" enable="false" visible="false" default=""/>
         <setting label="32134" type="lsep"/>
         <setting label="32135" type="bool" id="action_addon_enabled_7" default="false"/>
         <setting label="32136" type="addon" id="action_addon_7" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="true" default=""/>
-        <setting label=""      type="text" id="addon_name_7" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="addon_version_7" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_name_7" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_version_7" enable="false" visible="false" default=""/>
     </category>    
     <category label="32058">
         <setting label="32061" type="lsep"/>
@@ -252,12 +252,12 @@
         <setting label="32089" type="text" id="action_rules_mask_8" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
         <setting label="32090" type="text" id="action_command_8" enable="true" visible="eq(-5,10)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_8" default="10" range="0,10,30" option="int"/>
-        <setting label=""      type="lsep"/>
+        <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
         <setting label="32112" type="labelenum" id="action_timer_freq_8" lvalues="32113|32114|32115|32116|32117"/>
         <setting label="32118" type="time" id="action_time_8" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_8" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
-        <setting label=""      type="text" id="action_period_last_8" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="action_period_last_8" enable="false" visible="false" default=""/>
         <setting label="32120" type="labelenum" id="action_day_8" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
         <setting label="32128" type="slider" id="action_date_8" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
         <setting label="32129" type="bool" id="action_if_playing_8" visible="!eq(-6,0)" default="true"/>
@@ -265,13 +265,13 @@
         <setting label="32131" type="bool" id="action_file_enabled_8" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_8" visible="!eq(-1,false)" default="false"/>
         <setting label="32133" type="file" id="action_file_8" visible="!eq(-2,false)" default=""/>
-        <setting label=""      type="text" id="file_time_8" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="file_reboot_8" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_time_8" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_reboot_8" enable="false" visible="false" default=""/>
         <setting label="32134" type="lsep"/>
         <setting label="32135" type="bool" id="action_addon_enabled_8" default="false"/>
         <setting label="32136" type="addon" id="action_addon_8" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="true" default=""/>
-        <setting label=""      type="text" id="addon_name_8" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="addon_version_8" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_name_8" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_version_8" enable="false" visible="false" default=""/>
     </category>
     <category label="32059">
         <setting label="32061" type="lsep"/>
@@ -282,12 +282,12 @@
         <setting label="32089" type="text" id="action_rules_mask_9" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
         <setting label="32090" type="text" id="action_command_9" enable="true" visible="eq(-5,10)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_9" default="10" range="0,10,30" option="int"/>
-        <setting label=""      type="lsep"/>
+        <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
         <setting label="32112" type="labelenum" id="action_timer_freq_9" lvalues="32113|32114|32115|32116|32117"/>
         <setting label="32118" type="time" id="action_time_9" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_9" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
-        <setting label=""      type="text" id="action_period_last_9" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="action_period_last_9" enable="false" visible="false" default=""/>
         <setting label="32120" type="labelenum" id="action_day_9" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
         <setting label="32128" type="slider" id="action_date_9" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
         <setting label="32129" type="bool" id="action_if_playing_9" visible="!eq(-6,0)" default="true"/>
@@ -295,13 +295,13 @@
         <setting label="32131" type="bool" id="action_file_enabled_9" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_9" visible="!eq(-1,false)" default="false"/>
         <setting label="32133" type="file" id="action_file_9" visible="!eq(-2,false)" default=""/>
-        <setting label=""      type="text" id="file_time_9" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="file_reboot_9" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_time_9" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_reboot_9" enable="false" visible="false" default=""/>
         <setting label="32134" type="lsep"/>
         <setting label="32135" type="bool" id="action_addon_enabled_9" default="false"/>
         <setting label="32136" type="addon" id="action_addon_9" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="true" default=""/>
-        <setting label=""      type="text" id="addon_name_9" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="addon_version_9" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_name_9" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_version_9" enable="false" visible="false" default=""/>
     </category>    
     <category label="32060">
         <setting label="32061" type="lsep"/>
@@ -312,12 +312,12 @@
         <setting label="32089" type="text" id="action_rules_mask_10" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
         <setting label="32090" type="text" id="action_command_10" enable="true" visible="eq(-5,10)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_10" default="10" range="0,10,30" option="int"/>
-        <setting label=""      type="lsep"/>
+        <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
         <setting label="32112" type="labelenum" id="action_timer_freq_10" lvalues="32113|32114|32115|32116|32117"/>
         <setting label="32118" type="time" id="action_time_10" visible="!eq(-1,0)" default="02:00"/>
         <setting label="32119" type="slider" id="action_period_10" visible="eq(-2,2)" default="1" range="1,1,7" option="int"/>
-        <setting label=""      type="text" id="action_period_last_10" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="action_period_last_10" enable="false" visible="false" default=""/>
         <setting label="32120" type="labelenum" id="action_day_10" visible="eq(-4,3)" lvalues="32121|32122|32123|32124|32125|32126|32127"/>
         <setting label="32128" type="slider" id="action_date_10" visible="eq(-5,4)" default="1" range="1,1,31" option="int"/>
         <setting label="32129" type="bool" id="action_if_playing_10" visible="!eq(-6,0)" default="true"/>
@@ -325,25 +325,25 @@
         <setting label="32131" type="bool" id="action_file_enabled_10" default="false"/>
         <setting label="32132" type="bool" id="action_file_unavailable_10" visible="!eq(-1,false)" default="false"/>
         <setting label="32133" type="file" id="action_file_10" visible="!eq(-2,false)" default=""/>
-        <setting label=""      type="text" id="file_time_10" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="file_reboot_10" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_time_10" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="file_reboot_10" enable="false" visible="false" default=""/>
         <setting label="32134" type="lsep"/>
         <setting label="32135" type="bool" id="action_addon_enabled_10" default="false"/>
         <setting label="32136" type="addon" id="action_addon_10" visible="eq(-1,true)" addontype="xbmc.python.pluginsource" multiselect="true" default=""/>
-        <setting label=""      type="text" id="addon_name_10" enable="false" visible="false" default=""/>
-        <setting label=""      type="text" id="addon_version_10" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_name_10" enable="false" visible="false" default=""/>
+        <setting label=" "      type="text" id="addon_version_10" enable="false" visible="false" default=""/>
     </category>    
     <category label="32300">
         <setting label="32301" type="lsep"/>
         <setting label="32302" type="bool" id="refresh_rules" enable="true" visible="true" default="true"/>
         <setting label="32303" type="slider" id="command_delay" default="15" range="0,1,60" option="int"/>
         <setting label="32304" type="bool" id="disable_vpn_filter" enable="true" visible="true" default="true"/>
-        <setting label=""      type="lsep"/>
+        <setting label=" "      type="lsep"/>
         <setting label="32305" type="lsep"/>
         <setting label="32306" type="text" id="trakt_id" enable="true" visible="true" default=""/>
         <setting label="32307" type="text" id="trakt_secret" enable="true" visible="true" default=""/>
         <setting label="32308" type="bool" id="trakt_clear" enable="true" visible="true" default="true"/>
-        <setting label=""      type="lsep"/>
+        <setting label=" "      type="lsep"/>
         <setting label="32309" type="lsep"/>
         <setting label="32310" type="action" visible="true" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 0, Video)"/>
         <setting label="32311" type="text" id="video_mask" enable="false" visible="true" default="[I]All[/I]"/>  
@@ -357,9 +357,9 @@
         <setting label="32354" type="number" id="button_gpio_number" visible="eq(-1,true)" default="3"/>
         <setting label="32355" type="number" id="led_gpio_number" visible="eq(-2,true)" default="18"/>
         <setting label="32356" type="text" enable="false" visible="eq(-3,true)"/>
-        <setting label=""      type="lsep"/>
+        <setting label=" "      type="lsep"/>
         <setting label="32357" type="lsep" visible="eq(-5,true)"/>
-        <setting label=""      type="bool" id="button_override" visible="false" default="false"/>
+        <setting label=" "      type="bool" id="button_override" visible="false" default="false"/>
         <setting label="32358" type="text" visible="eq(-1,true)+eq(-7,true)"/>
         <setting label="32359" type="text" id="button_command_1" enable="eq(-8,true)" visible="eq(-8,true)" default=""/>
         <setting label="32360" type="text" id="button_command_2" enable="!eq(-1,)" visible="eq(-9,true)" default=""/>
@@ -372,20 +372,30 @@
         <setting label="32367" type="text" id="button_command_9" enable="!eq(-1,)" visible="eq(-16,true)" default=""/>
         <setting label="32368" type="text" id="button_command_10" enable="!eq(-1,)" visible="eq(-17,true)" default=""/>
     </category>
+    <category label="32400">
+        <setting label="32401" type="bool" id="clock_on_boot" default="false"/>
+        <setting label="32402" type="bool" id="clock_resync" visible="eq(-1,true)" default="false"/>
+        <setting label="32403" type="labelenum" id="clock_display" visible="eq(-2,true)" lvalues="32404|32405" default="12"/>
+        <setting label="32406" type="action" visible="true" option="close" action="RunScript(special://home/addons/service.zomboided.tools/clocksync.py, loud)"/>
+        <setting label=" "     type="text" id="clock_port" visible="false" enable="false" default="1"/>
+    </category>
     <category label="32450">
         <setting label="32451" type="lsep"/>
         <setting label="32452" type="bool" id="enable_debug" default="false"/>
         <setting label="32453" type="bool" id="enable_action_log" default="false"/>
         <setting label="32454" type="text" id="boot_time" enable="false" visible="true" default="Last restart time is unknown"/>
-        <setting label=""      type="lsep"/>
+        <setting label=" "      type="lsep"/>
         <setting label="32455" type="lsep"/>
         <setting label="32456" type="slider" id="addon_check" default="60" range="60,10,1440" option="int"/>
         <setting label="32457" type="time" id="addon_check_start" default="01:00"/>
         <setting label="32458" type="time" id="addon_check_end" default="06:59"/>
         <setting label="32459" type="slider" id="file_check" default="60" range="60,10,1440" option="int"/>
-        <setting label="32460" type="time" id="file_check_start" default="00:00"/>
+        <setting label="32460" type="time" id="file_check_start" default="00:01"/>
         <setting label="32461" type="time" id="file_check_end" default="23:59"/>
-        <setting label="32462" type="slider" id="refresh_check" default="60" range="60,10,1440" option="int"/>   
-        <setting label=""      type="lsep"/>
+        <setting label="32462" type="slider" id="clock_check" default="60" range="60,10,1440" option="int"/>
+        <setting label="32463" type="time" id="clock_check_start" default="00:01"/>
+        <setting label="32464" type="time" id="clock_check_end" default="23:59"/>
+        <setting label="32465" type="slider" id="refresh_check" default="60" range="60,10,1440" option="int"/>   
+        <setting label=" "      type="lsep"/>
     </category>
 </settings>

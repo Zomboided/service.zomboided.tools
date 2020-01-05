@@ -416,6 +416,7 @@ msgctxt "#32313"
 msgid "Emby rules"
 msgstr ""
 
+
 # Button Screen
 
 msgctxt "#32350"
@@ -495,6 +496,36 @@ msgid "Command 10"
 msgstr ""
 
 
+# Clock Screen
+
+msgctxt "#32400"
+msgid "Clock"
+msgstr ""
+
+msgctxt "#32401"
+msgid "Sync clock on boot"
+msgstr ""
+
+msgctxt "#32402"
+msgid "Resync clock on drift"
+msgstr ""
+
+msgctxt "#32403"
+msgid "Clock display"
+msgstr ""
+
+msgctxt "#32404"
+msgid "12"
+msgstr ""
+
+msgctxt "#32405"
+msgid "24"
+msgstr ""
+
+msgctxt "#32406"
+msgid "Resync clock now"
+msgstr ""
+
 # Advanced Screen
 
 msgctxt "#32450"
@@ -546,5 +577,17 @@ msgid "Check files until (24h)"
 msgstr ""
 
 msgctxt "#32462"
+msgid "Clock checking (mins)"
+msgstr ""
+
+msgctxt "#32463"
+msgid "Check clock from (24h)"
+msgstr ""
+
+msgctxt "#32464"
+msgid "Check clock until (24h)"
+msgstr ""
+
+msgctxt "#32465"
 msgid "Setting refresh rate (mins)"
 msgstr ""

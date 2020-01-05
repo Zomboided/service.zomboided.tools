@@ -32,7 +32,7 @@ from libs.trakt import updateTrakt, revertTrakt
 from libs.vpnapi import VPNAPI
 from libs.common import fixKeymaps, getSleep, setSleep, getSleepReq, setSleepReq, setSleepReqTime, clearSleep, setSleepRemaining, getSleepRemaining
 from libs.common import getSleepReqTime, SLEEP_OFF, SLEEP_END, SLEEP_DELAY_TIME, clearAlert, addAlert, activeAlert, forceSleepLock, freeSleepLock
-from libs.common import recordAction, getButtonCommands, makeButtonsFile, fixAutostart
+from libs.common import recordAction, getButtonCommands, makeButtonsFile, fixAutostart, syncClock
 
 
 setDebug(False)
@@ -92,6 +92,9 @@ playback_timer = 0
 file_timer = 0
 file_timer_start = 0
 file_timer_end = 0
+clock_timer = 0
+clock_timer_start = 0
+clock_timer_end = 0
 refresh_timer = 0
 auto_sleep_start = 0
 auto_sleep_end = 0
@@ -131,6 +134,10 @@ def updateSettings(caller, wait):
     global file_timer_start
     global file_timer_end
     global file_check_freq
+    global clock_timer
+    global clock_timer_start
+    global clock_timer_end
+    global clock_check_freq
     global refresh_timer
     global refresh_check_freq
     global auto_sleep_start
@@ -218,6 +225,10 @@ def updateSettings(caller, wait):
     file_check_freq = int(addon.getSetting("file_check"))*60
     file_timer_start, file_timer_end = parseTimePeriod(t, "File Check", addon.getSetting("file_check_start"), addon.getSetting("file_check_end"))
 
+    # Frequency clock is checked
+    clock_check_freq = int(addon.getSetting("clock_check"))*60
+    clock_timer_start, clock_timer_end = parseTimePeriod(t, "File Check", addon.getSetting("clock_check_start"), addon.getSetting("clock_check_end"))
+
     # Auto sleep timers
     auto_sleep_start, auto_sleep_end = parseTimePeriod(t, "Auto Sleep", addon.getSetting("auto_sleep_start"), addon.getSetting("auto_sleep_end"))
 
@@ -283,7 +294,9 @@ def parseTimer(type, freq, rtime, day, date, period, begin):
         #try:
         #    timer_dt = datetime.datetime.strptime(timer, "%d %m %Y %H:%M")
         #except:
+        #timer_dt = datetime.datetime(*(time.strptime(timer, "%d %m %Y %H:%M")[0:8]))
         timer_dt = datetime.datetime(*(time.strptime(timer, "%d %m %Y %H:%M")[0:6]))
+        
         # Adjust timer based on the frequency
         if freq == "Daily":
             # If the timer is in the past, add a day
@@ -498,6 +511,8 @@ if __name__ == '__main__':
     addon_timer = 0
     last_addon_check = 0
     action_number_a = 0
+    clock_timer = 0
+    last_clock_check = 0
     last_sleep = SLEEP_OFF
     sleep_timer = 0
     sleep_notify = 0
@@ -688,6 +703,12 @@ if __name__ == '__main__':
             allowUpdates(True)
             addon = xbmcaddon.Addon()
         
+        # Clock checking
+        if not player.isPlaying() and clock_timer >= clock_check_freq and not do_it:
+            newPrint("CLOCK MATTHEW")
+            syncClock()
+            clock_timer = 0
+        
         # Set up sleep timer
         sleep_setting = getSleepReq()
         if not sleep_setting == "":
@@ -847,4 +868,10 @@ if __name__ == '__main__':
             else:
                 file_timer = file_timer + delay_count
             last_file_check = t
+        if t > clock_timer_start and t < clock_timer_end: 
+            if t - last_clock_check > clock_check_freq:
+                clock_timer = clock_check_freq
+            else:
+                clock_timer = clock_timer + delay_count
+            last_clock_check = t
         refresh_timer = refresh_timer + delay_count

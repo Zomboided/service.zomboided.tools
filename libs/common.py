@@ -364,5 +364,10 @@ def fixAutostart():
         return False
     
     
+def syncClock():
+    # Run the script to sync the clock
+    command = xbmc.translatePath("special://home/addons/service.zomboided.tools/clocksync.py")
+    xbmc.executebuiltin('XBMC.RunScript(' + command + ', quiet)')
+        
     
     

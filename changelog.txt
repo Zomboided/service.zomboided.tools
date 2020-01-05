@@ -1,3 +1,6 @@
+V0.6.0
+- Arduino USB clock support
+
 v0.5.0
 - Raspberry Pi button support
 
