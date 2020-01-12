@@ -127,6 +127,17 @@ if not ser == None :
             error = True
             msg = "Arduino not ready"
     
+    # Arduino should ask for the display brightness
+    if not error:
+        if getMessageFromArduino("Brightness", 10) != None:
+            debugTrace("Arduino asked for the display brightness")
+            time.sleep(1)
+            clock_brightness = addon.getSetting("clock_brightness")
+            sendToArduino("<" + clock_brightness + ">")
+        else:
+            error = True
+            msg = "Expected 'Brightness' request but didn't get it"
+    
     # Arduino should ask whether it should display 12 or 24 hour clock
     if not error:
         if getMessageFromArduino("Display", 10) != None:

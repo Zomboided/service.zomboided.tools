@@ -705,8 +705,8 @@ if __name__ == '__main__':
         
         # Clock checking
         if not player.isPlaying() and clock_timer >= clock_check_freq and not do_it:
-            newPrint("CLOCK MATTHEW")
-            syncClock()
+            # newPrint("FIXME SYNC THE CLOCK")
+            # syncClock()
             clock_timer = 0
         
         # Set up sleep timer

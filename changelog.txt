@@ -1,3 +1,6 @@
+v0.6.1
+- Clock brightness support
+
 V0.6.0
 - Arduino USB clock support
 

@@ -375,8 +375,9 @@
     <category label="32400">
         <setting label="32401" type="bool" id="clock_on_boot" default="false"/>
         <setting label="32402" type="bool" id="clock_resync" visible="eq(-1,true)" default="false"/>
-        <setting label="32403" type="labelenum" id="clock_display" visible="eq(-2,true)" lvalues="32404|32405" default="12"/>
-        <setting label="32406" type="action" visible="true" option="close" action="RunScript(special://home/addons/service.zomboided.tools/clocksync.py, loud)"/>
+        <setting label="32403" type="slider" id="clock_brightness"  default="7" range="1,1,7" option="int"/>
+        <setting label="32404" type="labelenum" id="clock_display" visible="eq(-2,true)" lvalues="32405|32406" default="12"/>
+        <setting label="32407" type="action" visible="true" option="close" action="RunScript(special://home/addons/service.zomboided.tools/clocksync.py, loud)"/>
         <setting label=" "     type="text" id="clock_port" visible="false" enable="false" default="1"/>
     </category>
     <category label="32450">

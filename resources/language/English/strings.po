@@ -511,18 +511,22 @@ msgid "Resync clock on drift"
 msgstr ""
 
 msgctxt "#32403"
-msgid "Clock display"
+msgid "Clock brightness"
 msgstr ""
 
 msgctxt "#32404"
-msgid "12"
+msgid "Clock display"
 msgstr ""
 
 msgctxt "#32405"
-msgid "24"
+msgid "12"
 msgstr ""
 
 msgctxt "#32406"
+msgid "24"
+msgstr ""
+
+msgctxt "#32407"
 msgid "Resync clock now"
 msgstr ""
 

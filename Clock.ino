@@ -1,8 +1,8 @@
 #include <DS3231.h>
 #include <Wire.h>
+#include <EEPROM.h>
 
 DS3231 Clock;
-
 
 /* Code TM1637 4 digit 7 segment display with Arduino and DS3231 RTC */
 
@@ -44,6 +44,7 @@ int hours = 1;
 int minutes = 1;
 int seconds = 0;
 int disp = 12;
+int brightness = 7;
 
 void setup() {
     // Set up I2C interface to RTC module
@@ -51,7 +52,9 @@ void setup() {
     // Set up the display
     display.clear();
     delay(500);
-    display.setBrightness(7);
+    brightness = retrieveDisplayBrightness();
+    if (brightness == 0) brightness = 7;
+    display.setBrightness(brightness);
     delay(500);
     display.showNumberDecEx(0, 0b01000000, true, 4, 0);
     // Start the serial connection
@@ -62,6 +65,7 @@ void setup() {
     Serial.println("<Ready>");
     delay(1000);
     // Initialise the time
+    getClockBrightness();
     getClockDisplay();
     getTime();
 }
@@ -129,6 +133,32 @@ void receiveDataFromUSB(int timeout) {
 }
 
 
+void getClockBrightness() {
+    // Request the 12 or 24 hour setting
+    display.showNumberDecEx(0, 0b01000000, true, 4, 0);
+    Serial.println("<Brightness>");
+    delay(1000);
+    receiveDataFromUSB(10);
+    if (newData) {
+        // <FIXME> could check the brightness better here and loop if it was bad
+        brightness = (received_chars[0] - 48);
+        // Send to clock, write to eeprom if different
+        if (retrieveDisplayBrightness() != brightness) {
+            storeDisplayBrightness(brightness);
+            display.setBrightness(brightness);
+            // Flash the display to indicate time has been updated from PC
+            for (int i = 0; i <= 5; i++) {
+                display.showNumberDecEx(brightness, 0b00000000, false, 4, 0);
+                delay(100);
+                display.clear();
+                delay(100);
+            }
+            newData = false;
+        }
+    } 
+}
+
+
 void getClockDisplay() {
     // Request the 12 or 24 hour setting
     display.showNumberDecEx(0, 0b01000000, true, 4, 0);
@@ -186,4 +216,16 @@ void getTime() {
         Serial.println("<Thanks>");
         delay(5000);
     } 
+}
+
+
+int retrieveDisplayBrightness() {
+    // Return the brightness from EEPROM
+    return EEPROM.read(0);
+}
+
+
+void storeDisplayBrightness(int b) {
+    // Set the brightness in the EEPROM
+    EEPROM.write(0, b);
 }
