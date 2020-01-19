@@ -82,31 +82,43 @@ def getMessageFromArduino(message, timeout):
     return msg
         
         
+# Name of the serial device...both Linux and Windows names end with a number
+# Windows COM definitely changes, not sure what Linux does as I've only ever seen 0!
+LINUXDEVICE = "/dev/ttyUSB"
+WINDOWSDEVICE = "COM"
 # Set the baud rate, must be the same as the Arduino
-serPort = "/dev/ttyUSB0"
 baudRate = 9600
-ser = None
+
+# FIXME
+if xbmc.getCondVisibility('system.platform.windows'):
+    device = WINDOWSDEVICE
+    first_port = 1
+else:
+    device = LINUXDEVICE
+    first_port = 0
 
 # Get the previous port setting that was successful
 try:
     port = int(addon.getSetting("clock_port"))
 except Exception as e:
-    port = 1
+    port = first_port
+
 
 # Loop around the ports trying to find a serial interface
+ser = None
 MAX_PORT = 9
 for i in range(MAX_PORT):
     try:
-        ser = serial.Serial(port='COM'+str(port), baudrate=baudRate)
-        infoTrace("clocksync.py", "Opened COM" + str(port) + " to use with Arduino")
+        ser = serial.Serial(port=device + str(port), baudrate=baudRate)
+        infoTrace("clocksync.py", "Opened " + device + str(port) + " to use with Arduino")
         addon = xbmcaddon.Addon("service.zomboided.tools")
         addon.setSetting("clock_port", str(port))
         break
     except Exception as e:
-        debugTrace("Couldn't open COM" + str(port) + " to use with Arduino")
+        debugTrace("Couldn't open " + device + str(port) + " to use with Arduino")
         ser = None
     port += 1
-    if port > MAX_PORT: port = 1
+    if port > MAX_PORT: port = first_port
 
 
 startMarker = 60    # <
@@ -162,7 +174,7 @@ if not ser == None :
             error = True
             msg = "Expected 'Time' request but didn't get it"
             
-    # Arduino should send a Thanks when it has a good time and program can exit
+    # Arduino should send a Thanks when it has a good time stamp and this program can exit
     if not error: 
         if getMessageFromArduino("Thanks", 30) != None:
             infoTrace("clocksync.py", "Arduino has what it needs")
@@ -175,6 +187,7 @@ if not ser == None :
         errorTrace("clocksync.py", msg)
         if show_dialog: xbmcgui.Dialog().ok(addon_name, msg)
 
+    # Break serial connection, will cause clock to restart
     ser.close
 else:
     if show_dialog: xbmcgui.Dialog().ok(addon_name, "Couldn't find Arduino clock")

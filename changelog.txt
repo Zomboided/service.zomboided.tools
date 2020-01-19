@@ -1,3 +1,6 @@
+v0.6.2
+- Linux clock sync fix
+
 v0.6.1
 - Clock brightness support
 
