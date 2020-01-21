@@ -106,7 +106,7 @@ except Exception as e:
 
 # Loop around the ports trying to find a serial interface
 ser = None
-MAX_PORT = 9
+MAX_PORT = 10
 for i in range(MAX_PORT):
     try:
         ser = serial.Serial(port=device + str(port), baudrate=baudRate)
@@ -118,7 +118,7 @@ for i in range(MAX_PORT):
         debugTrace("Couldn't open " + device + str(port) + " to use with Arduino")
         ser = None
     port += 1
-    if port > MAX_PORT: port = first_port
+    if port == MAX_PORT: port = first_port
 
 
 startMarker = 60    # <
