@@ -64,22 +64,42 @@ void setup() {
     // Send a ready message to any PC that's listening
     Serial.println("<Ready>");
     delay(1000);
+    // Set clock module to 24 hour.  This hasn't been working for me so will deal with 12/24 differently
+    Clock.setClockMode(false);
     // Initialise the time
     getClockBrightness();
     getClockDisplay();
     getTime();
+    //fakeTime();
 }
 
 
 void loop() {
-    bool h12, PM; // Thesse seem to make no difference
+    bool h12, PM; // These are populated with whether it's a 12 or 24 hour clock, and whether it's currently AM or PM
     int delay_length = 1000;
+    int last_time_length = 4;
     while (true) {        
         hours = Clock.getHour(h12, PM);
         minutes = Clock.getMinute();
         seconds = Clock.getSecond();
         if (seconds > 50) delay_length = 1000;
         else delay_length = 10000;
+        // Time is 24 hour, adjust the hour display if it's a 12 hour display
+        if (disp == 12 and hours > 12) 
+            hours = hours - 12;
+        if (hours < 10) {
+            // Clear the left most segment if last time was four digits
+            if (last_time_length == 4) {
+                display.setSegments(blank, 1, 0);
+            }
+            // Display a three character time with leading zeros
+            display.showNumberDecEx(hours*100 + minutes, 0b10000000, true, 3, 1);
+            last_time_length = 3;
+        } else {
+            // Display a four character time
+            display.showNumberDecEx(hours*100 + minutes, 0b01000000, false, 4, 0);
+            last_time_length = 4;
+        }
         display.showNumberDecEx(hours*100 + minutes, 0b01000000, false, 4, 0);
         delay(delay_length);
     }
@@ -146,7 +166,7 @@ void getClockBrightness() {
         if (retrieveDisplayBrightness() != brightness) {
             storeDisplayBrightness(brightness);
             display.setBrightness(brightness);
-            // Flash the display to indicate time has been updated from PC
+            // Flash the display to indicate brightness has been updated from PC
             for (int i = 0; i <= 5; i++) {
                 display.showNumberDecEx(brightness, 0b00000000, false, 4, 0);
                 delay(100);
@@ -168,17 +188,37 @@ void getClockDisplay() {
     if (newData) {
         // <FIXME> could check the display better here and loop if it was bad
         disp = ((received_chars[0] - 48) * 10) + (received_chars[1] - 48);
-        if (disp == 12) Clock.setClockMode(true);
-        else Clock.setClockMode(false);
-        newData = false;
-        // Flash the display to indicate time has been updated from PC
-        for (int i = 0; i <= 5; i++) {
-            display.showNumberDecEx(disp, 0b00000000, false, 4, 0);
-            delay(100);
-            display.clear();
-            delay(100);
+        if (retrieveDisplay1224() != disp) {
+            storeDisplay1224(disp);        
+            // Flash the display to indicate display has been updated from PC
+            for (int i = 0; i <= 5; i++) {
+                display.showNumberDecEx(disp, 0b00000000, false, 4, 0);
+                delay(100);
+                display.clear();
+                delay(100);
+            }
+            newData = false;
         }
-    } 
+    }
+    // Put the current display setting in a variable for use later
+    disp = retrieveDisplay1224();
+}
+
+
+void fakeTime() {
+    // Fake the time up for testing the display
+    
+    delay(1000);
+    Clock.setYear(2020);
+    Clock.setMonth(04);
+    Clock.setDate(8);
+    Clock.setDoW(1);
+    Clock.setHour(23);
+    Clock.setMinute(59);
+    Clock.setSecond(45);
+    delay(1000);
+    //Clock.setClockMode(true);
+
 }
 
 
@@ -228,4 +268,16 @@ int retrieveDisplayBrightness() {
 void storeDisplayBrightness(int b) {
     // Set the brightness in the EEPROM
     EEPROM.write(0, b);
+}
+
+
+int retrieveDisplay1224() {
+    // Return the 12/24 from EEPROM
+    return EEPROM.read(1);
+}
+
+
+void storeDisplay1224(int b) {
+    // Set the 12/24 in the EEPROM
+    EEPROM.write(1, b);
 }
