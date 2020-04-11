@@ -356,7 +356,7 @@ def fixAutostart():
                 output.close()
             return True
         else:
-            errorTrace("common.py", "/storage/.config directory doesn't exist, can't create a autostart.sh file for zbutton.py")
+            debugTrace("/storage/.config directory doesn't exist, can't create a autostart.sh file for zbutton.py")
             return False
     except Exception as e:
         errorTrace("common.py", "Couldn't write the new python buttons file")

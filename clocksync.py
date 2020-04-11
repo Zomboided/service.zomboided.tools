@@ -163,7 +163,6 @@ if not ser == None :
         else:
             error = True
             msg = "Expected 'Display' request but didn't get it"
-        
     # If the Arduino asks for the time, send it back
     if not error: 
         if getMessageFromArduino("Time", 10) != None:

@@ -503,11 +503,11 @@ msgid "Clock"
 msgstr ""
 
 msgctxt "#32401"
-msgid "Sync clock on boot"
+msgid "External USB Clock"
 msgstr ""
 
 msgctxt "#32402"
-msgid "Resync clock on drift"
+msgid "Automatically resync clock"
 msgstr ""
 
 msgctxt "#32403"
@@ -529,6 +529,7 @@ msgstr ""
 msgctxt "#32407"
 msgid "Resync clock now"
 msgstr ""
+
 
 # Advanced Screen
 

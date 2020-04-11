@@ -95,6 +95,8 @@ file_timer_end = 0
 clock_timer = 0
 clock_timer_start = 0
 clock_timer_end = 0
+clock_sync = False
+clock_sync_force = False
 refresh_timer = 0
 auto_sleep_start = 0
 auto_sleep_end = 0
@@ -138,6 +140,7 @@ def updateSettings(caller, wait):
     global clock_timer_start
     global clock_timer_end
     global clock_check_freq
+    global clock_sync
     global refresh_timer
     global refresh_check_freq
     global auto_sleep_start
@@ -228,7 +231,9 @@ def updateSettings(caller, wait):
     # Frequency clock is checked
     clock_check_freq = int(addon.getSetting("clock_check"))*60
     clock_timer_start, clock_timer_end = parseTimePeriod(t, "File Check", addon.getSetting("clock_check_start"), addon.getSetting("clock_check_end"))
-
+    if addon.getSetting("clock_resync") == "true": clock_sync = True;
+    else: clock_sync = False;
+    
     # Auto sleep timers
     auto_sleep_start, auto_sleep_end = parseTimePeriod(t, "Auto Sleep", addon.getSetting("auto_sleep_start"), addon.getSetting("auto_sleep_end"))
 
@@ -513,6 +518,11 @@ if __name__ == '__main__':
     action_number_a = 0
     clock_timer = 0
     last_clock_check = 0
+    if addon.getSetting("clock_resync") == "true":
+        clock_sync = True;
+        clock_sync_force = True;
+    else:
+        clock_sync = False;
     last_sleep = SLEEP_OFF
     sleep_timer = 0
     sleep_notify = 0
@@ -704,10 +714,19 @@ if __name__ == '__main__':
             addon = xbmcaddon.Addon()
         
         # Clock checking
-        if not player.isPlaying() and clock_timer >= clock_check_freq and not do_it:
-            # newPrint("FIXME SYNC THE CLOCK")
-            # syncClock()
+        if not player.isPlaying() and clock_timer >= clock_check_freq:
+            prev_dst = addon.getSetting("clock_dst")
+            t = time.localtime()
+            current_dst = str(t.tm_isdst)
+            if (not current_dst == -1 and not prev_dst == current_dst) or clock_sync_force:
+                if not clock_sync_force: infoTrace("service.py", "Daylist savings time change detected, resyncing the clock")
+                else: infoTrace("service.py", "Forcing resync of the clock")
+                addon.setSetting("clock_dst", current_dst)
+                clock_sync_force = False
+                syncClock()
+            addon = xbmcaddon.Addon()    
             clock_timer = 0
+
         
         # Set up sleep timer
         sleep_setting = getSleepReq()
@@ -868,8 +887,8 @@ if __name__ == '__main__':
             else:
                 file_timer = file_timer + delay_count
             last_file_check = t
-        if t > clock_timer_start and t < clock_timer_end: 
-            if t - last_clock_check > clock_check_freq:
+        if (clock_sync and (t > clock_timer_start and t < clock_timer_end)) or clock_sync_force:
+            if (t - last_clock_check > clock_check_freq) or clock_sync_force:
                 clock_timer = clock_check_freq
             else:
                 clock_timer = clock_timer + delay_count
