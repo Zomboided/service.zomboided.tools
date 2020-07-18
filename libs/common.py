@@ -363,6 +363,16 @@ def fixAutostart():
         errorTrace("common.py", str(e))        
         return False
     
+
+def hasInternet():
+    # Determine if the internet is available
+    # FIXME Maybe this is ok, but it seems a bit slow and dimwitted in working out if the internet has gone away
+    state = str(xbmc.getCondVisibility('System.InternetState()'))
+    if state == "1": return True
+    else:
+        debugTrace("Internet state is " + state + " looking for a 1 to indicate a connection")
+        return False
+
     
 def syncClock():
     # Run the script to sync the clock

@@ -32,7 +32,7 @@ from libs.trakt import updateTrakt, revertTrakt
 from libs.vpnapi import VPNAPI
 from libs.common import fixKeymaps, getSleep, setSleep, getSleepReq, setSleepReq, setSleepReqTime, clearSleep, setSleepRemaining, getSleepRemaining
 from libs.common import getSleepReqTime, SLEEP_OFF, SLEEP_END, SLEEP_DELAY_TIME, clearAlert, addAlert, activeAlert, forceSleepLock, freeSleepLock
-from libs.common import recordAction, getButtonCommands, makeButtonsFile, fixAutostart, syncClock
+from libs.common import recordAction, getButtonCommands, makeButtonsFile, fixAutostart, hasInternet, syncClock
 
 
 setDebug(False)
@@ -85,7 +85,8 @@ refresh_check_freq = 0
 sleep_timer = 0
 sleep_done = False
 idle_duration_minutes = 0
-enable_idle_time = 0
+# Prevent idle sleep for 5 minutes after boot
+enable_idle_time = now() + 300
 pause_timer = 0
 action_timer = 0
 action_timer_number = 0
@@ -253,13 +254,16 @@ def updateSettings(caller, wait):
         debugTrace("Action timer " + str(action_timer_number) + " is the first timer with " + str(action_timer))
     else:
         debugTrace("No action timers are set")
+    
+    if addon.getSetting("button_enabled") == "true":
+        # Create the buttons file and make it autostart
+        getButtonCommands()
+        xbmc.sleep(500)
+        addon = xbmcaddon.Addon()
         
-    # Create the buttons file and make it autostart
-    getButtonCommands()
-    addon = xbmcaddon.Addon()
-    if makeButtonsFile():
-        debugTrace("Created a new button file")
-        if fixAutostart(): debugTrace("Updated autostart to run zbutton.py")
+        if makeButtonsFile():
+            debugTrace("Created a new button file")
+            if fixAutostart(): debugTrace("Updated autostart to run zbutton.py")
     
     allowUpdates(True)
 
@@ -748,16 +752,18 @@ if __name__ == '__main__':
         
         # Clock checking
         if not player.isPlaying() and clock_timer >= clock_check_freq:
-            prev_dst = addon.getSetting("clock_dst")
-            t = time.localtime()
-            current_dst = str(t.tm_isdst)
-            if (not current_dst == -1 and not prev_dst == current_dst) or clock_sync_force:
-                if not clock_sync_force: infoTrace("service.py", "Daylist savings time change detected, resyncing the clock")
-                else: infoTrace("service.py", "Forcing resync of the clock")
-                addon.setSetting("clock_dst", current_dst)
-                clock_sync_force = False
-                syncClock()
-            addon = xbmcaddon.Addon()    
+            if hasInternet():
+                prev_dst = addon.getSetting("clock_dst")
+                t = time.localtime()
+                current_dst = str(t.tm_isdst)
+                if (not current_dst == -1 and not prev_dst == current_dst) or clock_sync_force:
+                    if not clock_sync_force: infoTrace("service.py", "Daylist savings time change detected, resyncing the clock")
+                    else: infoTrace("service.py", "Forcing resync of the clock")
+                    addon.setSetting("clock_dst", current_dst)
+                    clock_sync_force = False
+                    syncClock()
+                addon = xbmcaddon.Addon()
+            # Don't want to check again for a while, so start the time again regardless of what happened
             clock_timer = 0
 
         
