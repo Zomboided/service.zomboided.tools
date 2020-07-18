@@ -5,15 +5,18 @@
         <setting label="32012" type="bool" id="stop_playback_duration" default="true"/>
         <setting label="32013" type="slider" id="stop_playback_mins" visible="eq(-1,true)" default="240" range="1,1,720" option="int"/>
         <setting label="32014" type="bool" id="stop_playback_after" default="true"/>
-        <setting label="32015" type="time" id="stop_playback_time" visible="eq(-1,true)" default="01:30"/>        
-        <setting label="32016" type="lsep"/>
+        <setting label="32015" type="time" id="stop_playback_time" visible="eq(-1,true)" default="01:30"/>
+        <setting label="32016" type="slider" id="stop_playback_pause" default="10" range="0,1,30" option="int"/>
+        <setting label="32017" type="lsep"/>
         <setting label="32012" type="bool" id="stop_playlist_time" default="true"/>
         <setting label="32013" type="slider" id="stop_playlist_mins" visible="eq(-1,true)" default="60" range="1,1,720" option="int"/>
-        <setting label="32017" type="bool" id="stop_playlist_videos" default="true"/>
-        <setting label="32018" type="slider" id="stop_playlist_count" visible="eq(-1,true)" default="10" range="3,1,100" option="int"/>
-        <setting label="32019" type="lsep"/>
-        <setting label="32020" type="slider" id="detect_playlist_minimum" default="2" range="1,1,10" option="int"/>
-        <setting label="32021" type="slider" id="detect_playlist_gap" default="10" range="1,1,60" option="int"/>
+        <setting label="32018" type="bool" id="stop_playlist_videos" default="true"/>
+        <setting label="32019" type="slider" id="stop_playlist_count" visible="eq(-1,true)" default="10" range="3,1,100" option="int"/>
+        <setting label="32020" type="lsep"/>
+        <setting label="32021" type="slider" id="detect_playlist_minimum" default="2" range="1,1,10" option="int"/>
+        <setting label="32022" type="slider" id="detect_playlist_gap" default="10" range="1,1,60" option="int"/>
+        <setting label="32023" type="lsep"/>
+        <setting label="32024" type="slider" id="stop_during_pause" default="10" range="1,1,60" option="int"/>
     </category>
     <category label="32030">
         <setting label="32031" type="lsep"/>
@@ -25,13 +28,14 @@
         <setting label="32036" type="text" enable="false" visible="eq(-1,true)"/>  
         <setting label="32037" type="slider" id="sleep_notify" default="1" range="0,1,5" option="int"/>
         <setting label="32038" type="slider" id="sleep_warn" default="10" range="0,10,30" option="int"/>
+        <setting label="32039" type="slider" id="sleep_inactivity" default="30" range="0,5,60" option="int"/>        
         <setting label=" "      type="lsep"/>
-        <setting label="32039" type="bool" id="auto_sleep" default="true"/>
-        <setting label="32040" type="time" id="auto_sleep_start" visible="eq(-1,true)" default="22:30"/>
-        <setting label="32041" type="time" id="auto_sleep_end" visible="eq(-2,true)" default="06:00"/>
+        <setting label="32040" type="bool" id="auto_sleep" default="true"/>
+        <setting label="32041" type="time" id="auto_sleep_start" visible="eq(-1,true)" default="22:30"/>
+        <setting label="32042" type="time" id="auto_sleep_end" visible="eq(-2,true)" default="06:00"/>
         <setting label=" "      type="lsep"/>
-        <setting label="32042" type="slider" id="sleep_inc" default="15" range="5,5,30" option="int"/>
-        <setting label="32043" type="slider" id="sleep_max" default="60" range="15,15,120" option="int"/>
+        <setting label="32043" type="slider" id="sleep_inc" default="15" range="5,5,30" option="int"/>
+        <setting label="32044" type="slider" id="sleep_max" default="60" range="15,15,120" option="int"/>
     </category>
     <category label="32051">
         <setting label="32061" type="lsep"/>

@@ -44,28 +44,41 @@ msgid "Stop time (24h)"
 msgstr ""
 
 msgctxt "#32016"
-msgid "Limit playlist playback"
+msgid "Stop playback after pause (minutes, 0 is off)"
 msgstr ""
 
 msgctxt "#32017"
-msgid "Stop playback after maximum videos"
+msgid "Limit playlist playback"
 msgstr ""
 
 msgctxt "#32018"
-msgid "Maximum videos"
+msgid "Stop playback after maximum videos"
 msgstr ""
 
 msgctxt "#32019"
-msgid "Playlist detection"
+msgid "Maximum videos"
 msgstr ""
 
 msgctxt "#32020"
-msgid "Minimum number of files"
+msgid "Playlist detection"
 msgstr ""
 
 msgctxt "#32021"
+msgid "Minimum number of files"
+msgstr ""
+
+msgctxt "#32022"
 msgid "Seconds between videos"
 msgstr ""
+
+msgctxt "#32023"
+msgid "Limit Pause"
+msgstr ""
+
+msgctxt "#32024"
+msgid "Stop playback if paused (minutes, 0 is off)"
+msgstr ""
+
 
 
 # Sleep Screen
@@ -107,27 +120,31 @@ msgid "Warning before sleep (seconds, 0 is off)"
 msgstr ""
 
 msgctxt "#32039"
-msgid "Auto enable sleep until end of video"
+msgid "Sleep on inactivty (minutes, 0 is off)"
 msgstr ""
 
 msgctxt "#32040"
-msgid "Auto sleep from (24h)"
+msgid "Auto enable sleep at end of video"
 msgstr ""
 
 msgctxt "#32041"
-msgid "Auto sleep until (24h)"
+msgid "Auto sleep from (24h)"
 msgstr ""
 
 msgctxt "#32042"
-msgid "Sleep timer increments"
+msgid "Auto sleep until (24h)"
 msgstr ""
 
 msgctxt "#32043"
+msgid "Sleep timer increments"
+msgstr ""
+
+msgctxt "#32044"
 msgid "Sleep timer maximum"
 msgstr ""
 
 
-# Trigger Screens
+# Trigger Screes
 
 msgctxt "#32051"
 msgid "Action #1"

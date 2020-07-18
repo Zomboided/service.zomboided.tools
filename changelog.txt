@@ -1,3 +1,7 @@
+v0.7.0
+- Pause idle stopping
+- Sleep idle
+
 v0.6.3
 - Linux clock sync on DST and boot
 

@@ -68,6 +68,7 @@ addon_name = addon.getAddonInfo('name')
 # Playlist check variables
 playback_duration_check = False
 playback_duration_minutes = 0
+pause_duration_minutes = 0
 playback_time_check = False
 playback_time = 0
 playlist_detection_delay = 0
@@ -82,6 +83,10 @@ refresh_check_freq = 0
 
 # Timers
 sleep_timer = 0
+sleep_done = False
+idle_duration_minutes = 0
+enable_idle_time = 0
+pause_timer = 0
 action_timer = 0
 action_timer_number = 0
 addon_timer = 0
@@ -118,6 +123,8 @@ class KodiMonitor(xbmc.Monitor):
 def updateSettings(caller, wait):
     global playback_duration_check
     global playback_duration_minutes
+    global pause_duration_minutes
+    global idle_duration_minutes
     global playback_time_check
     global playback_time
     global playlist_detection_delay
@@ -177,6 +184,8 @@ def updateSettings(caller, wait):
     playlist_max_count = int(addon.getSetting("stop_playlist_count"))
     playlist_min_count = int(addon.getSetting("detect_playlist_minimum"))
     playlist_detection_delay = int(addon.getSetting("detect_playlist_gap"))
+    pause_duration_minutes = int(addon.getSetting("stop_during_pause"))
+    idle_duration_minutes = int(addon.getSetting("sleep_inactivity"))
     
     # The warning timers should be 10 second increments so fix if it's not
     for i in range(1, (ACTION_COUNT + 1)):
@@ -295,11 +304,6 @@ def parseTimer(type, freq, rtime, day, date, period, begin):
         # Make some datetime objects representing now, last boot time and the timer
         current_dt = datetime.datetime.fromtimestamp(t)
         last_dt = datetime.datetime.fromtimestamp(last_boot)
-        #xbmc.sleep(1000)
-        #try:
-        #    timer_dt = datetime.datetime.strptime(timer, "%d %m %Y %H:%M")
-        #except:
-        #timer_dt = datetime.datetime(*(time.strptime(timer, "%d %m %Y %H:%M")[0:8]))
         timer_dt = datetime.datetime(*(time.strptime(timer, "%d %m %Y %H:%M")[0:6]))
         
         # Adjust timer based on the frequency
@@ -375,11 +379,15 @@ class KodiPlayer(xbmc.Player):
 
     def onPlayBackStarted(self, *arg):
         global playback_timer
+        global sleep_done
+        
+        # Allow idle sleep to work again
+        sleep_done = False
         
         addon = xbmcaddon.Addon()
         
         # Deal with endPlayback not being called previously
-        if self.playing_file: self.runPlaybackEnded()
+        if self.playing_file: self.runPlaybackEnded("onPlayBackStarted")
         self.playing_file = True
         
         t = now()
@@ -440,16 +448,14 @@ class KodiPlayer(xbmc.Player):
         
         
     def onPlayBackStopped(self, *arg):
-        global playback_timer
-        global sleep_timer
-        self.playing_file = False
-        playback_timer = 0
-        self.resetPlaybackCounts()
-        debugTrace("Playback stopped, sleep is " + getSleep())
-        if getSleep() == SLEEP_END:
-            addAlert()
-            sleep_timer = 1
-        
+        self.runPlaybackEnded("onPlayBackStopped")
+        self.resetPlaybackCounts
+    
+    def onPlayBackPaused(self):
+        global pause_timer        
+        if pause_duration_minutes > 0: pause_timer = now() + (pause_duration_minutes * 60)
+        debugTrace("Playback paused, pausing limited to " + str(pause_duration_minutes) + " miuntes, sleep is " + getSleep())
+    
     def onPlayBackEnded(self, *arg):
         self.runPlaybackEnded("onPlayBackEnded")
 
@@ -462,9 +468,14 @@ class KodiPlayer(xbmc.Player):
     def runPlaybackEnded(self, caller):
         global playback_timer
         global sleep_timer
+        global pause_timer
+        global enable_idle_time
         self.playing_file = False
         playback_timer = 0
+        pause_timer = 0
         t = now()
+        if idle_duration_minutes > 0: enable_idle_time = t + (idle_duration_minutes * 60)
+        else: enable_idle_time = 0
         self.playlist_ended = t
         self.playlist_count += 1
         debugTrace("Playback ended called from " + caller + ", at " + str(self.playlist_ended) + ", count is " + str(self.playlist_count) + " sleep is " + getSleep())
@@ -575,6 +586,23 @@ if __name__ == '__main__':
                 else:
                     xbmcgui.Dialog().notification("Sleeping in " + notify_mins + " minutes" , "", "", 5000, False)
         
+        # Idle checking
+        if not player.isPlaying() and idle_duration_minutes > 0 and not do_it:
+            if enable_idle_time == 0:
+                if xbmc.getCondVisibility('System.IdleTime(' + str(idle_duration_minutes) + ')'):
+                    # Only allow idle sleep once, then not again until some more user input has happened                 
+                    if not sleep_done:
+                        infoTrace("service.py", "Sleeping after being idle for " + str(idle_duration_minutes) + " minutes")
+                        addAlert()
+                        sleep_timer = 1
+                        sleep_done = True
+                else:
+                    # Idle time is less, so we've gotten an new input so reset the flag
+                    sleep_done = False
+            else:
+                # Reenable idle time after pausing it following playback finishing
+                if t >= enable_idle_time: enable_idle_time = 0;
+        
         # Timer Checking
         if action_timer > 0 and t >= action_timer and not do_it:
             do_it = True
@@ -584,6 +612,11 @@ if __name__ == '__main__':
             action_if_playing = False
             if addon.getSetting("action_if_playing_" + action_number) == "true": action_if_playing = True
             infoTrace("service.py", "Timer " + str(action_timer) + " has triggered on " + str(t) + " for action #" + action_number + ".")
+            
+        # Pause checking    
+        if pause_timer > 0 and t >= pause_timer and not do_it:
+            player.stop()
+            infoTrace("service.py", "Paused for longer than " + str(pause_duration_minutes) + " minutes, stopping playback")
             
         # File Checking
         if not player.isPlaying() and file_timer >= file_check_freq and not do_it:
@@ -792,6 +825,7 @@ if __name__ == '__main__':
                 for i in range(1, 100):
                     if dialog.iscanceled():
                         do_it = False
+                        clearSleep()
                         infoTrace("service.py", action + " aborted by user")
                         break
                     percent = 100-(i*tick)
