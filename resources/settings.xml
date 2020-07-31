@@ -15,8 +15,6 @@
         <setting label="32020" type="lsep"/>
         <setting label="32021" type="slider" id="detect_playlist_minimum" default="2" range="1,1,10" option="int"/>
         <setting label="32022" type="slider" id="detect_playlist_gap" default="10" range="1,1,60" option="int"/>
-        <setting label="32023" type="lsep"/>
-        <setting label="32024" type="slider" id="stop_during_pause" default="10" range="0,1,60" option="int"/>
     </category>
     <category label="32030">
         <setting label="32031" type="lsep"/>

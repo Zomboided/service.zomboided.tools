@@ -1,3 +1,6 @@
+v0.7.2
+- Fix sleep timings
+
 v0.7.1
 - Delay sleep idle for 5 minutes after boot
 - Check internet connectivity before syncing clock (which what should be a correct time)

@@ -44,7 +44,7 @@ msgid "Stop time (24h)"
 msgstr ""
 
 msgctxt "#32016"
-msgid "Stop playback after pause (minutes, 0 is off)"
+msgid "Stop playback if paused (minutes, 0 is off)"
 msgstr ""
 
 msgctxt "#32017"
@@ -70,15 +70,6 @@ msgstr ""
 msgctxt "#32022"
 msgid "Seconds between videos"
 msgstr ""
-
-msgctxt "#32023"
-msgid "Limit Pause"
-msgstr ""
-
-msgctxt "#32024"
-msgid "Stop playback if paused (minutes, 0 is off)"
-msgstr ""
-
 
 
 # Sleep Screen

@@ -85,8 +85,7 @@ refresh_check_freq = 0
 sleep_timer = 0
 sleep_done = False
 idle_duration_minutes = 0
-# Prevent idle sleep for 5 minutes after boot
-enable_idle_time = now() + 300
+enable_idle_time = 0
 pause_timer = 0
 action_timer = 0
 action_timer_number = 0
@@ -185,7 +184,7 @@ def updateSettings(caller, wait):
     playlist_max_count = int(addon.getSetting("stop_playlist_count"))
     playlist_min_count = int(addon.getSetting("detect_playlist_minimum"))
     playlist_detection_delay = int(addon.getSetting("detect_playlist_gap"))
-    pause_duration_minutes = int(addon.getSetting("stop_during_pause"))
+    pause_duration_minutes = int(addon.getSetting("stop_playback_pause"))
     idle_duration_minutes = int(addon.getSetting("sleep_inactivity"))
     
     # The warning timers should be 10 second increments so fix if it's not
@@ -384,6 +383,7 @@ class KodiPlayer(xbmc.Player):
     def onPlayBackStarted(self, *arg):
         global playback_timer
         global sleep_done
+        global pause_timer
         
         # Allow idle sleep to work again
         sleep_done = False
@@ -401,6 +401,9 @@ class KodiPlayer(xbmc.Player):
             recordAction("Playing " + self.getPlayingFile())
         except:
             pass
+        
+        # Reset the pause time, just in case so the film is not stopped randomly
+        pause_timer = 0
         
         # Determine the end time if there's a play back limit
         d_timer = 0
@@ -458,6 +461,7 @@ class KodiPlayer(xbmc.Player):
     def onPlayBackPaused(self):
         global pause_timer        
         if pause_duration_minutes > 0: pause_timer = now() + (pause_duration_minutes * 60)
+        else: pause_timer = 0
         debugTrace("Playback paused, pausing limited to " + str(pause_duration_minutes) + " miuntes, sleep is " + getSleep())
     
     def onPlayBackEnded(self, *arg):
@@ -524,7 +528,8 @@ if __name__ == '__main__':
     # Initialise a bunch of variables
     delay = 10
     delay_loop = 6
-
+    # Prevent idle sleep for 5 minutes after boot
+    enable_idle_time = now() + 300
     file_timer = 0
     last_file_check = 0
     action_number_f = 0
@@ -532,6 +537,7 @@ if __name__ == '__main__':
     last_addon_check = 0
     action_number_a = 0
     clock_timer = 0
+    pause_timer = 0
     last_clock_check = 0
     if addon.getSetting("clock_resync") == "true":
         clock_sync = True;
@@ -583,6 +589,7 @@ if __name__ == '__main__':
                 infoTrace("service.py", "Sleep timer has triggered on " + str(t) + ".")
                 last_sleep = SLEEP_OFF
                 clearSleep()
+                # FIXME switch off idle sleep timer here?  Who switches it back on?
             if sleep_notify > 0 and t > sleep_notify:
                 sleep_notify = 0
                 if notify_mins == "1":
@@ -593,7 +600,8 @@ if __name__ == '__main__':
         # Idle checking
         if not player.isPlaying() and idle_duration_minutes > 0 and not do_it:
             if enable_idle_time == 0:
-                if xbmc.getCondVisibility('System.IdleTime(' + str(idle_duration_minutes) + ')'):
+                idle_duration_seconds = idle_duration_minutes * 60
+                if xbmc.getCondVisibility('System.IdleTime(' + str(idle_duration_seconds) + ')'):
                     # Only allow idle sleep once, then not again until some more user input has happened                 
                     if not sleep_done:
                         infoTrace("service.py", "Sleeping after being idle for " + str(idle_duration_minutes) + " minutes")
@@ -601,10 +609,10 @@ if __name__ == '__main__':
                         sleep_timer = 1
                         sleep_done = True
                 else:
-                    # Idle time is less, so we've gotten an new input so reset the flag
+                    # Idle time is less than when we last (tried to) sleep, so reset the flag
                     sleep_done = False
             else:
-                # Reenable idle time after pausing it following playback finishing
+                # Reenable idle time after pausing it following playback finishing or the service starting
                 if t >= enable_idle_time: enable_idle_time = 0;
         
         # Timer Checking
