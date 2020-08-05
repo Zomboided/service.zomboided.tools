@@ -464,6 +464,10 @@ class KodiPlayer(xbmc.Player):
         else: pause_timer = 0
         debugTrace("Playback paused, pausing limited to " + str(pause_duration_minutes) + " miuntes, sleep is " + getSleep())
     
+    def onPlayBackResumed(self):
+        global pause_timer
+        pause_timer = 0
+    
     def onPlayBackEnded(self, *arg):
         self.runPlaybackEnded("onPlayBackEnded")
 
