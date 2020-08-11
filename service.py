@@ -868,7 +868,9 @@ if __name__ == '__main__':
                 elif action == "Modify Trakt add-ons":
                     updateTrakt(10000, False)
                     if addon.getSetting("trakt_clear") == "true":
-                        rules.runRules(False, "Video", mask)
+                        mask = addon.getSetting("video_mask")
+                        if mask == WILDCARD: mask = ""
+                        rules.runRules(False, VIDEO_GROUP, mask)
                 elif action == "Reset Emby":
                     mask = addon.getSetting("emby_mask")
                     if mask == WILDCARD: mask = ""
