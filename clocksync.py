@@ -7,7 +7,9 @@ import time
 import xbmcgui
 import xbmcaddon
 from datetime import datetime
-from libs.utility import debugTrace, errorTrace, infoTrace, newPrint, now
+from libs.utility import errorTrace, infoTrace, newPrint, now
+from libs.utility import alwaysTrace as debugTrace
+#from libs.utility import debugTrace
 
 action = sys.argv[1]
 

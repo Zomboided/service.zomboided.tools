@@ -44,6 +44,11 @@ def debugTrace(data):
     else:
         log = "ZTools : " + data
         xbmc.log(msg=log, level=xbmc.LOGDEBUG)
+
+
+def alwaysTrace(data):    
+    log = "ZTools : Debug: " + data
+    xbmc.log(msg=log, level=xbmc.LOGNONE)       
     
     
 def errorTrace(module, data):
