@@ -23,6 +23,7 @@ import xbmcaddon
 import xbmcvfs
 import xbmcgui
 import datetime
+import urllib
 import os
 from glob import glob
 from libs.utility import debugTrace, errorTrace, infoTrace, newPrint, now
@@ -364,13 +365,15 @@ def fixAutostart():
         return False
     
 
-def hasInternet():
+def hasInternet(host):
     # Determine if the internet is available
-    # FIXME Maybe this is ok, but it seems a bit slow and dimwitted in working out if the internet has gone away
-    state = str(xbmc.getCondVisibility('System.InternetState()'))
-    if state == "1": return True
-    else:
-        debugTrace("Internet state is " + state + " looking for a 1 to indicate a connection")
+    try:
+        socket = urllib.urlopen(host)
+        socket.close()
+        return True
+    except Exception as e:
+        errorTrace("common.py", "Did not detect a valid internet connection to " + host)
+        errorTrace("common.py", str(e))  
         return False
 
     

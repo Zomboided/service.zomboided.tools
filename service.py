@@ -239,7 +239,7 @@ def updateSettings(caller, wait):
 
     # Frequency clock is checked
     clock_check_freq = int(addon.getSetting("clock_check"))*60
-    clock_timer_start, clock_timer_end = parseTimePeriod(t, "File Check", addon.getSetting("clock_check_start"), addon.getSetting("clock_check_end"))
+    clock_timer_start, clock_timer_end = parseTimePeriod(t, "Clock Check", addon.getSetting("clock_check_start"), addon.getSetting("clock_check_end"))
     if addon.getSetting("clock_resync") == "true": clock_sync = True;
     else: clock_sync = False;
     
@@ -764,17 +764,17 @@ if __name__ == '__main__':
         
         # Clock checking
         if not player.isPlaying() and clock_timer >= clock_check_freq:
-            if hasInternet():
-                prev_dst = addon.getSetting("clock_dst")
-                t = time.localtime()
-                current_dst = str(t.tm_isdst)
-                if (not current_dst == -1 and not prev_dst == current_dst) or clock_sync_force:
+            prev_dst = addon.getSetting("clock_dst")
+            t = time.localtime()
+            current_dst = str(t.tm_isdst)
+            if (not current_dst == -1 and not prev_dst == current_dst) or clock_sync_force:
+                if hasInternet("http://google.com"):
                     if not clock_sync_force: infoTrace("service.py", "Daylist savings time change detected, resyncing the clock")
                     else: infoTrace("service.py", "Forcing resync of the clock")
                     addon.setSetting("clock_dst", current_dst)
                     clock_sync_force = False
                     syncClock()
-                addon = xbmcaddon.Addon()
+            addon = xbmcaddon.Addon()
             # Don't want to check again for a while, so start the time again regardless of what happened
             clock_timer = 0
 
