@@ -1,3 +1,5 @@
+Deprecated, moved change log to news in addon.xml
+
 v0.7.5
 - Change internet check
 

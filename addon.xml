@@ -13,7 +13,7 @@
     <provides>executable</provides>
   </extension>
   <extension point="xbmc.addon.metadata">
-    <news></news>
+    
     <platform>all</platform>
     <summary lang="en">Various Kodi tools</summary>
     <description lang="en">Limit playback and play lists; trigger actions based on events and timers; sleep timer; clear caches; speed test LAN connections.</description>
@@ -25,7 +25,11 @@
         <fanart></fanart>
         <banner></banner>
         <clearlogo></clearlogo>
-        <screenshot></screenshot>
+        <screenshot></screenshot>		
     </assets>
+	<news>
+		v0.8.0
+		- Kodi 19/Python 3 support
+	</news>
   </extension>
 </addon>
