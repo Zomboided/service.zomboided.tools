@@ -210,47 +210,15 @@ msgid "Stop Playing"
 msgstr ""
 
 msgctxt "#32069"
-msgid "Modify Trakt add-ons"
-msgstr ""
-
-msgctxt "#32070"
-msgid "Reset video add-ons"
-msgstr ""
-
-msgctxt "#32071"
-msgid "Reset Emby"
-msgstr ""
-
-msgctxt "#32072"
-msgid "Run custom rules"
-msgstr ""
-
-msgctxt "#32073"
 msgid "Run Command"
 msgstr ""
 
-msgctxt "#32074"
+msgctxt "#32070"
 msgid "Disconnect VPN"
 msgstr ""
 
-msgctxt "#32075"
+msgctxt "#32071"
 msgid "Reconnect VPN"
-msgstr ""
-
-msgctxt "#32086"
-msgid "Click to select rule sets"
-msgstr ""
-
-msgctxt "#32087"
-msgid "Rule sets"
-msgstr ""
-
-msgctxt "#32088"
-msgid "Click to refine rules within sets"
-msgstr ""
-
-msgctxt "#32089"
-msgid "Rules"
 msgstr ""
 
 msgctxt "#32090"

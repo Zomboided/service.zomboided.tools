@@ -24,11 +24,10 @@ import xbmcplugin
 import xbmcgui
 import os
 from libs.utility import debugTrace, errorTrace, infoTrace
-from libs.rules import rules, hasVideoAddons, hasEmbyAddons, EMBY_GROUP, VIDEO_GROUP, WILDCARD
-from libs.trakt import updateTrakt, revertTrakt
 from libs.logbox import popupKodiLog
 from libs.speedtest import speedTest
 from libs.managefiles import copyLog
+from libs.common import getIconPath
 
 debugTrace("-- Entered addon.py " + sys.argv[0] + " " + sys.argv[1] + " " + sys.argv[2] + " --")
 
@@ -55,32 +54,20 @@ def topLevel():
     # Build the top level menu with URL callbacks to this plugin
     debugTrace("Displaying the top level menu")
     url = base_url + "?settings"
-    li = xbmcgui.ListItem("Add-on Settings", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
+    li = xbmcgui.ListItem("Add-on Settings")
+    li.setArt({"icon":getIconPath()+"box.png"})
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
-    if hasVideoAddons():
-        url = base_url + "?resetvideo"
-        li = xbmcgui.ListItem("Reset Video Add-ons", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
-        xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
-    if addon.getSetting("enable_debug") == "true" and hasEmbyAddons():
-        url = base_url + "?resetemby"
-        li = xbmcgui.ListItem("Reset Emby", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
-        xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
-    if xbmc.getCondVisibility('System.HasAddon(plugin.video.covenant)') or xbmc.getCondVisibility('System.HasAddon(plugin.video.exodus)') or xbmc.getCondVisibility('System.HasAddon(plugin.video.fantastic)'):
-        url = base_url + "?modifytrakt"
-        li = xbmcgui.ListItem("Modify Trakt Add-ons", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
-        xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
-        if addon.getSetting("enable_debug") == "true":
-            url = base_url + "?reverttrakt"
-            li = xbmcgui.ListItem("Revert Trakt Add-ons", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
-            xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
     url = base_url + "?viewlog"
-    li = xbmcgui.ListItem("View Log", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
+    li = xbmcgui.ListItem("View Log")
+    li.setArt({"icon":getIconPath()+"box.png"})
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
     url = base_url + "?copylog"
-    li = xbmcgui.ListItem("Copy Log", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
+    li = xbmcgui.ListItem("Copy Log")
+    li.setArt({"icon":getIconPath()+"box.png"})
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
     url = base_url + "?speedtest"
-    li = xbmcgui.ListItem("LAN Speed Test", iconImage=xbmc.translatePath("special://home/addons/service.zomboided.tools/resources/box.png"))
+    li = xbmcgui.ListItem("LAN Speed Test")
+    li.setArt({"icon":getIconPath()+"box.png"})
     xbmcplugin.addDirectoryItem(handle=addon_handle, url=url, listitem=li)
     xbmcplugin.endOfDirectory(addon_handle)
     return
@@ -94,24 +81,6 @@ def back():
 if action == "settings" :
     debugTrace("Opening settings")
     xbmc.executebuiltin("Addon.OpenSettings(service.zomboided.tools)")    
-elif action == "resetvideo" :
-    debugTrace("Reset video addons")
-    mask = addon.getSetting("video_mask")
-    if mask == WILDCARD: mask = ""
-    rules = rules(False)
-    rules.runRules(True, "Video", mask)
-elif action == "resetemby" :
-    debugTrace("Reset Emby")
-    mask = addon.getSetting("emby_mask")
-    if mask == WILDCARD: mask = ""
-    rules = rules(False)
-    rules.runRules(True, "Emby", mask)
-elif action == "modifytrakt" :
-    debugTrace("Modify Trakt add-ons")
-    updateTrakt(10000, True)
-elif action == "reverttrakt" :
-    debugTrace("Revert Trakt add-ons")
-    revertTrakt()
 elif action == "viewlog" :
     debugTrace("Displaying log")
     popupKodiLog()

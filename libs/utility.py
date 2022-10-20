@@ -24,6 +24,7 @@ import time
 
 forceDebug = False
 
+DEC_ERR = "*** DECODE ERROR *** : "
 
 def ifDebug():
     if forceDebug: return True
@@ -38,35 +39,60 @@ def setDebug(debug):
     
     
 def debugTrace(data):    
-    if ifDebug():
-        log = "ZTools : Debug: " + data
-        xbmc.log(msg=log, level=xbmc.LOGNONE)       
-    else:
-        log = "ZTools : " + data
-        xbmc.log(msg=log, level=xbmc.LOGDEBUG)
+    try:
+        if ifDebug():
+            log = "ZTools : Debug: " + str(data)
+            xbmc.log(msg=log, level=xbmc.LOGINFO)       
+        else:
+            log = "ZTools : " + str(data)
+            xbmc.log(msg=log, level=xbmc.LOGDEBUG)
+    except Exception as e:
+        log = DEC_ERR + "ZTools : " + str(data)
+        log = log.encode('ascii', 'ignore')
+        xbmc.log(msg=log, level=xbmc.LOGERROR)        
 
 
-def alwaysTrace(data):    
-    log = "ZTools : Debug: " + data
-    xbmc.log(msg=log, level=xbmc.LOGNONE)       
+def alwaysTrace(data):
+    try:
+        log = "ZTools : Debug: " + str(data)
+        xbmc.log(msg=log, level=xbmc.LOGINFO)       
+    except Exception as e:
+        log = DEC_ERR + "ZTools : " + str(data)
+        log = log.encode('ascii', 'ignore')
+        xbmc.log(msg=log, level=xbmc.LOGERROR)        
     
     
 def errorTrace(module, data):
-    log = "ZTools : (" + module + ") " + data
-    xbmc.log(msg=log, level=xbmc.LOGERROR)
+    try:
+        log = "ZTools : (" + module + ") " + str(data)
+        xbmc.log(msg=log, level=xbmc.LOGERROR)
+    except Exception as e:
+        log = DEC_ERR + "ZTools : " + str(data)
+        log = log.encode('ascii', 'ignore')
+        xbmc.log(msg=log, level=xbmc.LOGERROR)        
     
     
 def infoTrace(module, data):
-    log = "ZTools : (" + module + ") " + data
-    xbmc.log(msg=log, level=xbmc.LOGNOTICE)
+    try:
+        log = "ZTools : (" + module + ") " + str(data)
+        xbmc.log(msg=log, level=xbmc.LOGINFO)
+    except Exception as e:
+        log = DEC_ERR + "ZTools : " + str(data)
+        log = log.encode('ascii', 'ignore')
+        xbmc.log(msg=log, level=xbmc.LOGERROR) 
 
     
 def infoPrint(data):
-    xbmc.log(msg=data, level=xbmc.LOGNOTICE)
+    try:
+        xbmc.log(msg=str(data), level=xbmc.LOGINFO)
+    except Exception as e:
+        log = DEC_ERR + str(data)
+        log = log.encode('ascii', 'ignore')
+        xbmc.log(msg=log, level=xbmc.LOGERROR)
 
 
 def newPrint(data):
-    xbmc.log(msg=data, level=xbmc.LOGERROR)
+    xbmc.log(msg=str(data), level=xbmc.LOGINFO)
 
    
 def now():

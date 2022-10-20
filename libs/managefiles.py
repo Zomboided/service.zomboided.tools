@@ -39,7 +39,7 @@ def copyLog():
     log_path = ""
     dest_path = ""
     try:
-        log_path = xbmc.translatePath("special://logpath/kodi.log")
+        log_path = xbmcvfs.translatePath("special://logpath/kodi.log")
         start_dir = ""
         dest_folder = xbmcgui.Dialog().browse(0, "Select folder to copy log file into", "files", "", False, False, start_dir, False)
         dest_path = "kodi " + datetime.datetime.now().strftime("%y-%m-%d %H-%M-%S") + ".log"

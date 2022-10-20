@@ -27,8 +27,6 @@ import time
 import datetime
 import calendar
 from libs.utility import ifDebug, setDebug, debugTrace, errorTrace, infoTrace, newPrint, now
-from libs.rules import rules, VIDEO_GROUP, EMBY_GROUP, WILDCARD
-from libs.trakt import updateTrakt, revertTrakt
 from libs.vpnapi import VPNAPI
 from libs.common import fixKeymaps, getSleep, setSleep, getSleepReq, setSleepReq, setSleepReqTime, clearSleep, setSleepRemaining, getSleepRemaining
 from libs.common import getSleepReqTime, SLEEP_OFF, SLEEP_END, SLEEP_DELAY_TIME, clearAlert, addAlert, activeAlert, forceSleepLock, freeSleepLock
@@ -364,7 +362,7 @@ def parseTimePeriod(t, timer_name, start_time, end_time):
         # If the scheduled time is in the past, try again for the next day
         if timer_end < t: start = TOMORROW
         else: happy = True
-    return timer_start, timer_end
+    return int(timer_start), int(timer_end)
     
 
 # Player class which will be called when the playback state changes           
@@ -559,12 +557,7 @@ if __name__ == '__main__':
     action = ""
     warn = -1
     action_number = 0
-          
-    # Load the rules
-    # This can delay for up to 3 minutes if there's no network available
-    rules = rules(True)
-    rules.preloadRulesAddons()
-              
+                      
     # Check the keymaps for this add-on are intact
     if fixKeymaps():
         xbmcgui.Dialog().ok(addon_name, "The keymap had been renamed.  This has been reverted to the correct name, but you must restart for the keymap to take effect.") 
@@ -765,8 +758,8 @@ if __name__ == '__main__':
         # Clock checking
         if not player.isPlaying() and clock_timer >= clock_check_freq:
             prev_dst = addon.getSetting("clock_dst")
-            t = time.localtime()
-            current_dst = str(t.tm_isdst)
+            clock_t = time.localtime()
+            current_dst = str(clock_t.tm_isdst)
             if (not current_dst == -1 and not prev_dst == current_dst) or clock_sync_force:
                 if hasInternet("http://google.com"):
                     if not clock_sync_force: infoTrace("service.py", "Daylist savings time change detected, resyncing the clock")
@@ -861,20 +854,6 @@ if __name__ == '__main__':
                     xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but no action is defined.")
                 elif action == "Stop Playing":
                     player.stop()
-                elif action == "Reset video add-ons":
-                    mask = addon.getSetting("video_mask")
-                    if mask == WILDCARD: mask = ""
-                    rules.runRules(False, VIDEO_GROUP, mask)
-                elif action == "Modify Trakt add-ons":
-                    updateTrakt(10000, False)
-                    if addon.getSetting("trakt_clear") == "true":
-                        mask = addon.getSetting("video_mask")
-                        if mask == WILDCARD: mask = ""
-                        rules.runRules(False, VIDEO_GROUP, mask)
-                elif action == "Reset Emby":
-                    mask = addon.getSetting("emby_mask")
-                    if mask == WILDCARD: mask = ""
-                    rules.runRules(False, EMBY_GROUP, mask)
                 elif action == "Disconnect VPN":
                     if api is not None:
                         result = api.disconnect(False)
@@ -895,11 +874,6 @@ if __name__ == '__main__':
                         xbmcgui.Dialog().ok(addon_name, "Trigger has fired for action #" + action_number + ", but command failed to run.  See log for details.")
                         errorTrace("service.py", "Could not run command '" + c + "' for action #" + action_number + ". Error shown on next line.")
                         errorTrace("service.py", str(e))
-                elif action == "Run custom rules":
-                    group = addon.getSetting("action_rules_group_" + action_number)
-                    mask = addon.getSetting("action_rules_mask_" + action_number)
-                    if mask == WILDCARD: mask = ""
-                    rules.runRules(False, group, mask)
                 else:
                     xbmc.executebuiltin(action)
             

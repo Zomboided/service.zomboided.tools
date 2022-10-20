@@ -23,7 +23,7 @@ import xbmcaddon
 import xbmcvfs
 import xbmcgui
 import datetime
-import urllib
+import urllib.request
 import os
 from glob import glob
 from libs.utility import debugTrace, errorTrace, infoTrace, newPrint, now
@@ -35,7 +35,7 @@ SLEEP_END = "End"
 
 
 def getKeyMapsPath(path):
-    return xbmc.translatePath("special://userdata/keymaps/" + path)
+    return xbmcvfs.translatePath("special://userdata/keymaps/" + path)
     
 
 def getKeyMapsFileName():
@@ -254,14 +254,14 @@ def getActionLogName(old):
     name = "ztools."
     if old: name = name + "old."
     name = name + "log"
-    name = xbmc.translatePath("special://logpath/" + name)
+    name = xbmcvfs.translatePath("special://logpath/" + name)
     return name
 
     
 def getButtonCommands():
     # Use button activated commands from a userdata file instead of entering them
     addon = xbmcaddon.Addon("service.zomboided.tools")
-    filename = xbmc.translatePath("special://userdata/addon_data/service.zomboided.tools/COMMANDS.txt")
+    filename = xbmcvfs.translatePath("special://userdata/addon_data/service.zomboided.tools/COMMANDS.txt")
     
     # This will just warn the user on the settings screen we're using a file instead
     if xbmcvfs.exists(filename):
@@ -294,13 +294,13 @@ def getButtonCommands():
             
                 
 def getButtonsPythonName():
-    return xbmc.translatePath("special://home/addons/service.zomboided.tools/zbutton.py")
+    return xbmcvfs.translatePath("special://home/addons/service.zomboided.tools/zbutton.py")
 
     
 def makeButtonsFile():
     # Use the buttons template to build a file to run at boot to check for a button press and run some commands
     addon = xbmcaddon.Addon("service.zomboided.tools")
-    template_filename = xbmc.translatePath("special://home/addons/service.zomboided.tools/BUTTONS.txt")
+    template_filename = xbmcvfs.translatePath("special://home/addons/service.zomboided.tools/BUTTONS.txt")
     python_filename = getButtonsPythonName()
     # Read the template file in
     try:
@@ -368,7 +368,7 @@ def fixAutostart():
 def hasInternet(host):
     # Determine if the internet is available
     try:
-        socket = urllib.urlopen(host)
+        socket = urllib.request.urlopen(host)
         socket.close()
         return True
     except Exception as e:
@@ -379,8 +379,20 @@ def hasInternet(host):
     
 def syncClock():
     # Run the script to sync the clock
-    command = xbmc.translatePath("special://home/addons/service.zomboided.tools/clocksync.py")
+    command = xbmcvfs.translatePath("special://home/addons/service.zomboided.tools/clocksync.py")
     xbmc.executebuiltin('XBMC.RunScript(' + command + ', quiet)')
         
+
     
+def getIconPath():
+    return getAddonPath(True, "/resources/")
+
     
+def getAddonPath(this_addon, path):
+    # Return the URL of the addon directory, plus any addition path/file name.
+    addon = xbmcaddon.Addon()
+    addon_id = addon.getAddonInfo('id')
+    if this_addon:
+        return xbmcvfs.translatePath("special://home/addons/" + addon_id + "/" + path)
+    else:
+        return xbmcvfs.translatePath("special://home/addons/" + path)

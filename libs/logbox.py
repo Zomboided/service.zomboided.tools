@@ -22,7 +22,7 @@ import xbmc
 import xbmcaddon
 import xbmcgui
 import xbmcvfs
-from utility import debugTrace, errorTrace, infoTrace, newPrint
+from libs.utility import debugTrace, errorTrace, infoTrace, newPrint
 
 
 ACTION_PREVIOUS_MENU = 10
@@ -56,11 +56,11 @@ def showLogBox(caption, text):
 def popupKodiLog():
     dialog_text = ""
     try:
-        log_file = open(xbmc.translatePath("special://logpath/kodi.log"), 'r')
+        log_file = open(xbmcvfs.translatePath("special://logpath/kodi.log"), 'r')
         log_output = log_file.readlines()
         log_file.close()    
         for line in log_output:
             dialog_text = dialog_text + line
     except:
-        dialog_text = "Log file " + xbmc.translatePath("special://logpath/kodi.log") + " weirdly does not exist...maybe try rebooting?"
+        dialog_text = "Log file " + xbmcvfs.translatePath("special://logpath/kodi.log") + " weirdly does not exist...maybe try rebooting?"
     showLogBox("Kodi Log", dialog_text)

@@ -37,12 +37,8 @@
     </category>
     <category label="32051">
         <setting label="32061" type="lsep"/>
-        <setting label="32062" type="labelenum" id="action_1" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072|32073|32074|32075"/>
-        <setting label="32086" type="action" visible="eq(-1,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 1, Set)"/>
-        <setting label="32087" type="text" id="action_rules_group_1" enable="false" visible="eq(-2,9)" default=""/> 
-        <setting label="32088" type="action" visible="!eq(-1,)&eq(-3,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 1, Rules)"/>
-        <setting label="32089" type="text" id="action_rules_mask_1" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
-        <setting label="32090" type="text" id="action_command_1" enable="true" visible="eq(-5,10)" default=""/>        
+        <setting label="32062" type="labelenum" id="action_1" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071"/>
+		<setting label="32090" type="text" id="action_command_1" enable="true" visible="eq(-1,6)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_1" default="10" range="0,10,30" option="int"/>
         <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
@@ -67,12 +63,8 @@
     </category>
     <category label="32052">
         <setting label="32061" type="lsep"/>
-        <setting label="32062" type="labelenum" id="action_2" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072|32073|32074|32075"/>
-        <setting label="32086" type="action" visible="eq(-1,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 2, Set)"/>
-        <setting label="32087" type="text" id="action_rules_group_2" enable="false" visible="eq(-2,9)" default=""/> 
-        <setting label="32088" type="action" visible="!eq(-1,)&eq(-3,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 2, Rules)"/>
-        <setting label="32089" type="text" id="action_rules_mask_2" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
-        <setting label="32090" type="text" id="action_command_2" enable="true" visible="eq(-5,10)" default=""/>        
+        <setting label="32062" type="labelenum" id="action_2" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071"/>      
+        <setting label="32090" type="text" id="action_command_2" enable="true" visible="eq(-1,6)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_2" default="10" range="0,10,30" option="int"/>
         <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
@@ -97,12 +89,8 @@
     </category>
     <category label="32053">
         <setting label="32061" type="lsep"/>
-        <setting label="32062" type="labelenum" id="action_3" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072|32073|32074|32075"/>
-        <setting label="32086" type="action" visible="eq(-1,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 3, Set)"/>
-        <setting label="32087" type="text" id="action_rules_group_3" enable="false" visible="eq(-2,9)" default=""/> 
-        <setting label="32088" type="action" visible="!eq(-1,)&eq(-3,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 3, Rules)"/>
-        <setting label="32089" type="text" id="action_rules_mask_3" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
-        <setting label="32090" type="text" id="action_command_3" enable="true" visible="eq(-5,10)" default=""/>        
+        <setting label="32062" type="labelenum" id="action_3" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071"/>       
+        <setting label="32090" type="text" id="action_command_3" enable="true" visible="eq(-1,6)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_3" default="10" range="0,10,30" option="int"/>
         <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
@@ -127,12 +115,8 @@
     </category>
     <category label="32054">
         <setting label="32061" type="lsep"/>
-        <setting label="32062" type="labelenum" id="action_4" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072|32073|32074|32075"/>
-        <setting label="32086" type="action" visible="eq(-1,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 4, Set)"/>
-        <setting label="32087" type="text" id="action_rules_group_4" enable="false" visible="eq(-2,9)" default=""/> 
-        <setting label="32088" type="action" visible="!eq(-1,)&eq(-3,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 4, Rules)"/>
-        <setting label="32089" type="text" id="action_rules_mask_4" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
-        <setting label="32090" type="text" id="action_command_4" enable="true" visible="eq(-5,10)" default=""/>        
+        <setting label="32062" type="labelenum" id="action_4" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071"/>       
+        <setting label="32090" type="text" id="action_command_4" enable="true" visible="eq(-1,6)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_4" default="10" range="0,10,30" option="int"/>
         <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
@@ -157,12 +141,8 @@
     </category>
         <category label="32055">
         <setting label="32061" type="lsep"/>
-        <setting label="32062" type="labelenum" id="action_5" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072|32073|32074|32075"/>
-        <setting label="32086" type="action" visible="eq(-1,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 5, Set)"/>
-        <setting label="32087" type="text" id="action_rules_group_5" enable="false" visible="eq(-2,9)" default=""/> 
-        <setting label="32088" type="action" visible="!eq(-1,)&eq(-3,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 5, Rules)"/>
-        <setting label="32089" type="text" id="action_rules_mask_5" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
-        <setting label="32090" type="text" id="action_command_5" enable="true" visible="eq(-5,10)" default=""/>        
+        <setting label="32062" type="labelenum" id="action_5" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071"/>   
+        <setting label="32090" type="text" id="action_command_5" enable="true" visible="eq(-1,6)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_5" default="10" range="0,10,30" option="int"/>
         <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
@@ -187,12 +167,8 @@
     </category>
     <category label="32056">
         <setting label="32061" type="lsep"/>
-        <setting label="32062" type="labelenum" id="action_6" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072|32073|32074|32075"/>
-        <setting label="32086" type="action" visible="eq(-1,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 6, Set)"/>
-        <setting label="32087" type="text" id="action_rules_group_6" enable="false" visible="eq(-2,9)" default=""/> 
-        <setting label="32088" type="action" visible="!eq(-1,)&eq(-3,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 6, Rules)"/>
-        <setting label="32089" type="text" id="action_rules_mask_6" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
-        <setting label="32090" type="text" id="action_command_6" enable="true" visible="eq(-5,10)" default=""/>        
+        <setting label="32062" type="labelenum" id="action_6" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071"/>       
+        <setting label="32090" type="text" id="action_command_6" enable="true" visible="eq(-1,6)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_6" default="10" range="0,10,30" option="int"/>
         <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
@@ -217,12 +193,8 @@
     </category>
     <category label="32057">
         <setting label="32061" type="lsep"/>
-        <setting label="32062" type="labelenum" id="action_7" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072|32073|32074|32075"/>
-        <setting label="32086" type="action" visible="eq(-1,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 7, Set)"/>
-        <setting label="32087" type="text" id="action_rules_group_7" enable="false" visible="eq(-2,9)" default=""/> 
-        <setting label="32088" type="action" visible="!eq(-1,)&eq(-3,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 7, Rules)"/>
-        <setting label="32089" type="text" id="action_rules_mask_7" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
-        <setting label="32090" type="text" id="action_command_7" enable="true" visible="eq(-5,10)" default=""/>        
+        <setting label="32062" type="labelenum" id="action_7" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071"/>      
+        <setting label="32090" type="text" id="action_command_7" enable="true" visible="eq(-1,6)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_7" default="10" range="0,10,30" option="int"/>
         <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
@@ -247,12 +219,8 @@
     </category>    
     <category label="32058">
         <setting label="32061" type="lsep"/>
-        <setting label="32062" type="labelenum" id="action_8" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072|32073|32074|32075"/>
-        <setting label="32086" type="action" visible="eq(-1,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 8, Set)"/>
-        <setting label="32087" type="text" id="action_rules_group_8" enable="false" visible="eq(-2,9)" default=""/> 
-        <setting label="32088" type="action" visible="!eq(-1,)&eq(-3,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 8, Rules)"/>
-        <setting label="32089" type="text" id="action_rules_mask_8" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
-        <setting label="32090" type="text" id="action_command_8" enable="true" visible="eq(-5,10)" default=""/>        
+        <setting label="32062" type="labelenum" id="action_8" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071"/>        
+        <setting label="32090" type="text" id="action_command_8" enable="true" visible="eq(-1,6)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_8" default="10" range="0,10,30" option="int"/>
         <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
@@ -277,12 +245,8 @@
     </category>
     <category label="32059">
         <setting label="32061" type="lsep"/>
-        <setting label="32062" type="labelenum" id="action_9" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072|32073|32074|32075"/>
-        <setting label="32086" type="action" visible="eq(-1,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 9, Set)"/>
-        <setting label="32087" type="text" id="action_rules_group_9" enable="false" visible="eq(-2,9)" default=""/> 
-        <setting label="32088" type="action" visible="!eq(-1,)&eq(-3,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 9, Rules)"/>
-        <setting label="32089" type="text" id="action_rules_mask_9" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
-        <setting label="32090" type="text" id="action_command_9" enable="true" visible="eq(-5,10)" default=""/>        
+        <setting label="32062" type="labelenum" id="action_9" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071"/>     
+        <setting label="32090" type="text" id="action_command_9" enable="true" visible="eq(-1,6)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_9" default="10" range="0,10,30" option="int"/>
         <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
@@ -307,12 +271,8 @@
     </category>    
     <category label="32060">
         <setting label="32061" type="lsep"/>
-        <setting label="32062" type="labelenum" id="action_10" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071|32072|32073|32074|32075"/>
-        <setting label="32086" type="action" visible="eq(-1,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 10, Set)"/>
-        <setting label="32087" type="text" id="action_rules_group_10" enable="false" visible="eq(-2,9)" default=""/> 
-        <setting label="32088" type="action" visible="!eq(-1,)&eq(-3,9)" option="close" action="RunScript(special://home/addons/service.zomboided.tools/filtering.py, 10, Rules)"/>
-        <setting label="32089" type="text" id="action_rules_mask_10" enable="false" visible="!eq(-2,)&eq(-4,9)" default="[I]All[/I]"/>        
-        <setting label="32090" type="text" id="action_command_10" enable="true" visible="eq(-5,10)" default=""/>        
+        <setting label="32062" type="labelenum" id="action_10" lvalues="32063|32064|32065|32066|32067|32068|32069|32070|32071"/>       
+        <setting label="32090" type="text" id="action_command_10" enable="true" visible="eq(-1,6)" default=""/>        
         <setting label="32110" type="slider" id="action_warn_10" default="10" range="0,10,30" option="int"/>
         <setting label=" "      type="lsep"/>
         <setting label="32111" type="lsep"/>
@@ -389,9 +349,6 @@
         <setting label="32454" type="text" id="boot_time" enable="false" visible="true" default="Last restart time is unknown"/>
         <setting label=" "      type="lsep"/>
         <setting label="32455" type="lsep"/>
-        <setting label="32456" type="slider" id="addon_check" default="60" range="60,10,1440" option="int"/>
-        <setting label="32457" type="time" id="addon_check_start" default="01:00"/>
-        <setting label="32458" type="time" id="addon_check_end" default="06:59"/>
         <setting label="32459" type="slider" id="file_check" default="60" range="60,10,1440" option="int"/>
         <setting label="32460" type="time" id="file_check_start" default="00:01"/>
         <setting label="32461" type="time" id="file_check_end" default="23:59"/>

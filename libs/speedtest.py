@@ -60,8 +60,8 @@ def speedTest():
         
         try:
             debugTrace("Opening file " + source)
-            file = xbmcvfs.File(source, "r")
-            total_size = file.size()
+            f = open(source, "rb")
+            total_size = os.path.getsize(source)
         except:
             errorTrace("speedtest.py", "Error opening file " + source)
             total_size = -1
@@ -76,33 +76,33 @@ def speedTest():
             total_read = 0
             total_to_mb = 0
             percent = 0
-            time_start = time.clock()
+            time_start = time.time()
             last_time = time_start
             transfer_speed = 0
             
-            bytes_read = file.read(chunk_size)
+            bytes_read = f.read(chunk_size)
             while bytes_read:
-                bytes_read = file.read(chunk_size)
+                bytes_read = f.read(chunk_size)
                 total_read = total_read + chunk_size
                 total_to_mb = total_to_mb + chunk_size
                 if total_to_mb >= one_mb:
                     total_to_mb = total_to_mb - one_mb
                     percent = percent + 1
-                    time_now = time.clock()-time_start
+                    time_now = time.time()-time_start
                     progress_message = "Read " + formatFileSize(total_read) + " in " + '{:.0f}'.format(time_now) + " seconds"            
                     if percent == 100:                
-                        last_time = time.clock() - last_time
+                        last_time = time.time() - last_time
                         transfer_speed = ((one_mb * 800) / last_time) / 1000000                
                         progress_title = "Running speed test  (100MB average " + '{:.2f}'.format(transfer_speed) + "Mbps)"
-                        last_time = time.clock()
+                        last_time = time.time()
                         percent = 0
-                    progress.update(percent, progress_title, progress_message)
+                    progress.update(percent, progress_title + "\n" + progress_message)
                 if progress.iscanceled() : break
-            file.close()
+            f.close()
 
             progress.close()
 
-            time_now = time.clock()
+            time_now = time.time()
             transfer_speed = (total_read * 8 / (time_now - time_start)) / 1000000 
             per_hour = (total_read / (time_now - time_start)) * 60 * 60
             
