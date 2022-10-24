@@ -129,7 +129,7 @@ if getSleepLock():
             msg = "Key ID " + sleep_key + " is mapped to the sleep function.  Remap or clear current mapping?"
             y = "Clear"
             n = "Remap"
-        if not xbmcgui.Dialog().yesno(addon_name, msg, "", "", n, y):
+        if not xbmcgui.Dialog().yesno(addon_name, msg, n, y):
             sleep_key = KeyListener().record_key()
             if sleep_key == "": 
                 dialog = "Sleep is not mapped to a key."

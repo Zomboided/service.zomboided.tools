@@ -36,7 +36,7 @@ def getYYMMDDwHHMMSS():
 def sendToArduino(send_buffer):
     # Write a message to the Arduino
     debugTrace("Sending " + send_buffer)
-    ser.write(send_buffer)
+    ser.write(bytes(send_buffer, 'utf-8'))
 
 
 def receiveFromArduino():
@@ -59,7 +59,7 @@ def receiveFromArduino():
             return char_buffer
         else:
             if started:
-                char_buffer = char_buffer + char
+                char_buffer = char_buffer + str(char)
                 byte_count += 1
                 
     # Don't return messages that aren't surrounded by markers

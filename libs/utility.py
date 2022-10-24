@@ -54,7 +54,7 @@ def debugTrace(data):
 
 def alwaysTrace(data):
     try:
-        log = "ZTools : Debug: " + str(data)
+        log = "ZTools : Forced: " + str(data)
         xbmc.log(msg=log, level=xbmc.LOGINFO)       
     except Exception as e:
         log = DEC_ERR + "ZTools : " + str(data)
