@@ -59,7 +59,7 @@ def receiveFromArduino():
             return char_buffer
         else:
             if started:
-                char_buffer = char_buffer + str(char)
+                char_buffer = char_buffer + char.decode("utf-8")
                 byte_count += 1
                 
     # Don't return messages that aren't surrounded by markers

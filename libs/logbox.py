@@ -56,7 +56,7 @@ def showLogBox(caption, text):
 def popupKodiLog():
     dialog_text = ""
     try:
-        log_file = open(xbmcvfs.translatePath("special://logpath/kodi.log"), 'r')
+        log_file = open(xbmcvfs.translatePath("special://logpath/kodi.log"), 'r', errors='ignore')
         log_output = log_file.readlines()
         log_file.close()    
         for line in log_output:
