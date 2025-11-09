@@ -35,6 +35,7 @@ const byte max_chars = 32;        // Size of array to read serial data into
 char received_chars[max_chars];   // Array to store the received serial data
 int num_bytes;                    // Number of bytes read
 boolean newData = false;          // Indicates if new data has been found or not
+const int timeout_length = 10;    // Timeout reading commands...10 is a good value
 
 int years = 20;
 int months = 1;
@@ -100,7 +101,6 @@ void loop() {
             display.showNumberDecEx(hours*100 + minutes, 0b01000000, false, 4, 0);
             last_time_length = 4;
         }
-        display.showNumberDecEx(hours*100 + minutes, 0b01000000, false, 4, 0);
         delay(delay_length);
     }
 }
@@ -158,7 +158,7 @@ void getClockBrightness() {
     display.showNumberDecEx(0, 0b01000000, true, 4, 0);
     Serial.println("<Brightness>");
     delay(1000);
-    receiveDataFromUSB(10);
+    receiveDataFromUSB(timeout_length);
     if (newData) {
         // <FIXME> could check the brightness better here and loop if it was bad
         brightness = (received_chars[0] - 48);
@@ -173,9 +173,11 @@ void getClockBrightness() {
                 display.clear();
                 delay(100);
             }
-            newData = false;
         }
-    } 
+        newData = false;
+    }
+    brightness = retrieveDisplayBrightness();
+    //Serial.println(brightness);
 }
 
 
@@ -184,7 +186,7 @@ void getClockDisplay() {
     display.showNumberDecEx(0, 0b01000000, true, 4, 0);
     Serial.println("<Display>");
     delay(1000);
-    receiveDataFromUSB(10);
+    receiveDataFromUSB(timeout_length);
     if (newData) {
         // <FIXME> could check the display better here and loop if it was bad
         disp = ((received_chars[0] - 48) * 10) + (received_chars[1] - 48);
@@ -197,11 +199,12 @@ void getClockDisplay() {
                 display.clear();
                 delay(100);
             }
-            newData = false;
         }
+        newData = false;
     }
     // Put the current display setting in a variable for use later
     disp = retrieveDisplay1224();
+    //Serial.println(disp);
 }
 
 
@@ -213,8 +216,8 @@ void fakeTime() {
     Clock.setMonth(04);
     Clock.setDate(8);
     Clock.setDoW(1);
-    Clock.setHour(23);
-    Clock.setMinute(59);
+    Clock.setHour(11);
+    Clock.setMinute(30);
     Clock.setSecond(45);
     delay(1000);
     //Clock.setClockMode(true);
@@ -227,7 +230,7 @@ void getTime() {
     display.showNumberDecEx(0, 0b01000000, true, 4, 0);
     Serial.println("<Time>");
     delay(1000);
-    receiveDataFromUSB(10);
+    receiveDataFromUSB(timeout_length);
     if (newData) {
         // <FIXME> could check the time better here and loop if it was bad
         years = ((received_chars[0] - 48) * 10) + (received_chars[1] - 48);
@@ -244,7 +247,7 @@ void getTime() {
         Clock.setHour(hours);
         Clock.setMinute(minutes);
         Clock.setSecond(seconds);
-        
+        //Serial.println(hours+minutes+seconds);
         // Flash the display to indicate time has been updated from PC
         for (int i = 0; i <= 5; i++) {
             display.showNumberDecEx(hours*100 + minutes, 0b01000000, false, 4, 0);
